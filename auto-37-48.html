@@ -952,4 +952,45 @@ document.getElementById('searchInput').addEventListener('focus', function() {
   📘 대전차 블로그에서 더 많은 자료 보기
 </a>
 </body>
+<div id="pw-gate" style="
+  position:fixed; top:0; left:0; width:100%; height:100%;
+  background:#0a0e1a; z-index:99999;
+  display:flex; align-items:center; justify-content:center;
+  flex-direction:column; font-family:'Malgun Gothic',sans-serif;
+">
+  <div style="background:#131929; border:1px solid #1e2d47; border-radius:16px; padding:40px 32px; max-width:320px; width:90%; text-align:center;">
+    <div style="font-size:32px; margin-bottom:12px;">🔒</div>
+    <div style="color:#e2e8f0; font-size:16px; font-weight:600; margin-bottom:6px;">대전차 학습자료</div>
+    <div style="color:#94a3b8; font-size:13px; margin-bottom:20px;">블로그 글에서 안내한 비밀번호를 입력하세요</div>
+    <input type="password" id="pw-input" placeholder="비밀번호"
+      style="width:100%; box-sizing:border-box; padding:12px 14px; border-radius:8px; border:1px solid #1e2d47; background:#0a0e1a; color:#e2e8f0; font-size:15px; margin-bottom:12px; outline:none;">
+    <button onclick="checkPw()"
+      style="width:100%; padding:12px; border-radius:8px; border:none; background:#3b82f6; color:#fff; font-size:15px; font-weight:600; cursor:pointer;">
+      확인
+    </button>
+    <div id="pw-error" style="color:#ef4444; font-size:12px; margin-top:10px; display:none;">비밀번호가 틀렸어요</div>
+  </div>
+</div>
+
+<script>
+  var CORRECT_PW = "auto2026"; // 예: "dj2026"
+
+  function checkPw() {
+    var input = document.getElementById('pw-input').value;
+    if (input === CORRECT_PW) {
+      document.getElementById('pw-gate').style.display = 'none';
+      sessionStorage.setItem('dj-auth', 'ok');
+    } else {
+      document.getElementById('pw-error').style.display = 'block';
+    }
+  }
+
+  document.getElementById('pw-input').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') checkPw();
+  });
+
+  if (sessionStorage.getItem('dj-auth') === 'ok') {
+    document.getElementById('pw-gate').style.display = 'none';
+  }
+</script>
 </html>
