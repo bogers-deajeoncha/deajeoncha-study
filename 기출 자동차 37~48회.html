@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>자동차대인 기출분석 통합 (37~48회)</title>
+<style>
+  :root {
+    --bg: #0a0e1a;
+    --card: #131929;
+    --card2: #1a2235;
+    --border: #1e2d47;
+    --accent: #3b82f6;
+    --accent2: #f59e0b;
+    --accent3: #10b981;
+    --accent4: #ef4444;
+    --accent5: #8b5cf6;
+    --text: #e2e8f0;
+    --text2: #94a3b8;
+    --text3: #64748b;
+    --tag-bg: #1e3a5f;
+    --tag-text: #60a5fa;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: 'Malgun Gothic', sans-serif; font-size: 14px; line-height: 1.6; }
+
+  .header { background: linear-gradient(135deg, #0d1b2e 0%, #1a2a45 100%); padding: 18px 16px 14px; border-bottom: 2px solid var(--accent); }
+  .header h1 { font-size: 17px; font-weight: 700; color: #60a5fa; }
+  .header p { font-size: 12px; color: var(--text2); margin-top: 3px; }
+
+  /* 상단 탭 네비 */
+  .era-tabs { display: flex; background: #0d1221; border-bottom: 2px solid var(--border); }
+  .era-btn { flex: 1; padding: 10px 6px; font-size: 12px; font-weight: 700; cursor: pointer; text-align: center; color: var(--text2); border: none; background: transparent; border-bottom: 3px solid transparent; transition: all .2s; font-family: inherit; }
+  .era-btn.active { color: var(--accent2); border-bottom-color: var(--accent2); background: rgba(245,158,11,0.07); }
+  .era-btn:hover:not(.active) { color: var(--text); background: var(--card2); }
+
+  /* 하단 서브탭 */
+  .sub-tabs { display: flex; overflow-x: auto; background: var(--card); border-bottom: 1px solid var(--border); }
+  .sub-tab { padding: 9px 12px; font-size: 12px; font-weight: 600; cursor: pointer; white-space: nowrap; color: var(--text2); border-bottom: 2px solid transparent; transition: all .2s; font-family: inherit; background: transparent; border-left: none; border-right: none; border-top: none; }
+  .sub-tab.active { color: var(--accent); border-bottom-color: var(--accent); background: rgba(59,130,246,0.08); }
+  .sub-tab:hover:not(.active) { color: var(--text); background: var(--card2); }
+
+  /* 검색 */
+  .search-bar { padding: 10px 14px; background: #0d1221; border-bottom: 1px solid var(--border); }
+  .search-bar input { width: 100%; padding: 7px 12px; background: var(--card); border: 1px solid var(--border); border-radius: 8px; color: var(--text); font-family: inherit; font-size: 13px; }
+  .search-bar input:focus { outline: none; border-color: var(--accent); }
+
+  .content-area { padding: 12px 14px; max-width: 940px; margin: 0 auto; }
+
+  /* 섹션 */
+  .era-section { display: none; }
+  .era-section.active { display: block; }
+  .sub-section { display: none; }
+  .sub-section.active { display: block; }
+
+  /* 카드 */
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 14px; margin-bottom: 12px; }
+  .card-title { font-size: 14px; font-weight: 700; color: var(--accent); margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
+
+  /* 배지 */
+  .badge { padding: 2px 7px; border-radius: 4px; font-size: 11px; font-weight: 600; }
+  .badge-blue { background: #1e3a5f; color: #60a5fa; }
+  .badge-gold { background: #3d2e10; color: #f59e0b; }
+  .badge-green { background: #0f3327; color: #34d399; }
+  .badge-red { background: #3b1111; color: #f87171; }
+  .badge-purple { background: #2d1f5e; color: #a78bfa; }
+  .badge-count { background: var(--accent4); color: #fff; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 700; }
+
+  /* 아코디언 아이템 */
+  .q-item { background: var(--card2); border-radius: 8px; padding: 12px; margin-bottom: 8px; cursor: pointer; border: 1px solid var(--border); transition: border-color 0.2s; }
+  .q-item:hover { border-color: var(--accent); }
+  .q-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }
+  .q-title { font-size: 13px; font-weight: 600; color: var(--text); flex: 1; }
+  .q-meta { display: flex; gap: 4px; flex-wrap: wrap; margin-top: 6px; }
+  .q-answer { display: none; margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--border); font-size: 13px; color: var(--text2); line-height: 1.8; }
+  .q-answer.show { display: block; }
+  .toggle-btn { background: var(--tag-bg); color: var(--tag-text); border: none; padding: 3px 9px; border-radius: 5px; font-size: 11px; cursor: pointer; white-space: nowrap; font-weight: 600; font-family: inherit; }
+
+  /* 강조 박스 */
+  .key-box { background: rgba(59,130,246,0.08); border-left: 3px solid var(--accent); padding: 9px 12px; border-radius: 0 6px 6px 0; margin: 8px 0; }
+  .warn-box { background: rgba(245,158,11,0.08); border-left: 3px solid var(--accent2); padding: 9px 12px; border-radius: 0 6px 6px 0; margin: 8px 0; }
+  .ok-box { background: rgba(16,185,129,0.08); border-left: 3px solid var(--accent3); padding: 9px 12px; border-radius: 0 6px 6px 0; margin: 8px 0; }
+  .err-box { background: rgba(239,68,68,0.08); border-left: 3px solid var(--accent4); padding: 9px 12px; border-radius: 0 6px 6px 0; margin: 8px 0; }
+
+  /* 표 */
+  .tbl { width: 100%; border-collapse: collapse; margin: 8px 0; font-size: 12px; }
+  .tbl th { background: #1e2d47; color: #60a5fa; padding: 7px 8px; text-align: left; font-weight: 600; }
+  .tbl td { padding: 6px 8px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  .tbl tr:hover td { background: rgba(59,130,246,0.04); }
+
+  /* 빈도 바 */
+  .freq-bar { display: flex; align-items: center; gap: 8px; margin: 4px 0; }
+  .freq-label { width: 140px; font-size: 12px; color: var(--text); flex-shrink: 0; }
+  .freq-track { flex: 1; background: var(--border); border-radius: 4px; height: 8px; }
+  .freq-fill { height: 8px; border-radius: 4px; background: var(--accent); }
+  .freq-fill.hot { background: var(--accent4); }
+  .freq-fill.med { background: var(--accent2); }
+  .freq-num { font-size: 11px; color: var(--accent2); font-weight: 700; width: 30px; text-align: right; }
+
+  /* 암기 카드 */
+  .memo-card { background: var(--card2); border: 1px solid var(--border); border-radius: 8px; padding: 12px; margin-bottom: 8px; cursor: pointer; }
+  .memo-q { font-size: 13px; font-weight: 600; color: var(--accent2); }
+  .memo-a { display: none; margin-top: 8px; font-size: 13px; color: var(--text); line-height: 1.8; border-top: 1px solid var(--border); padding-top: 8px; }
+  .memo-a.show { display: block; }
+
+  /* 퀵카드 그리드 */
+  .qcard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 8px; }
+  .qcard { background: var(--card2); border: 1px solid var(--border); border-radius: 8px; padding: 12px; cursor: pointer; }
+  .qcard:hover { border-color: var(--accent); }
+  .qcard .qq { font-size: 13px; font-weight: 600; color: #fff; margin-bottom: 6px; }
+  .qcard .qa { display: none; font-size: 12px; color: var(--accent3); border-top: 1px solid var(--border); padding-top: 7px; margin-top: 5px; }
+  .qcard .qa.show { display: block; }
+  .qcard .qhint { font-size: 11px; color: var(--text3); margin-top: 3px; }
+
+  .sec { font-weight: 700; color: var(--accent); margin: 10px 0 4px; font-size: 13px; }
+  ul { padding-left: 18px; }
+  li { margin-bottom: 3px; }
+  strong { color: #fbbf24; }
+  em { color: var(--accent3); font-style: normal; }
+
+  .tag { display: inline-block; padding: 1px 6px; border-radius: 3px; font-size: 10px; font-weight: 700; margin-right: 3px; }
+  .tag-必 { background: #3b1111; color: #f87171; }
+  .tag-출 { background: #1e3a5f; color: #60a5fa; }
+
+  .year-pill { display: inline-block; padding: 1px 7px; background: #1e3a5f; border-radius: 10px; font-size: 11px; color: #93c5fd; margin: 2px; }
+  .stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 8px; margin-bottom: 14px; }
+  .stat-box { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 12px; text-align: center; }
+  .stat-box .num { font-size: 22px; font-weight: 700; color: var(--accent); }
+  .stat-box .lbl { font-size: 11px; color: var(--text2); margin-top: 2px; }
+
+  @media (max-width:600px) {
+    .qcard-grid { grid-template-columns: 1fr; }
+    .freq-label { width: 110px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>🚗 신체손해사정사 2차 — 자동차대인 기출분석 통합</h1>
+  <p>제37회(2014) ~ 제48회(2025) · 12개 시험 완전분석 · 핵심암기 총정리</p>
+</div>
+
+<!-- 시대별 탭 -->
+<div class="era-tabs">
+  <button class="era-btn active" onclick="switchEra('old', this)">📚 37~43회<br><span style="font-size:10px;font-weight:400">(2014~2020)</span></button>
+  <button class="era-btn" onclick="switchEra('new', this)">📖 44~48회<br><span style="font-size:10px;font-weight:400">(2021~2025)</span></button>
+  <button class="era-btn" onclick="switchEra('total', this)">🔥 통합빈도<br><span style="font-size:10px;font-weight:400">(12회 전체)</span></button>
+  <button class="era-btn" onclick="switchEra('numbers', this)">🔢 숫자암기<br><span style="font-size:10px;font-weight:400">(전 회차)</span></button>
+  <button class="era-btn" onclick="switchEra('qcard', this)">⚡ 퀵암기<br><span style="font-size:10px;font-weight:400">(클릭정답)</span></button>
+</div>
+
+<!-- 서브탭 (era에 따라 보임) -->
+<div class="sub-tabs" id="subTabsOld">
+  <button class="sub-tab active" onclick="switchSub('old','overview',this)">📊 출제빈도</button>
+  <button class="sub-tab" onclick="switchSub('old','topic1',this)">운행자책임</button>
+  <button class="sub-tab" onclick="switchSub('old','topic2',this)">피보험자</button>
+  <button class="sub-tab" onclick="switchSub('old','topic3',this)">면책사유</button>
+  <button class="sub-tab" onclick="switchSub('old','topic4',this)">보험금산정</button>
+  <button class="sub-tab" onclick="switchSub('old','topic5',this)">타차특약</button>
+  <button class="sub-tab" onclick="switchSub('old','topic6',this)">피해자보호</button>
+  <button class="sub-tab" onclick="switchSub('old','topic7',this)">약술정리</button>
+  <button class="sub-tab" onclick="switchSub('old','gichul',this)">회차별기출</button>
+  <button class="sub-tab" onclick="switchSub('old','memo',this)">📝 암기노트</button>
+</div>
+<div class="sub-tabs" id="subTabsNew" style="display:none">
+  <button class="sub-tab active" onclick="switchSub('new','overview44',this)">📊 출제현황</button>
+  <button class="sub-tab" onclick="switchSub('new','topics44',this)">주제별 요약</button>
+  <button class="sub-tab" onclick="switchSub('new','gichul44',this)">회차별기출</button>
+  <button class="sub-tab" onclick="switchSub('new','predict',this)">🎯 출제예측</button>
+</div>
+
+<div class="search-bar">
+  <input type="text" id="searchInput" placeholder="🔍 키워드 검색 (예: 사고부담금, 손익상계, 타인성, 무단운전...)" oninput="doSearch()">
+</div>
+
+<div class="content-area">
+
+<!-- ========== ERA: 37~43회 ========== -->
+<div class="era-section active" id="era-old">
+
+  <!-- 출제빈도 -->
+  <div class="sub-section active" id="old-overview">
+    <div class="card">
+      <div class="card-title">📊 주제별 출제빈도 (37~43회, 7개 시험)</div>
+      <div class="freq-bar"><div class="freq-label">보험금 계산</div><div class="freq-track"><div class="freq-fill hot" style="width:100%"></div></div><div class="freq-num">7회</div></div>
+      <div class="freq-bar"><div class="freq-label">면부책 사례(복합)</div><div class="freq-track"><div class="freq-fill hot" style="width:85%"></div></div><div class="freq-num">6회</div></div>
+      <div class="freq-bar"><div class="freq-label">타인성/공동운행자</div><div class="freq-track"><div class="freq-fill med" style="width:71%"></div></div><div class="freq-num">5회</div></div>
+      <div class="freq-bar"><div class="freq-label">무면허/특약면책</div><div class="freq-track"><div class="freq-fill med" style="width:71%"></div></div><div class="freq-num">5회</div></div>
+      <div class="freq-bar"><div class="freq-label">타차운전특약</div><div class="freq-track"><div class="freq-fill med" style="width:71%"></div></div><div class="freq-num">5회</div></div>
+      <div class="freq-bar"><div class="freq-label">피보험자 개별적용</div><div class="freq-track"><div class="freq-fill" style="width:57%"></div></div><div class="freq-num">4회</div></div>
+      <div class="freq-bar"><div class="freq-label">무보험차상해</div><div class="freq-track"><div class="freq-fill" style="width:57%"></div></div><div class="freq-num">4회</div></div>
+      <div class="freq-bar"><div class="freq-label">과실상계·손익상계</div><div class="freq-track"><div class="freq-fill" style="width:43%"></div></div><div class="freq-num">3회</div></div>
+      <div class="freq-bar"><div class="freq-label">직접청구권</div><div class="freq-track"><div class="freq-fill" style="width:43%"></div></div><div class="freq-num">3회</div></div>
+      <div class="freq-bar"><div class="freq-label">운행자책임 vs 민법</div><div class="freq-track"><div class="freq-fill" style="width:43%"></div></div><div class="freq-num">3회</div></div>
+      <div class="freq-bar"><div class="freq-label">동시사망·상속</div><div class="freq-track"><div class="freq-fill" style="width:29%"></div></div><div class="freq-num">2회</div></div>
+      <div class="freq-bar"><div class="freq-label">양도·의무보험일시담보</div><div class="freq-track"><div class="freq-fill" style="width:29%"></div></div><div class="freq-num">2회</div></div>
+      <div class="freq-bar"><div class="freq-label">노동능력상실률</div><div class="freq-track"><div class="freq-fill" style="width:29%"></div></div><div class="freq-num">2회</div></div>
+      <div class="freq-bar"><div class="freq-label">과실비율 수정요소</div><div class="freq-track"><div class="freq-fill" style="width:29%"></div></div><div class="freq-num">2회</div></div>
+      <div class="freq-bar"><div class="freq-label">교통사고처리특례법</div><div class="freq-track"><div class="freq-fill" style="width:29%"></div></div><div class="freq-num">2회</div></div>
+      <div class="freq-bar"><div class="freq-label">유상운송 면책</div><div class="freq-track"><div class="freq-fill" style="width:14%"></div></div><div class="freq-num">1회</div></div>
+    </div>
+    <div class="card">
+      <div class="card-title">💡 회차별 1번 문제 주제</div>
+      <table class="tbl">
+        <tr><th>회차</th><th>연도</th><th>1번 주요 쟁점</th><th>배점</th></tr>
+        <tr><td>37회</td><td>2014</td><td>쌍방사고 2피해자 면부책 + 보험금산정</td><td>40점</td></tr>
+        <tr><td>38회</td><td>2015</td><td>굴삭기 임차인 B 타인성 + 보험금</td><td>40점</td></tr>
+        <tr><td>39회</td><td>2016</td><td>무단운전 사고 운행자책임 + 면부책 + 보험금</td><td>30점</td></tr>
+        <tr><td>40회</td><td>2017</td><td>가족사고 동시사망 + 자기신체 + 상속</td><td>30점</td></tr>
+        <tr><td>41회</td><td>2018</td><td>스카이차 임차인 타인성 3소문제</td><td>30점</td></tr>
+        <tr><td>42회</td><td>2019</td><td>타차운전 + 1인한정 특약 C사망·D장해 면부책</td><td>30점</td></tr>
+        <tr><td>43회</td><td>2020</td><td>약술만 출제 (면부책 사례 없음)</td><td>-</td></tr>
+      </table>
+    </div>
+    <div class="card">
+      <div class="card-title">🔥 반드시 나오는 3대 핵심 유형</div>
+      <div class="ok-box"><strong>유형①</strong> 면부책 사례문제 — 매회 20~30점<br>→ 법률책임 → 피보험자 해당여부 → 약관상 면책사유 <strong>3단계</strong></div>
+      <div class="ok-box"><strong>유형②</strong> 지급보험금 계산 — 매회 출제<br>→ 부상·장해·사망 구분, 과실상계, 한도액, 공제액 순서</div>
+      <div class="ok-box"><strong>유형③</strong> 약술형 단문 (15~20점) — 매회 3~4문제<br>→ 직접청구권, 과실상계, 피보험자 범위, 운행자책임 vs 민법</div>
+    </div>
+  </div>
+
+  <!-- 운행자책임 -->
+  <div class="sub-section" id="old-topic1">
+    <div class="q-item" onclick="toggleQ(this)">
+      <div class="q-header"><div class="q-title">자배법 제3조 운행자책임 — 조문과 면책요건</div><button class="toggle-btn">보기 ▼</button></div>
+      <div class="q-meta"><span class="badge badge-gold">必암기</span><span class="badge badge-blue">37·38·39·41·42·43회</span></div>
+      <div class="q-answer">
+        <div class="key-box"><strong>자기를 위하여 자동차를 운행하는 자</strong>는 그 운행으로 다른 사람을 사상케 한 경우 손해를 배상할 책임을 진다.</div>
+        <div class="sec">면책요건</div>
+        <table class="tbl">
+          <tr><th>구분</th><th>면책요건</th></tr>
+          <tr><td><strong>승객</strong></td><td>고의 또는 자살행위 (단, 정신질환 등 자유로운 의사결정 불가 시 면책 어려움 — 48회 판례)</td></tr>
+          <tr><td><strong>승객 아닌 자</strong></td><td>① 자기·운전자 주의 게을리 않음<br>② 피해자·제3자 고의·과실<br>③ 자동차 구조결함·기능장해 없음 (3가지 모두 입증)</td></tr>
+        </table>
+        <div class="warn-box">⚠️ 승객은 <strong>조건부 무과실책임</strong> → 입증책임 운행자<br>승객 아닌 자: 3면책 요건 모두 입증 시에만 면책</div>
+      </div>
+    </div>
+    <div class="q-item" onclick="toggleQ(this)">
+      <div class="q-header"><div class="q-title">운행자책임 vs 민법상 책임 비교 (43회 25점)</div><button class="toggle-btn">보기 ▼</button></div>
+      <div class="q-meta"><span class="badge badge-red">43회 25점</span></div>
+      <div class="q-answer">
+        <table class="tbl">
+          <tr><th>항목</th><th>자배법 (운행자책임)</th><th>민법 불법행위</th></tr>
+          <tr><td>근거</td><td>자배법 §3</td><td>민법 §750, §756</td></tr>
+          <tr><td>책임주체</td><td>운행자 (운행이익+운행지배)</td><td>직접 가해자 또는 사용자</td></tr>
+          <tr><td>책임 성격</td><td>조건부 무과실책임</td><td>과실책임주의</td></tr>
+          <tr><td>입증책임</td><td><strong>운행자</strong>가 면책요건 입증</td><td><strong>피해자</strong>가 고의·과실 입증</td></tr>
+          <tr><td>적용범위</td><td>대인사고만</td><td>대인·대물 모두</td></tr>
+          <tr><td>관계</td><td>민법의 특별법 (우선 적용)</td><td>자배법 없을 때 보충</td></tr>
+        </table>
+        <div class="ok-box">피해자보호: 자배법 입증책임 전환 + 강제보험 + 직접청구권 + 가불금 + 정부보장사업 + 압류·양도 금지</div>
+      </div>
+    </div>
+    <div class="q-item" onclick="toggleQ(this)">
+      <div class="q-header"><div class="q-title">공동운행자의 타인성 판단 기준</div><button class="toggle-btn">보기 ▼</button></div>
+      <div class="q-meta"><span class="badge badge-gold">必암기</span><span class="badge badge-blue">38·39·41·42회</span></div>
+      <div class="q-answer">
+        <div class="key-box">운행자가 복수인 경우 → 사고당시 <strong>구체적 운행지배의 정도 비교</strong><br>간접적·추상적 운행자는 직접적·구체적 운행자에 대하여 <strong>타인</strong> 주장 가능</div>
+        <div class="warn-box">
+          <strong>임차인 타인성 원칙</strong><br>
+          단독 임차 → 타인 ✗ (임차인이 더 직접적) / <strong>운전기사 포함 임차</strong> → 타인 ✓ (38·41회)<br>
+          <strong>무단운전</strong>: 소유자 vs 무단운전자 → 소유자가 간접적 → 소유자도 타인 ✓
+        </div>
+      </div>
+    </div>
+    <div class="q-item" onclick="toggleQ(this)">
+      <div class="q-header"><div class="q-title">무단운전 시 보유자 운행지배 상실 판단요소</div><button class="toggle-btn">보기 ▼</button></div>
+      <div class="q-meta"><span class="badge badge-blue">39·42회</span></div>
+      <div class="q-answer">
+        <ul>
+          <li>평소 자동차 및 <strong>열쇠 보관상태</strong></li>
+          <li>무단운전이 가능하게 된 경위</li>
+          <li>소유자와 운전자의 <strong>인적관계</strong></li>
+          <li>차량 반환의사 유무</li>
+          <li>보유자의 <strong>사후승낙 가능성</strong></li>
+          <li>피해자의 주관적 인식 유무</li>
+          <li>시간적·장소적 근접성</li>
+        </ul>
+        <div class="err-box">39회: 아버지 차 열쇠 무단 취득 + 무면허 + 평소 허락 없음 → 운행지배 <strong>상실</strong> → 면책</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 피보험자 -->
+  <div class="sub-section" id="old-topic2">
+    <div class="q-item" onclick="toggleQ(this)">
+      <div class="q-header"><div class="q-title">각 담보별 피보험자 범위</div><button class="toggle-btn">보기 ▼</button></div>
+      <div class="q-meta"><span class="badge badge-gold">必암기</span><span class="badge badge-blue">41회 15점</span></div>
+      <div class="q-answer">
+        <table class="tbl">
+          <tr><th>담보</th><th>피보험자 범위</th></tr>
+          <tr><td><strong>대인1</strong></td><td>기명·친족·승낙·사용·운전·<strong>기타보유(자배법상 보유자)</strong></td></tr>
+          <tr><td><strong>대인2</strong></td><td>기명·친족·승낙·사용·운전 (취급업자 제외)</td></tr>
+          <tr><td><strong>자기신체</strong></td><td>대인2의 피보험자 + 이들의 <strong>부모·배우자·자녀</strong></td></tr>
+          <tr><td><strong>무보험차상해</strong></td><td>① 기명피보험자·배우자 ② 기명·배우자의 부모·자녀 ③ 탑승중 승낙피보험자 ④ 위 피보험자를 위해 운전중인 자 (취급업자 제외)</td></tr>
+        </table>
+        <div class="warn-box"><strong>대인1 vs 대인2 차이:</strong> 대인1에만 <em>기타보유피보험자(자배법상 보유자)</em> 있음</div>
+      </div>
+    </div>
+    <div class="q-item" onclick="toggleQ(this)">
+      <div class="q-header"><div class="q-title">피보험자 개별적용 — 정의와 효과</div><button class="toggle-btn">보기 ▼</button></div>
+      <div class="q-meta"><span class="badge badge-gold">必암기</span><span class="badge badge-blue">38·39·40·42회 + 44회</span></div>
+      <div class="q-answer">
+        <div class="key-box">한 사고로 복수 피보험자 배상책임 → 보상책임·면책규정은 <strong>각 피보험자마다 개별 적용</strong></div>
+        <div class="sec">비적용 항목 (약관 §9)</div>
+        <ul>
+          <li>①보험계약자·기명피보험자 고의면책</li>
+          <li>②유상운송면책</li>
+          <li>③시험·경기면책</li>
+        </ul>
+        <div class="sec">적용 사례</div>
+        <ul>
+          <li>대인2 고의면책: 기명 이외 피보험자 고의 → 개별적용 → 고의없는 피보험자 청구권 인정</li>
+          <li>가족면책: 다른 피보험자 배상책임 있으면 그를 통해 보상</li>
+          <li>산재면책: 산재면책 미해당 피보험자 있으면 통해서 보상</li>
+        </ul>
+        <div class="err-box">한도액은 개별적용으로 <strong>증액되지 않음</strong></div>
+      </div>
+    </div>
+    <div class="q-item" onclick="toggleQ(this)">
+      <div class="q-header"><div class="q-title">승낙피보험자 — 요건과 전대의 추정적 승낙</div><button class="toggle-btn">보기 ▼</button></div>
+      <div class="q-meta"><span class="badge badge-blue">38·41회 + 45회</span></div>
+      <div class="q-answer">
+        <div class="key-box">기명피보험자의 승낙을 얻어 피보험자동차를 <strong>사용하거나 관리하고 있는 자</strong><br>명시적·묵시적·포괄적 승낙 가능 / 기명피보험자로부터 직접 승낙</div>
+        <div class="warn-box">
+          <strong>전전대(재승낙)</strong>: 원칙 승낙피보험자 아님<br>
+          <strong>전대의 추정적 승낙</strong>: 전대 가능성 예상 + 밀접한 인간관계 + 전대 미제한 → 인정 가능 (45회)<br>
+          <strong>기명피보험자 의사에 명백히 반하는 경우</strong>: 승낙피·운전피 모두 아님
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 면책사유 -->
+  <div class="sub-section" id="old-topic3">
+    <div class="q-item" onclick="toggleQ(this)">
+      <div class="q-header"><div class="q-title">기명피보험자 1인 한정운전 특별약관</div><button class="toggle-btn">보기 ▼</button></div>
+      <div class="q-meta"><span class="badge badge-gold">必암기</span><span class="badge badge-blue">39·42회</span></div>
+      <div class="q-answer">
+        <div class="key-box">운전자를 <strong>기명피보험자</strong>로 한정 → 위반 시 <strong>대인1 제외 전 담보 면책</strong></div>
+        <div class="ok-box"><strong>면책 예외 (부책)</strong><br>① 피보험자동차를 <strong>도난</strong>당한 경우<br>② <strong>자동차취급업자</strong>의 운전으로 피보험자가 배상책임을 지는 경우</div>
+        <div class="warn-box">42회: 동료 A의 운전 → 도난·취급업자 아님 → 대인1만 부책</div>
+      </div>
+    </div>
+    <div class="q-item" onclick="toggleQ(this)">
+      <div class="q-header"><div class="q-title">무면허운전 면책 — 대인2 약관</div><button class="toggle-btn">보기 ▼</button></div>
+      <div class="q-meta"><span class="badge badge-gold">必암기</span><span class="badge badge-blue">42회 조사사항 + 46회</span></div>
+      <div class="q-answer">
+        <div class="key-box">피보험자 <strong>본인</strong>이 무면허 OR <strong>기명피보험자의 명시적·묵시적 승인 하에</strong> 무면허운전 → 면책</div>
+        <div class="sec">묵시적 승인 판단기준</div>
+        <ul>
+          <li>소유자가 무면허 사실을 아는지 여부</li>
+          <li>무면허운전자와의 관계, 평소 차량 운전·관리 상황</li>
+          <li>무면허운전 가능하게 된 경위, 운전 목적</li>
+        </ul>
+        <div class="ok-box">기명피보험자가 무면허 <strong>몰랐다면</strong> → 개별적용 → 무면허면책 적용 불가</div>
+      </div>
+    </div>
+    <div class="q-item" onclick="toggleQ(this)">
+      <div class="q-header"><div class="q-title">유상운송 면책 (43회 15점)</div><button class="toggle-btn">보기 ▼</button></div>
+      <div class="q-meta"><span class="badge badge-red">43회 15점</span></div>
+      <div class="q-answer">
+        <div class="key-box">영리목적 + 요금·대가 수수 + <strong>반복적</strong> 사용·대여 → 대인1 제외 전 담보 면책<br>단, 피보험자개별적용 ✗ (유상운송은 개별적용 안 함)</div>
+        <div class="sec">예외 (부책)</div>
+        <ul>
+          <li>소액·실비변상적 성격</li>
+          <li>출퇴근 승용차함께타기 (오전 7~9시, 오후 6~8시, 평일)</li>
+          <li>장기임대차계약(30일 초과) 전속 사용</li>
+          <li>유상운송위험담보 특약 가입</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- 보험금 산정 -->
+  <div class="sub-section" id="old-topic4">
+    <div class="q-item" onclick="toggleQ(this)">
+      <div class="q-header"><div class="q-title">부상·장해·사망보험금 산정 기본구조</div><button class="toggle-btn">보기 ▼</button></div>
+      <div class="q-meta"><span class="badge badge-gold">必암기</span><span class="badge badge-blue">매회 출제</span></div>
+      <div class="q-answer">
+        <div class="sec">① 부상보험금</div>
+        <div class="key-box">치료비 + 위자료(부상등급) + 휴업손해(85%) + 간병비<br>→ 과실상계 후 금액 vs 치료비 전액: <strong>큰 금액</strong> 지급 → 상해등급별 한도액</div>
+        <div class="sec">② 후유장해보험금</div>
+        <div class="key-box">위자료 + 상실수익액 + 가정간호비<br>상실수익액 = 월소득 × 노동능력상실률 × (과거월수 + 미래 호프만계수)</div>
+        <div class="sec">③ 사망보험금</div>
+        <div class="key-box">위자료 + 장례비(500만원) + 상실수익액<br>→ 과실상계 → 최저보장 2,000만원 → 대인1 한도 1억5,000만원</div>
+        <div class="warn-box">치료 중 사망: 부상 + 사망 한도 합산 범위 내 (최대 1억8천만원)<br>과실상계 후 &lt; 치료비 → 치료비 전액 지급 (최저보장)</div>
+      </div>
+    </div>
+    <div class="q-item" onclick="toggleQ(this)">
+      <div class="q-header"><div class="q-title">자기신체사고 지급보험금 계산식</div><button class="toggle-btn">보기 ▼</button></div>
+      <div class="q-meta"><span class="badge badge-blue">37·38·40·41회</span></div>
+      <div class="q-answer">
+        <div class="key-box"><strong>지급보험금 = 실제손해액 + 비용 − 공제액</strong><br>공제액 = 대인1 지급액 + 대인2 지급액 + 무상 지급액 + 기타</div>
+        <div class="warn-box"><strong>공제액 없을 때</strong>: 비용 지급 안 함 / 사망 시 <strong>사망가입금액만</strong> 지급 (44회 핵심)</div>
+        <div class="ok-box">무상보험금 청구 포기 시 → 공제 안 함 (41회)</div>
+      </div>
+    </div>
+    <div class="q-item" onclick="toggleQ(this)">
+      <div class="q-header"><div class="q-title">과실상계·손익상계·동승자감액·기왕증 적용순서</div><button class="toggle-btn">보기 ▼</button></div>
+      <div class="q-meta"><span class="badge badge-red">41회 15점</span><span class="badge badge-gold">必암기</span></div>
+      <div class="q-answer">
+        <div class="key-box"><strong>기왕증 공제 → 동승자감액 + 과실상계 (합산) → 손익상계</strong></div>
+        <table class="tbl">
+          <tr><th>제도</th><th>내용</th><th>적용담보</th></tr>
+          <tr><td>기왕증 공제</td><td>사고 전 기존 장해·질병 기여도만큼 공제</td><td>전 담보</td></tr>
+          <tr><td>동승자감액</td><td>호의동승 시 운행자 책임 감액 (0~100%)</td><td>대인1·2, 무상</td></tr>
+          <tr><td>과실상계</td><td>피해자 과실만큼 배상액 경감</td><td>대인1·2, 무상</td></tr>
+          <tr><td>손익상계</td><td>동일원인으로 피해자가 얻은 이익 공제</td><td>대인1·2, 무상</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="q-item" onclick="toggleQ(this)">
+      <div class="q-header"><div class="q-title">노동능력상실률 — 맥브라이드식 (42·43회)</div><button class="toggle-btn">보기 ▼</button></div>
+      <div class="q-meta"><span class="badge badge-red">42·43회 각 20점</span></div>
+      <div class="q-answer">
+        <div class="key-box"><strong>일반의 옥내 또는 옥외 근로자</strong> 기준 / 진단한 의사 또는 해당과목 전문의가 판정</div>
+        <div class="sec">중복장해 병합 공식</div>
+        <div class="key-box"><strong>A% + (100−A%) × B% = 최종 장해율</strong></div>
+        <div class="sec">기왕장해 있을 때</div>
+        <div class="key-box">기왕 20%, 사고 장해 50% → (100−20) × 50% = <strong>40%</strong></div>
+        <div class="sec">취업가능연한</div>
+        <ul><li>일반: <strong>65세</strong> / 62세 이상: 별표 취업가능월수 적용</li></ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- 타차특약 -->
+  <div class="sub-section" id="old-topic5">
+    <div class="q-item" onclick="toggleQ(this)">
+      <div class="q-header"><div class="q-title">다른자동차운전담보 특별약관 — 전체 구조</div><button class="toggle-btn">보기 ▼</button></div>
+      <div class="q-meta"><span class="badge badge-gold">必암기</span><span class="badge badge-blue">42·43회 사례</span></div>
+      <div class="q-answer">
+        <div class="key-box">무보험차상해 가입 시 <strong>자동 적용</strong><br>피보험자가 다른 자동차 운전 중 사고 → 그 다른 자동차를 피보험자동차로 간주</div>
+        <div class="sec">보상내용</div>
+        <ul>
+          <li>대인2: 피보험자 법률상 배상책임 보상</li>
+          <li>자기신체: 피보험자 상해 보상</li>
+          <li><strong>다른 자동차 소유자 상해</strong> → 자기신체 피보험자로 간주 (간주규정)</li>
+        </ul>
+        <div class="warn-box"><strong>면책</strong>: 피보험자 → 다른 자동차 <strong>소유자에 대한</strong> 법률상 배상책임 (타차 소유자는 승낙피보험자 면책조항과 충돌)</div>
+        <div class="sec">다른 자동차 정의</div>
+        <ul>
+          <li>피보험자동차와 <strong>동일한 차종</strong>인 자가용자동차</li>
+          <li>기명피보험자·배우자·부모·자녀 소유 또는 통상사용 제외</li>
+          <li>대체자동차(교체 승인 전) 포함</li>
+        </ul>
+      </div>
+    </div>
+    <div class="q-item" onclick="toggleQ(this)">
+      <div class="q-header"><div class="q-title">42회 사례 — 타차특약 + 1인한정 복합</div><button class="toggle-btn">보기 ▼</button></div>
+      <div class="q-meta"><span class="badge badge-red">42회 핵심 사례</span></div>
+      <div class="q-answer">
+        <div class="sec">갑보험사 (A의 보험 — 타차특약)</div>
+        <ul>
+          <li>대인2: A → D에게 → <strong>부책</strong></li>
+          <li>대인2: A → C(소유자)에게 → 타차특약 면책 → <strong>면책</strong></li>
+          <li>자기신체: C는 타차 소유자 간주 → <strong>부책</strong></li>
+        </ul>
+        <div class="sec">병보험사 (C 차 — 1인한정 특약)</div>
+        <ul><li>1인한정 위반 → 대인1만 부책 (D에게) / C는 타인 아님 → 대인1 면책</li></ul>
+        <div class="sec">을보험사 (B 차)</div>
+        <ul><li>대인1·2 — C, D 모두 타인 → 부책</li></ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- 피해자보호 -->
+  <div class="sub-section" id="old-topic6">
+    <div class="q-item" onclick="toggleQ(this)">
+      <div class="q-header"><div class="q-title">피해자 직접청구권 (43회 15점)</div><button class="toggle-btn">보기 ▼</button></div>
+      <div class="q-meta"><span class="badge badge-red">43회 15점</span><span class="badge badge-blue">41회도 출제</span></div>
+      <div class="q-answer">
+        <div class="key-box">손해배상청구권자가 보험회사에 <strong>직접</strong> 손해배상금을 청구할 수 있는 권리 (약관 §29, 상법 §724, 자배법 §10)</div>
+        <div class="sec">특징: 독립성·배타성·강행성</div>
+        <div class="sec">약관상 유의사항</div>
+        <ul>
+          <li>직접청구권 vs 피보험자 보험금청구권 경합 → <strong>직접청구권 우선</strong></li>
+          <li>지급기일: 서류 접수 후 지체없이 정하고 <strong>7일 이내</strong> 지급</li>
+          <li>30일 내 거절 또는 지연 이유 미통지 → 지급 지연으로 간주</li>
+          <li>대인1 고의사고 → 피해자 직접청구 시 보상 (항변 포기)</li>
+        </ul>
+      </div>
+    </div>
+    <div class="q-item" onclick="toggleQ(this)">
+      <div class="q-header"><div class="q-title">피보험자동차 양도 + 의무보험일시담보 특약 (43회 15점)</div><button class="toggle-btn">보기 ▼</button></div>
+      <div class="q-meta"><span class="badge badge-red">43회 15점</span></div>
+      <div class="q-answer">
+        <div class="key-box">양도 성립: 현실인도 후 명의이전 OR <strong>매매대금 완납 + 명의이전서류 교부</strong> 시 양도인 운행지배 상실</div>
+        <div class="sec">의무보험일시담보 특약</div>
+        <div class="key-box">양도일부터 <strong>15일째 되는 날 24시</strong>까지 대인1 피보험자동차로 간주<br>양수인이 재양도해도 적용</div>
+        <div class="warn-box">양수인 명의 이전등록 후 사고 / 양수인 유효한 대인1 가입 / 보험기간 마지막날 이후 → 특약 면책(무효)</div>
+      </div>
+    </div>
+    <div class="q-item" onclick="toggleQ(this)">
+      <div class="q-header"><div class="q-title">소멸시효 기산점 (41회 10점)</div><button class="toggle-btn">보기 ▼</button></div>
+      <div class="q-meta"><span class="badge badge-red">41회 10점</span></div>
+      <div class="q-answer">
+        <table class="tbl">
+          <tr><th>청구권 종류</th><th>기산점</th></tr>
+          <tr><td>피해자 직접청구권 (대인1·2)</td><td><strong>사고 발생 시</strong></td></tr>
+          <tr><td>피보험자 — 대인1·2</td><td>판결 확정·화해·합의로 <strong>손해배상액 확정된 때</strong></td></tr>
+          <tr><td>피보험자 — 자기신체</td><td>사고로 <strong>상해 입은 때</strong></td></tr>
+          <tr><td>피보험자 — 무상</td><td>무보험차에 의해 <strong>상해 입은 때</strong></td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- 약술 정리 -->
+  <div class="sub-section" id="old-topic7">
+    <div class="card">
+      <div class="card-title">📝 약술형 반복 출제 주제 정리 (37~43회)</div>
+      <table class="tbl">
+        <tr><th>주제</th><th>출제회차</th><th>배점</th><th>핵심키워드</th></tr>
+        <tr><td>운행자책임 vs 민법 비교</td><td>43회</td><td>25점</td><td>주체·요건·입증책임·적용순서</td></tr>
+        <tr><td>피해자 직접청구권</td><td>43회</td><td>15점</td><td>독립성·배타성·강행성·경합시 처리</td></tr>
+        <tr><td>유상운송 면책</td><td>43회</td><td>15점</td><td>요건·예외(승용차함께타기 등)</td></tr>
+        <tr><td>피보험자동차 양도</td><td>43회</td><td>15점</td><td>시점·승계불가·의무보험일시담보</td></tr>
+        <tr><td>기술직·군복무 소득·취업가능월수</td><td>43회</td><td>15점</td><td>통계기관노임·공무원보수규정·65세</td></tr>
+        <tr><td>보험금 계산 (사례형)</td><td>43회</td><td>15점</td><td>순서·한도액·치료비최저</td></tr>
+        <tr><td>과실상계·손익상계·동승자·기왕증</td><td>41회</td><td>15점</td><td>적용순서 必암기</td></tr>
+        <tr><td>자배법·약관상 피해자보호</td><td>41회</td><td>15점</td><td>강제보험·직접청구·가불금·정부보장</td></tr>
+        <tr><td>피보험자별 범위 (4담보)</td><td>41회</td><td>15점</td><td>대인1vs2 차이·자기신체·무상</td></tr>
+        <tr><td>소멸시효 기산점</td><td>41회</td><td>10점</td><td>사고시·확정시 구분</td></tr>
+        <tr><td>노동능력상실률 평가</td><td>42·43회</td><td>20점</td><td>맥브라이드·중복병합 공식</td></tr>
+        <tr><td>과실비율 수정요소</td><td>42·43회</td><td>15점</td><td>차대인·차대차·가산·감산요소</td></tr>
+        <tr><td>교통사고처리특례법</td><td>42·43회</td><td>15점</td><td>반의사불벌·보험가입 특례·14가지</td></tr>
+        <tr><td>손사 조사사항 (대인1·2)</td><td>38·42회</td><td>20점</td><td>무단운전·무면허·묵시적 승인 조사</td></tr>
+        <tr><td>척추 상해 급별·한도·세부지침</td><td>39회</td><td>20점</td><td>1급~12급·마미증후군</td></tr>
+        <tr><td>가정간호비 인정요건</td><td>39회</td><td>20점</td><td>식물인간·사지완전마비 6대·3대 기준</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- 회차별 기출 -->
+  <div class="sub-section" id="old-gichul">
+    <div class="q-item" onclick="toggleQ(this)"><div class="q-header"><div class="q-title">제37회 (2014) — 쌍방사고 갑·을 보험사 40점</div><button class="toggle-btn">보기 ▼</button></div><div class="q-answer"><ul><li>A차(갑보험사) vs C차(을보험사, 대인1만) 충돌</li><li>피해자A: 자기 차 운전자 → 대인 면책, <strong>자기신체·무상</strong> 부책</li><li>피해자B: 타인 → 갑·을 대인1 각각 부책</li><li>무상보험금 계산 → 자기신체 공제 관계</li></ul></div></div>
+    <div class="q-item" onclick="toggleQ(this)"><div class="q-header"><div class="q-title">제38회 (2015) — 굴삭기 임차인 B 타인성 40점</div><button class="toggle-btn">보기 ▼</button></div><div class="q-answer"><ul><li>도급계약 → B는 타인 + 승피 아님 → 대인1·2 모두 부책</li><li>임대차계약 → B는 공동운행자 + 승피 → 대인1 부책, 대인2 면책</li><li>병보험사 D: B의 계부 → 피보험자 아님 → 전 담보 면책</li></ul></div></div>
+    <div class="q-item" onclick="toggleQ(this)"><div class="q-header"><div class="q-title">제39회 (2016) — 무단운전 A·B·C 30점</div><button class="toggle-btn">보기 ▼</button></div><div class="q-answer"><ul><li>A(무면허): 무단취득 → 친족피보험자 여부 논란 → 자기신체 부책 여부</li><li>B(무단운전자): 승피·운전피 아님 → 전 담보 면책</li><li>2번: 척추 상해 급별 전체 (20점) / 3번: 가정간호비 / 4번: 타차특약 / 5번: 병합장해</li></ul></div></div>
+    <div class="q-item" onclick="toggleQ(this)"><div class="q-header"><div class="q-title">제40회 (2017) — 가족사고 동시사망 상속 30점</div><button class="toggle-btn">보기 ▼</button></div><div class="q-answer"><ul><li>B(어머니): 대인1 부책, 대인2 기명피 A 배우자로 면책</li><li>D(C의 배우자): 대인1 부책, A로 청구 시 개별적용 → 부책</li><li><strong>동시사망</strong>: C·D 서로 상속 불가 → E만 상속</li><li>2번: 양도·대리운전 복합 (의무보험일시담보 15일)</li></ul></div></div>
+    <div class="q-item" onclick="toggleQ(this)"><div class="q-header"><div class="q-title">제41회 (2018) — 스카이차 임차인 A 30점</div><button class="toggle-btn">보기 ▼</button></div><div class="q-answer"><ul><li>A: 운전기사 C 포함 임차 → 타인성 ✓</li><li>갑보험사(영업용) 대인1 부책, 대인2 면책(견해차), 자기신체 부책</li><li>을보험사(A 승용차) 무상 부책</li><li>2번: 과실상계·손익상계·동승자·기왕증 + 적용순서 (15점)</li><li>5번: 산재 구상 — 손익상계·상속권자·수급권자 (15점)</li></ul></div></div>
+    <div class="q-item" onclick="toggleQ(this)"><div class="q-header"><div class="q-title">제42회 (2019) — 타차운전 + 1인한정 C사망·D장해 30점</div><button class="toggle-btn">보기 ▼</button></div><div class="q-answer"><ul><li>A: 동료 C 차 운전 → 갑 타차특약 → 대인2(D 부책), 자기신체(C 부책)</li><li>갑 대인2: C(소유자)에게 → 타차특약 면책조항 → 면책</li><li>병보험사(C 차): 1인한정 위반 → 대인1만 부책</li><li>을보험사(B 차): 대인1·2 C·D 부책</li></ul></div></div>
+    <div class="q-item" onclick="toggleQ(this)"><div class="q-header"><div class="q-title">제43회 (2020) — 약술 6문제, 면부책 사례 없음</div><button class="toggle-btn">보기 ▼</button></div><div class="q-answer"><ul><li>1번 25점: 자배법상 책임 vs 민법상 책임 비교</li><li>2번 15점: 피해자 직접청구권</li><li>3번 15점: 유상운송 면책</li><li>4번 15점: 피보험자동차 양도·의무보험일시담보</li><li>5번 15점: 기술직종사자·현역병 소득+취업가능월수</li><li>6번 15점: 보험금 계산</li></ul><div class="warn-box">43회는 이례적으로 면부책 사례 없음 → 약술 철저 대비 필수</div></div></div>
+  </div>
+
+  <!-- 암기노트 -->
+  <div class="sub-section" id="old-memo">
+    <div class="card"><div class="card-title">📝 면부책 판단 3단계</div><div class="key-box"><strong>1단계</strong> 법률상 배상책임 (자배법 or 민법)<br>↓<br><strong>2단계</strong> 약관상 피보험자 해당 여부<br>↓<br><strong>3단계</strong> 약관상 면책사유 해당 여부<br>↓<br><strong>결론</strong>: 부책 or 면책</div></div>
+    <div class="memo-card" onclick="toggleMemo(this)"><div class="memo-q">Q. 대인1 vs 대인2의 가장 큰 차이점 3가지는?</div><div class="memo-a">① 담보 책임: 대인1은 <strong>자배법상 책임만</strong>, 대인2는 자배법+민법<br>② 피보험자: 대인1에만 <strong>기타보유피보험자</strong> 있음<br>③ 고의면책: 대인1은 피해자 직접청구 시 보상 (예외), 대인2는 면책</div></div>
+    <div class="memo-card" onclick="toggleMemo(this)"><div class="memo-q">Q. 타차운전특약 자기신체사고 — 소유자 상해시?</div><div class="memo-a">다른 자동차의 소유자가 상해를 입은 때<br>→ <strong>자기신체사고의 피보험자로 간주</strong>하여 보상</div></div>
+    <div class="memo-card" onclick="toggleMemo(this)"><div class="memo-q">Q. 동시사망 상속 처리 원칙은?</div><div class="memo-a">동일 위난으로 수인 사망, 전후 불명 → <strong>동시에 사망한 것으로 추정</strong><br>→ 상호 상속 불발생 → 다음 순위 상속인이 상속</div></div>
+    <div class="memo-card" onclick="toggleMemo(this)"><div class="memo-q">Q. 구상 발생 원칙 — 가능/불가?</div><div class="memo-a"><strong>가능</strong>: 공동불법행위자 중 피보험자 아닌 제3자에게 구상<br><strong>불가</strong>: 구상 대상이 피보험자인 경우 / 자기신체·가족운전자 → 보험자대위 불인정</div></div>
+    <div class="memo-card" onclick="toggleMemo(this)"><div class="memo-q">Q. 피해자측 과실이란? 언제 적용?</div><div class="memo-a">쌍방과실 사고에서 상대방 탑승자가 운행자책임 부담자인 경우<br>→ 탑승자 과실 산정 시 운전자의 과실을 참작 (42회: C가 타차 소유자 → C의 과실 20% 적용)</div></div>
+    <div class="memo-card" onclick="toggleMemo(this)"><div class="memo-q">Q. 교통사고처리특례법 14가지 예외사고는?</div><div class="memo-a">① 사망 ② 뺑소니 ③ 중상해 (보험가입 특례 적용 안 됨)<br>④~⑭ 12대 중과실:<br>신호·지시위반, 중앙선침범, 20km/h 초과 속도위반, 앞지르기 금지위반,<br>건널목 통과방법위반, 횡단보도 보행자보호위반, 무면허운전, 음주·약물운전,<br>보도침범, 승객추락방지의무위반, 어린이보호구역 준수위반, 화물고정조치위반</div></div>
+  </div>
+</div>
+
+<!-- ========== ERA: 44~48회 ========== -->
+<div class="era-section" id="era-new">
+
+  <!-- 출제 현황 -->
+  <div class="sub-section active" id="new-overview44">
+    <div class="stats-row">
+      <div class="stat-box"><div class="num">5</div><div class="lbl">분석 회차 (44~48회)</div></div>
+      <div class="stat-box"><div class="num" style="color:var(--accent4)">3회</div><div class="lbl">사고부담금 출제</div></div>
+      <div class="stat-box"><div class="num" style="color:var(--accent2)">3회</div><div class="lbl">손익상계 출제</div></div>
+      <div class="stat-box"><div class="num" style="color:var(--accent3)">2회</div><div class="lbl">상속·혼동 출제</div></div>
+    </div>
+    <div class="card">
+      <div class="card-title">📋 44~48회 출제 일람표</div>
+      <table class="tbl">
+        <tr><th>회차</th><th>연도</th><th>1번(30점)</th><th>2번</th><th>3번</th><th>4번</th><th>5번</th><th>6번</th></tr>
+        <tr><td><strong>48회</strong></td><td>2025</td><td>자배법3조·면책요건·운행자책임</td><td>손익상계·사망손해액(20점)</td><td>동승자감액(15점)</td><td>후유장해 조사사항(15점)</td><td>청약철회(10점)</td><td>중간이자공제·호프만240(10점)</td></tr>
+        <tr><td><strong>47회</strong></td><td>2024</td><td>담보별 보상·유족별 지급(혼동·대습상속)</td><td>산재+출퇴근(20점)</td><td>PM 정의·보상(20점)</td><td>치료관계비(15점)</td><td>보행자 과실수정(10점)</td><td>뇌진탕·척추(10점)</td></tr>
+        <tr><td><strong>46회</strong></td><td>2023</td><td>손해사정사 조사사항(25점)</td><td>과실상계 법리·운용(25점)</td><td>자배법상 타인(20점)</td><td>무보험차·다른자동차(10점)</td><td>정비업자 사고(10점)</td><td>경상환자 치료비과실(10점)</td></tr>
+        <tr><td><strong>45회</strong></td><td>2022</td><td>대리운전 손해배상책임(20점)</td><td>사고부담금 개정 전후 계산(20점)</td><td>상속·태아(15점)</td><td>현역병 상실수익액(15점)</td><td>승낙피보험자(10점)</td><td>가정간호비(10점)</td></tr>
+        <tr><td><strong>44회</strong></td><td>2021</td><td>사고부담금 의의·산출·납부의무(30점)</td><td>피보험자개별적용(20점)</td><td>위자료(20점)</td><td>피해지원사업(15점)</td><td>보험자대위(15점)</td><td>-</td></tr>
+      </table>
+    </div>
+    <div class="ok-box">✅ <strong>빈출 TOP (44~48회):</strong> 사고부담금(3회) → 손익상계(3회) → 상속·혼동(2회) → 과실상계(2회)</div>
+    <div class="warn-box" style="margin-top:8px">⚠️ <strong>패턴:</strong> 1번은 항상 사례형(법률책임+보험회사 보상책임), 나머지 개념설명·계산·단문 혼합</div>
+  </div>
+
+  <!-- 주제별 요약 -->
+  <div class="sub-section" id="new-topics44">
+    <div class="q-item" onclick="toggleQ(this)">
+      <div class="q-header"><div class="q-title">사고부담금 — 개정 전후 완벽 비교</div><button class="toggle-btn">보기 ▼</button></div>
+      <div class="q-meta"><span class="badge badge-red">44·45·46회 3회 출제</span><span class="badge badge-gold">最빈출</span></div>
+      <div class="q-answer">
+        <div class="sec">정의</div>
+        <div class="key-box">피보험자 본인 또는 기명피보험자의 명시적·묵시적 승인하에서 <strong>음주운전·무면허운전·마약약물운전·도주</strong> 사고 시 보험회사가 대인배상1·2에서 보험금 지급 → 피보험자가 보험회사에 납입하는 금액</div>
+        <table class="tbl">
+          <tr><th>담보</th><th>개정 전 (2022.7.27 이전)</th><th>개정 후 (2022.7.28 이후)</th></tr>
+          <tr><td>대인배상1 (음주)</td><td>1,000만원</td><td><strong>한도 내 지급보험금 전액</strong></td></tr>
+          <tr><td>대인배상1 (무면허·도주)</td><td>300만원</td><td><strong>한도 내 지급보험금 전액</strong></td></tr>
+          <tr><td>대인배상2</td><td>1사고당 1억원</td><td>1사고당 1억원 (동일)</td></tr>
+          <tr><td>대물배상 (의무보험 이하)</td><td>-</td><td>전액</td></tr>
+          <tr><td>대물배상 (초과분)</td><td>-</td><td>1사고당 5,000만원</td></tr>
+        </table>
+        <div class="warn-box">중복 위반(음주+무면허): 많은 사고부담금 하나만 납부<br>미납 시: 보험사 우선 지급 후 피보험자에게 청구<br>납부의무자: 위반자 + 기명피보험자의 명시적·묵시적 승인 시 기명피보험자도 납부</div>
+      </div>
+    </div>
+    <div class="q-item" onclick="toggleQ(this)">
+      <div class="q-header"><div class="q-title">손익상계 — 산재·공무원연금·형사합의</div><button class="toggle-btn">보기 ▼</button></div>
+      <div class="q-meta"><span class="badge badge-red">44·47·48회 3회 출제</span><span class="badge badge-gold">最빈출</span></div>
+      <div class="q-answer">
+        <div class="key-box">동일 사고로 손해와 이익이 함께 발생 → 이익을 공제하여 배상 (실손해 전보 목적)</div>
+        <div class="sec">핵심 원칙</div>
+        <ul>
+          <li><strong>동일 성질끼리만</strong> 공제: 장의비↔장례비 / 유족급여↔상실수익액</li>
+          <li>위자료는 손익상계 대상 ❌</li>
+          <li>산재 수급권자(배우자)만 해당 지분 공제 / 자녀 지분은 공제 안 함</li>
+          <li>공무원연금 급여: 손해 전보 목적 → 공제 ✓</li>
+          <li>형사합의 + 채권양도: 피해자 보험금 산정에 영향 없음</li>
+        </ul>
+        <div class="err-box">상속인 복수일 때 산재수급권자(배우자) 지분만 상계! 자녀 지분은 공제 ❌</div>
+      </div>
+    </div>
+    <div class="q-item" onclick="toggleQ(this)">
+      <div class="q-header"><div class="q-title">동승자 감액 (호의동승) — 기준요소·감액비율</div><button class="toggle-btn">보기 ▼</button></div>
+      <div class="q-meta"><span class="badge badge-blue">48회 출제</span></div>
+      <div class="q-answer">
+        <table class="tbl">
+          <tr><th>동승 유형 및 운행목적</th><th>감액비율</th></tr>
+          <tr><td>동승자의 강요·무단동승</td><td><strong>100%</strong></td></tr>
+          <tr><td>음주운전자의 차량 동승</td><td><strong>40%</strong></td></tr>
+          <tr><td>동승자의 요청 동승</td><td><strong>30%</strong></td></tr>
+          <tr><td>상호 의논·합의 동승</td><td><strong>20%</strong></td></tr>
+          <tr><td>운전자의 권유 동승</td><td><strong>10%</strong></td></tr>
+          <tr><td>운전자의 강요 동승</td><td><strong>0%</strong></td></tr>
+        </table>
+        <div class="warn-box">수정요소: 동승과정 과실 +10~20% / 실제 출퇴근 승용차함께타기: 동승감액 미적용</div>
+      </div>
+    </div>
+    <div class="q-item" onclick="toggleQ(this)">
+      <div class="q-header"><div class="q-title">혼동·대습상속 + 보험금 계산 (47회)</div><button class="toggle-btn">bo기 ▼</button></div>
+      <div class="q-meta"><span class="badge badge-red">47회 핵심</span></div>
+      <div class="q-answer">
+        <div class="key-box"><strong>혼동</strong>: 동일인에게 채권·채무 귀속 → 채무범위 내 채권 소멸<br>판례: 가해자가 피해자의 상속인이 되는 경우<br><strong>대습상속</strong>: 상속인 될 직계비속·형제자매가 상속개시 전 사망·결격 → 그 직계비속(배우자 포함)이 대신</div>
+        <div class="sec">47회 계산 흐름</div>
+        <ul>
+          <li>손해액 4억 × 50%(과실상계) = 2억 → 대인1 한도 1억5천만원 지급</li>
+          <li>배우자 A의 상속분(9천만원) → 혼동으로 소멸</li>
+          <li>딸 E(사전 사망)의 지분(6천만원) → 대습상속: F(3천6백만원) + G(2천4백만원)</li>
+        </ul>
+      </div>
+    </div>
+    <div class="q-item" onclick="toggleQ(this)">
+      <div class="q-header"><div class="q-title">현역병 상실수익액 — 개정 전후 (45회)</div><button class="toggle-btn">보기 ▼</button></div>
+      <div class="q-meta"><span class="badge badge-blue">45회 15점</span></div>
+      <div class="q-answer">
+        <table class="tbl">
+          <tr><th>항목</th><th>2022.1.1 이전</th><th>2022.1.1 이후</th></tr>
+          <tr><td>현실소득액</td><td>공무원보수규정 현역병 육군 기준</td><td><strong>일용근로자임금</strong></td></tr>
+          <tr><td>생활비</td><td>복무기간 중 <strong>미공제</strong></td><td>1/3 공제 (복무기간도)</td></tr>
+          <tr><td>계수</td><td>라이프니츠 계수</td><td><strong>호프만 계수</strong></td></tr>
+        </table>
+        <div class="warn-box">두 기준 모두 취업가능연한: 사망 당시 만18세 → 취업시기 만19세 → 1년간 상실수익액 발생 안 함</div>
+      </div>
+    </div>
+    <div class="q-item" onclick="toggleQ(this)">
+      <div class="q-header"><div class="q-title">청약철회 + 위법계약 해지 (48회 신규)</div><button class="toggle-btn">보기 ▼</button></div>
+      <div class="q-meta"><span class="badge badge-purple">48회 신규 10점</span></div>
+      <div class="q-answer">
+        <div class="key-box">청약철회 기간: 보험증권 수령일로부터 <strong>15일</strong> OR 청약일로부터 <strong>30일</strong> 중 먼저 도래</div>
+        <div class="sec">철회 불가 예외</div>
+        <ul><li>①전문보험계약자 ②의무보험 ③보험기간 90일 이내</li></ul>
+        <div class="sec">기타</div>
+        <ul>
+          <li>보험료 반환: 철회 접수일로부터 <strong>3일 이내</strong></li>
+          <li>이미 사고 발생 시 계약자가 몰랐다면 철회 효력 발생 안 함</li>
+          <li>위법계약 해지: 계약체결일 5년 이내 + 위반 안 날 1년 이내</li>
+          <li>의무보험 해지: 동종 의무보험 가입 시에만 가능</li>
+          <li>보험사 검토기간: <strong>10일 이내</strong> 수락여부 통지</li>
+        </ul>
+      </div>
+    </div>
+    <div class="q-item" onclick="toggleQ(this)">
+      <div class="q-header"><div class="q-title">중간이자공제 + 호프만 240 한도 (48회)</div><button class="toggle-btn">보기 ▼</button></div>
+      <div class="q-meta"><span class="badge badge-blue">48회 10점</span></div>
+      <div class="q-answer">
+        <div class="key-box">장래 소득을 현시점 일시금으로 지급 → 이자분 공제 = 중간이자공제<br>자동차보험: <strong>호프만식</strong> 공제방식</div>
+        <div class="sec">호프만 240 한도</div>
+        <div class="err-box">240 초과 시 전체 손해배상금의 이자가 순수입 초과 → 과잉배상<br>→ 법원은 호프만 계수를 <strong>240</strong>으로 제한 (과잉배상 방지)</div>
+        <div class="sec">중간이자 미공제 케이스</div>
+        <ul><li>피해자가 정기금으로 직접청구 / 가정간호비 정기금 / 1회성 향후치료비(금속제거술 등)</li></ul>
+      </div>
+    </div>
+    <div class="q-item" onclick="toggleQ(this)">
+      <div class="q-header"><div class="q-title">PM(개인형이동장치) + 무보험차상해 (47회)</div><button class="toggle-btn">보기 ▼</button></div>
+      <div class="q-meta"><span class="badge badge-purple">47회 신규</span></div>
+      <div class="q-answer">
+        <div class="key-box">PM: 시속 25km 이상 시 전동기 미작동 + 차체 30kg 미만 (전동킥보드·전동이륜평행차·전동자전거)</div>
+        <div class="sec">무보험차상해 적용</div>
+        <ul>
+          <li>PM 이용자 확인 O: 무보험차상해 → 자배법 시행령 한도</li>
+          <li>PM 뺑소니: "밝혀지지 않은 자동차" 예외에서 PM 제외 → <strong>무보험차상해 면책</strong></li>
+        </ul>
+        <div class="err-box">PM 뺑소니 = 무보험차상해 면책! 정부보장사업도 안 됨!</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 회차별 기출 (44~48) -->
+  <div class="sub-section" id="new-gichul44">
+    <div class="q-item" onclick="toggleQ(this)"><div class="q-header"><div class="q-title">제44회 (2021) — 사고부담금·피보험자개별적용·위자료</div><button class="toggle-btn">보기 ▼</button></div><div class="q-answer"><ul><li>1번(30점): 사고부담금 의의·약관규정 / 사례 산출·납부의무자 / B·C에 지급보험금 계산</li><li>2번(20점): 피보험자 개별적용</li><li>3번(20점): 위자료 의의·지급기준 (사망·부상·장해)</li><li>4번(15점): 자동차사고피해지원사업 (정부보장사업)</li><li>5번(15점): 보험자대위 (청구권대위)</li></ul><div class="warn-box">핵심: 음주운전+무면허 중복 → 사고부담금 많은 금액 하나 / 공제액 없을 때 비용 미지급</div></div></div>
+    <div class="q-item" onclick="toggleQ(this)"><div class="q-header"><div class="q-title">제45회 (2022) — 대리운전·사고부담금 개정·상속·현역병</div><button class="toggle-btn">보기 ▼</button></div><div class="q-answer"><ul><li>1번(20점): 대리운전 A·B·C의 D에 대한 책임 / A에 대한 B의 책임</li><li>2번(20점): 사고부담금 최근 개정 + 개정 전후 계산</li><li>3번(15점): 상속·태아 상속권 (정지조건설 vs 해제조건설)</li><li>4번(15점): 현역병 상실수익액 (2022.1.1 전후 구분)</li><li>5번(10점): 승낙피보험자</li><li>6번(10점): 가정간호비</li></ul></div></div>
+    <div class="q-item" onclick="toggleQ(this)"><div class="q-header"><div class="q-title">제46회 (2023) — 손해사정사 조사사항·과실상계·타인·경상환자</div><button class="toggle-btn">보기 ▼</button></div><div class="q-answer"><ul><li>1번(25점): 손사 착안사항·조사방법·보상처리 유의점 (무단운전·무면허·사고부담금·경상환자 등)</li><li>2번(25점): 과실상계 법리 + 약관상 운용</li><li>3번(20점): 자배법상 타인 (운전자·가족·무상동승자·임차인)</li><li>4번(10점): 무보험자동차·다른자동차 정의</li><li>5번(10점): 정비업자 사고 보상책임</li><li>6번(10점): 경상환자 대인2 치료비 과실책임주의</li></ul></div></div>
+    <div class="q-item" onclick="toggleQ(this)"><div class="q-header"><div class="q-title">제47회 (2024) — 혼동·대습상속·산재·PM·치료관계비</div><button class="toggle-btn">보기 ▼</button></div><div class="q-answer"><ul><li>1번(25점): 담보별 보상책임(가족면책·자기신체) + 유족별 지급보험금(혼동·대습상속)</li><li>2번(20점): 출퇴근 산재 요건 + 담보별 영향 (대인1·2·자기신체·무상)</li><li>3번(20점): PM 정의·종류 / 갑 보험사 보상책임 및 범위</li><li>4번(15점): 치료관계비 지급기준 + 손해사정 유의사항</li><li>5번(10점): 자동차-보행자 과실수정요소 (가산·감산)</li><li>6번(10점): 뇌진탕 + 척추 세부지침</li></ul></div></div>
+    <div class="q-item" onclick="toggleQ(this)"><div class="q-header"><div class="q-title">제48회 (2025) — 자배법3조·손익상계·동승자감액·청약철회</div><button class="toggle-btn">보기 ▼</button></div><div class="q-answer"><ul><li>1번(30점): 자배법3조 요건 / 면책요건(승객vs비승객) / 甲 사례 쟁점 + 보험회사 보상책임</li><li>2번(20점): 손익상계 개념 / 사망손해배상액 산정방법(산재경합·상속·수급권자)</li><li>3번(15점): 동승자 감액 이론적 근거 + 유형별 감액비율표</li><li>4번(15점): 후유장해 노동능력상실률 조사·검토사항</li><li>5번(10점): 청약철회 (기간·예외·반환·지연이자·위법계약 해지)</li><li>6번(10점): 중간이자공제 + 호프만 240 한도</li></ul><div class="warn-box">48회 핵심: 정신질환자 자살행위 → 자유로운 의사결정 단정 어려움 → 면책 불인정</div></div></div>
+  </div>
+
+  <!-- 출제 예측 -->
+  <div class="sub-section" id="new-predict">
+    <div class="err-box" style="margin-bottom:12px">🎯 <strong>다음 회차 출제 가능성 높은 주제</strong></div>
+    <div class="q-item" onclick="toggleQ(this)"><div class="q-header"><div class="q-title">🔴 최고위험 — 반드시 준비</div><button class="toggle-btn">보기 ▼</button></div><div class="q-answer"><ul><li><strong>피보험자 개별적용</strong> - 44회 출제, 개념+사례 재출제 가능 (37~43회에도 4회 출제)</li><li><strong>사고부담금 계산</strong> - 44·45·46회 연속, 계산 숙달 필수</li><li><strong>손익상계 + 산재 경합</strong> - 44·47·48회 연속, 수급권자 지분 구분</li><li><strong>혼동·대습상속</strong> - 47회 첫 출제, 48회 이후 심화 가능</li><li><strong>무보험차상해 + PM</strong> - 47회 출제, 뺑소니 면책 논점</li></ul></div></div>
+    <div class="q-item" onclick="toggleQ(this)"><div class="q-header"><div class="q-title">🟡 중위험 — 준비 권장</div><button class="toggle-btn">보기 ▼</button></div><div class="q-answer"><ul><li><strong>자기신체사고</strong> - 공제액 없을 때 처리, 산재 제3자 포함 여부</li><li><strong>정부보장사업 (유가족지원제도)</strong> - 44회 출제, 재출제 가능</li><li><strong>가정간호비</strong> - 45회 출제, 사례형 변형</li><li><strong>보험자대위</strong> - 44회 출제, 심화 재출제</li><li><strong>치료비과실책임주의 경상환자</strong> - 46·47회, 심화 출제</li><li><strong>대리운전 3자 책임</strong> - 45회 출제, 다시 나올 수 있음</li></ul></div></div>
+    <div class="q-item" onclick="toggleQ(this)"><div class="q-header"><div class="q-title">🟢 신규논점 주의</div><button class="toggle-btn">보기 ▼</button></div><div class="q-answer"><ul><li><strong>마약·약물운전 사고부담금</strong> - 개정 신설, 미출제</li><li><strong>청약철회</strong> - 48회 첫 출제, 예외사유 완벽 암기</li><li><strong>위법계약 해지</strong> - 45회(제3보험) 출제, 자동차 미출제</li><li><strong>개인형이동장치(PM)</strong> - 47회 출제, 심화 가능</li></ul></div></div>
+  </div>
+</div>
+
+<!-- ========== ERA: 통합 빈도 ========== -->
+<div class="era-section" id="era-total">
+  <div class="card">
+    <div class="card-title">📊 37~48회 통합 출제빈도 TOP (12회 시험)</div>
+    <div class="freq-bar"><div class="freq-label">보험금 계산</div><div class="freq-track"><div class="freq-fill hot" style="width:100%"></div></div><div class="freq-num">12회</div></div>
+    <div class="freq-bar"><div class="freq-label">면부책 사례</div><div class="freq-track"><div class="freq-fill hot" style="width:92%"></div></div><div class="freq-num">11회</div></div>
+    <div class="freq-bar"><div class="freq-label">손익상계 (산재포함)</div><div class="freq-track"><div class="freq-fill hot" style="width:83%"></div></div><div class="freq-num">10회</div></div>
+    <div class="freq-bar"><div class="freq-label">과실상계·동승자감액</div><div class="freq-track"><div class="freq-fill med" style="width:75%"></div></div><div class="freq-num">9회</div></div>
+    <div class="freq-bar"><div class="freq-label">피보험자 개별적용</div><div class="freq-track"><div class="freq-fill med" style="width:67%"></div></div><div class="freq-num">8회</div></div>
+    <div class="freq-bar"><div class="freq-label">타인성/공동운행자</div><div class="freq-track"><div class="freq-fill med" style="width:67%"></div></div><div class="freq-num">8회</div></div>
+    <div class="freq-bar"><div class="freq-label">사고부담금</div><div class="freq-track"><div class="freq-fill med" style="width:58%"></div></div><div class="freq-num">7회</div></div>
+    <div class="freq-bar"><div class="freq-label">무보험차상해</div><div class="freq-track"><div class="freq-fill" style="width:58%"></div></div><div class="freq-num">7회</div></div>
+    <div class="freq-bar"><div class="freq-label">상속·혼동·대습상속</div><div class="freq-track"><div class="freq-fill" style="width:50%"></div></div><div class="freq-num">6회</div></div>
+    <div class="freq-bar"><div class="freq-label">운행자책임 vs 민법</div><div class="freq-track"><div class="freq-fill" style="width:50%"></div></div><div class="freq-num">6회</div></div>
+    <div class="freq-bar"><div class="freq-label">노동능력상실률</div><div class="freq-track"><div class="freq-fill" style="width:42%"></div></div><div class="freq-num">5회</div></div>
+    <div class="freq-bar"><div class="freq-label">직접청구권</div><div class="freq-track"><div class="freq-fill" style="width:42%"></div></div><div class="freq-num">5회</div></div>
+    <div class="freq-bar"><div class="freq-label">타차운전특약</div><div class="freq-track"><div class="freq-fill" style="width:42%"></div></div><div class="freq-num">5회</div></div>
+    <div class="freq-bar"><div class="freq-label">가정간호비</div><div class="freq-track"><div class="freq-fill" style="width:33%"></div></div><div class="freq-num">4회</div></div>
+    <div class="freq-bar"><div class="freq-label">무단운전/특약면책</div><div class="freq-track"><div class="freq-fill" style="width:33%"></div></div><div class="freq-num">4회</div></div>
+    <div class="freq-bar"><div class="freq-label">과실비율 수정요소</div><div class="freq-track"><div class="freq-fill" style="width:33%"></div></div><div class="freq-num">4회</div></div>
+    <div class="freq-bar"><div class="freq-label">보험자대위</div><div class="freq-track"><div class="freq-fill" style="width:25%"></div></div><div class="freq-num">3회</div></div>
+    <div class="freq-bar"><div class="freq-label">정부보장사업</div><div class="freq-track"><div class="freq-fill" style="width:25%"></div></div><div class="freq-num">3회</div></div>
+    <div class="freq-bar"><div class="freq-label">손사 조사사항</div><div class="freq-track"><div class="freq-fill" style="width:25%"></div></div><div class="freq-num">3회</div></div>
+  </div>
+  <div class="card">
+    <div class="card-title">📅 37~48회 전 회차 요약표</div>
+    <table class="tbl">
+      <tr><th>회차</th><th>연도</th><th>핵심주제</th></tr>
+      <tr><td>37회</td><td>2014</td><td>쌍방사고 면부책·보험금계산(자신·무상)</td></tr>
+      <tr><td>38회</td><td>2015</td><td>굴삭기 임차인 타인성·피보험자개별적용</td></tr>
+      <tr><td>39회</td><td>2016</td><td>무단운전·척추상해급별·가정간호비·타차특약</td></tr>
+      <tr><td>40회</td><td>2017</td><td>가족사고·동시사망·상속·의무보험일시담보</td></tr>
+      <tr><td>41회</td><td>2018</td><td>스카이차 임차인·과실상계적용순서·피해자보호·소멸시효</td></tr>
+      <tr><td>42회</td><td>2019</td><td>타차특약+1인한정·노동능력상실률·과실비율</td></tr>
+      <tr><td>43회</td><td>2020</td><td>운행자vs민법·직접청구권·유상운송·양도·보험금계산</td></tr>
+      <tr><td>44회</td><td>2021</td><td>사고부담금·피보험자개별적용·위자료·보험자대위</td></tr>
+      <tr><td>45회</td><td>2022</td><td>대리운전·사고부담금개정·태아상속·현역병상실수익</td></tr>
+      <tr><td>46회</td><td>2023</td><td>손사조사사항·과실상계법리·타인·경상환자치료비과실</td></tr>
+      <tr><td>47회</td><td>2024</td><td>혼동·대습상속·산재출퇴근·PM·치료관계비·척추지침</td></tr>
+      <tr><td>48회</td><td>2025</td><td>자배법3조·손익상계·동승자감액·후유장해조사·청약철회·호프만240</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- ========== ERA: 숫자 암기 ========== -->
+<div class="era-section" id="era-numbers">
+  <div class="card"><div class="card-title">🔢 반드시 암기할 숫자·금액 총정리</div>
+    <table class="tbl">
+      <tr><th>항목</th><th>금액/수치</th><th>비고</th></tr>
+      <tr><td>사고부담금 - 대인배상1 (개정 후)</td><td style="color:var(--accent4);font-weight:700">한도 내 지급보험금 전액</td><td>2022.7.28 이후</td></tr>
+      <tr><td>사고부담금 - 대인배상1 (음주, 개정 전)</td><td>1,000만원</td><td>1사고당</td></tr>
+      <tr><td>사고부담금 - 대인배상1 (무면허·도주, 개정 전)</td><td>300만원</td><td>1사고당</td></tr>
+      <tr><td>사고부담금 - 대인배상2</td><td style="color:var(--accent2);font-weight:700">1억원</td><td>1사고당 (개정 전후 동일)</td></tr>
+      <tr><td>사고부담금 - 대물배상 (의무보험 초과)</td><td>5,000만원</td><td>1사고당</td></tr>
+      <tr><td>대인배상1 - 사망 한도</td><td style="color:var(--accent3);font-weight:700">1억 5,000만원</td><td></td></tr>
+      <tr><td>대인배상1 - 사망 최저보장</td><td>2,000만원</td><td>과실상계 후에도 보장</td></tr>
+      <tr><td>대인배상1 - 부상 최고(1급)</td><td>3,000만원</td><td></td></tr>
+      <tr><td>대인배상1 - 후유장해 최고(1급)</td><td>1억 5,000만원</td><td></td></tr>
+      <tr><td>부상+사망 경합 한도</td><td style="color:var(--accent5);font-weight:700">1억 8,000만원</td><td>부상+사망 합산</td></tr>
+      <tr><td>사망위자료 (65세 미만)</td><td style="color:var(--accent2);font-weight:700">8,000만원</td><td></td></tr>
+      <tr><td>사망위자료 (65세 이상)</td><td>5,000만원</td><td></td></tr>
+      <tr><td>장례비</td><td>500만원</td><td></td></tr>
+      <tr><td>후유장해위자료 (50%이상, 65세미만)</td><td>4,500만원 × 상실률 × 85%</td><td></td></tr>
+      <tr><td>후유장해위자료 (가정간호, 65세미만)</td><td>8,000만원 × 상실률 × 85%</td><td></td></tr>
+      <tr><td>호프만계수 한도</td><td style="color:var(--accent4);font-weight:700">240</td><td>월 단위 상한</td></tr>
+      <tr><td>청약철회 기간 ①</td><td>보험증권 수령일 15일</td><td>먼저 도래 기준</td></tr>
+      <tr><td>청약철회 기간 ②</td><td>청약일로부터 30일</td><td></td></tr>
+      <tr><td>청약철회 후 보험료 반환</td><td style="color:var(--accent3);font-weight:700">3일 이내</td><td></td></tr>
+      <tr><td>위법계약 해지 제척기간</td><td>계약체결일 5년 / 위반 안 날 1년</td><td></td></tr>
+      <tr><td>보험사 해지 검토기간</td><td>10일 이내</td><td></td></tr>
+      <tr><td>경상환자 진단서의무화 급수</td><td>12~14급 / 4주 경과 후</td><td></td></tr>
+      <tr><td>의무보험일시담보 특약 기간</td><td>양도일로부터 15일째 24시</td><td></td></tr>
+      <tr><td>직접청구권 지급기일</td><td>서류 접수 후 7일 이내</td><td></td></tr>
+      <tr><td>직접청구권 거절통지 기한</td><td>30일 이내</td><td>미통지 시 지연 간주</td></tr>
+      <tr><td>취업가능연한 (일반)</td><td>65세</td><td></td></tr>
+      <tr><td>PM 속도 기준</td><td>시속 25km 이상 시 전동기 미작동</td><td></td></tr>
+      <tr><td>PM 차체 중량</td><td>30kg 미만</td><td></td></tr>
+      <tr><td>정부보장사업 사망 한도</td><td>1억 5,000만원 (최저 2,000만원)</td><td></td></tr>
+      <tr><td>휴업손해액 지급률</td><td>85%</td><td>월평균현실소득 기준</td></tr>
+      <tr><td>생활비 공제율</td><td>1/3</td><td>상실수익액 계산시</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- ========== ERA: 퀵 암기 ========== -->
+<div class="era-section" id="era-qcard">
+  <p style="color:var(--text2);margin-bottom:10px;font-size:12px">👆 카드 클릭 시 정답 표시 — 전 회차(37~48회) 핵심 암기 항목</p>
+  <div class="qcard-grid" id="qcardGrid"></div>
+</div>
+
+</div><!-- content-area -->
+
+<script>
+// ========== 퀵 암기 데이터 ==========
+const qcards = [
+  // 숫자/금액
+  {q:'사고부담금 대인배상1 개정 후 (음주·무면허·도주)', a:'한도 내 지급보험금 전액', h:'2022.7.28 이후'},
+  {q:'사고부담금 대인배상2', a:'1사고당 1억원', h:'개정 전후 동일'},
+  {q:'부상+사망 경합 시 대인배상1 한도', a:'1억 8,000만원', h:'부상한도+사망한도 합산'},
+  {q:'사망위자료 (65세 미만)', a:'8,000만원', h:''},
+  {q:'사망위자료 (65세 이상)', a:'5,000만원', h:''},
+  {q:'장례비', a:'500만원', h:''},
+  {q:'대인배상1 사망 최저 보장액', a:'2,000만원', h:'과실상계 후에도 보장'},
+  {q:'호프만계수 한도', a:'240 (월 단위)', h:'초과 시 과잉배상'},
+  {q:'청약철회 가능 기간 (2가지)', a:'보험증권 수령 15일 or 청약일 30일 중 먼저 도래', h:''},
+  {q:'청약철회 후 보험료 반환기간', a:'3일 이내', h:'철회 접수일로부터'},
+  {q:'위법계약 해지 제척기간', a:'계약체결일 5년 이내 + 위반 안 날 1년 이내', h:''},
+  {q:'청약철회 불가 3가지', a:'전문보험계약자 / 의무보험 / 보험기간 90일 이내', h:''},
+  {q:'의무보험일시담보 특약 적용기간', a:'양도일로부터 15일째 되는 날 24시까지', h:''},
+  {q:'직접청구권 지급기일', a:'서류 접수 후 7일 이내', h:'30일 내 거절통지 없으면 지연 간주'},
+  {q:'취업가능연한 (일반)', a:'65세', h:'62세 이상은 별표 취업가능월수'},
+  // 동승자 감액
+  {q:'호의동승 감액 — 운전자 강요', a:'0%', h:'감액 없음'},
+  {q:'호의동승 감액 — 운전자 권유', a:'10%', h:''},
+  {q:'호의동승 감액 — 상호 의논합의', a:'20%', h:''},
+  {q:'호의동승 감액 — 동승자 요청', a:'30%', h:''},
+  {q:'호의동승 감액 — 음주운전 차량 동승', a:'40%', h:''},
+  {q:'호의동승 감액 — 동승자 강요·무단동승', a:'100%', h:''},
+  // 법리
+  {q:'자배법상 타인 = ?', a:'운행자·운전자·운전보조자를 제외한 자', h:'민법상 타인보다 좁은 개념'},
+  {q:'운전기사 포함 임차인의 타인성', a:'타인 ✓ (임대인이 더 직접적 운행지배)', h:'38·41회 핵심'},
+  {q:'단독 임차인의 타인성 (임대인 대비)', a:'타인 ✗ (임차인이 더 직접적 운행지배)', h:''},
+  {q:'피보험자개별적용 비적용 3가지', a:'①보험계약자·기명피보험자 고의면책 ②유상운송면책 ③시험·경기면책', h:''},
+  {q:'대인배상1에만 있는 피보험자', a:'기타보유피보험자 (자배법상 보유자)', h:'대인2에는 없음'},
+  {q:'동시사망 처리 원칙', a:'동시에 사망한 것으로 추정 → 상호 상속 불발생', h:'40회 핵심'},
+  {q:'혼동 발생 요건', a:'가해자가 피해자의 상속인이 되는 경우 (채권·채무 동일인 귀속)', h:'47회'},
+  {q:'대습상속 요건', a:'상속인 될 직계비속·형제자매가 상속개시 전 사망·결격 → 그 직계비속(배우자 포함)이 대신', h:''},
+  // 공제/상계
+  {q:'손익상계 - 위자료 공제 여부', a:'공제 안 함 ❌', h:''},
+  {q:'산재 수급권자(배우자) 손익상계 범위', a:'배우자 지분만 / 자녀 지분 공제 안 함', h:''},
+  {q:'과실상계·손익상계 적용 순서', a:'기왕증 공제 → 동승자감액+과실상계 → 손익상계', h:'41회 필수'},
+  {q:'자기신체사고 - 공제액 없을 때 비용 지급?', a:'지급 안 함 / 사망 시 사망가입금액만', h:'44회 핵심'},
+  // 약관
+  {q:'1인한정특약 면책 예외 2가지', a:'①도난당한 경우 ②자동차취급업자 운전으로 피보험자 배상책임 있는 경우', h:''},
+  {q:'타차특약 - 다른 자동차 소유자 상해 처리', a:'자기신체사고 피보험자로 간주하여 보상', h:'간주규정'},
+  {q:'타차특약 - 소유자에 대한 배상책임', a:'면책 (타차특약 면책조항)', h:'42회 핵심'},
+  {q:'PM 뺑소니 시 무보험차상해', a:'면책 (밝혀지지 않은 자동차 예외에서 PM 제외)', h:'47회'},
+  {q:'정비업자 사고 - 소유자 대인배상2', a:'면책 (소유자 법률책임 없음)', h:'대인1은 정비업자 통해 보상'},
+  {q:'현역병 상실수익액 2022.1.1 이후 현실소득액', a:'일용근로자임금', h:'생활비 1/3 공제 O'},
+  {q:'현역병 상실수익액 2022.1.1 이전 현실소득액', a:'공무원보수규정 현역병 육군 기준', h:'복무기간 생활비 미공제'},
+  {q:'가정간호비 인정 대상 2가지', a:'식물인간상태의 환자 / 척수손상 사지완전마비 환자', h:'노동상실률 100%'},
+  {q:'경상환자 진단서의무화 급수·기간', a:'12~14급 / 4주 경과 후', h:''},
+  {q:'소멸시효 - 피해자 직접청구권 기산점', a:'사고 발생 시', h:''},
+  {q:'소멸시효 - 피보험자 대인배상 청구 기산점', a:'손해배상액 확정된 때 (판결·화해·합의)', h:''},
+];
+
+// 렌더링
+function renderQcards() {
+  const grid = document.getElementById('qcardGrid');
+  qcards.forEach(item => {
+    const c = document.createElement('div');
+    c.className = 'qcard';
+    c.innerHTML = `<div class="qq">Q. ${item.q}</div>${item.h?`<div class="qhint">💡 ${item.h}</div>`:''}<div class="qa">✅ ${item.a}</div>`;
+    c.onclick = () => c.querySelector('.qa').classList.toggle('show');
+    grid.appendChild(c);
+  });
+}
+renderQcards();
+
+// ========== 탭 전환 ==========
+function switchEra(era, btn) {
+  document.querySelectorAll('.era-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.era-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('era-' + era).classList.add('active');
+  btn.classList.add('active');
+  document.getElementById('subTabsOld').style.display = (era === 'old') ? 'flex' : 'none';
+  document.getElementById('subTabsNew').style.display = (era === 'new') ? 'flex' : 'none';
+  document.getElementById('searchInput').value = '';
+}
+
+function switchSub(era, sub, btn) {
+  const parent = document.getElementById('era-' + era);
+  parent.querySelectorAll('.sub-section').forEach(s => s.classList.remove('active'));
+  parent.querySelector('#' + era + '-' + sub) && (parent.querySelector('#' + era + '-' + sub).classList.add('active'));
+  // new era prefix
+  const el = document.getElementById(era + '-' + sub) || document.getElementById('new-' + sub) || document.getElementById('old-' + sub);
+  if(el) { parent.querySelectorAll('.sub-section').forEach(s=>s.classList.remove('active')); el.classList.add('active'); }
+  const tabBar = era === 'old' ? document.getElementById('subTabsOld') : document.getElementById('subTabsNew');
+  tabBar.querySelectorAll('.sub-tab').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+function toggleQ(el) {
+  const ans = el.querySelector('.q-answer');
+  const btn = el.querySelector('.toggle-btn');
+  const isOpen = ans.classList.contains('show');
+  ans.classList.toggle('show');
+  btn.textContent = isOpen ? '보기 ▼' : '접기 ▲';
+}
+
+function toggleMemo(el) {
+  el.querySelector('.memo-a').classList.toggle('show');
+}
+
+function doSearch() {
+  const val = document.getElementById('searchInput').value.toLowerCase().trim();
+  if (!val) return;
+  // 모든 q-item 검색
+  document.querySelectorAll('.q-item, .memo-card, .qcard').forEach(el => {
+    const txt = el.textContent.toLowerCase();
+    el.style.display = txt.includes(val) ? '' : 'none';
+  });
+}
+document.getElementById('searchInput').addEventListener('focus', function() {
+  if (!this.value) {
+    document.querySelectorAll('.q-item, .memo-card, .qcard').forEach(el => el.style.display = '');
+  }
+});
+</script>
+</body>
+</html>
