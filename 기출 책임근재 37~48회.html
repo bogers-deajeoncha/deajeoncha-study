@@ -1,0 +1,1532 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>책임근재보험 기출 총정리 (37~48회 / 2014~2025)</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:#0a0e1a; color:#e0e6f0; font-family:'Malgun Gothic','Apple SD Gothic Neo',sans-serif; font-size:14px; }
+.tab-bar { display:flex; flex-wrap:wrap; background:#0d1220; border-bottom:2px solid #1e2a45; position:sticky; top:0; z-index:100; }
+.tab-btn { padding:9px 12px; background:none; border:none; color:#7a8aaa; cursor:pointer; font-size:12px; font-family:inherit; border-bottom:3px solid transparent; transition:all .2s; white-space:nowrap; }
+.tab-btn.active { color:#4fc3f7; border-bottom-color:#4fc3f7; background:#0a0e1a; }
+.tab-btn:hover { color:#90caf9; }
+.tab-content { display:none; padding:16px; max-width:900px; margin:0 auto; }
+.tab-content.active { display:block; }
+.page-header { background:linear-gradient(135deg,#0d2137,#0a1628); border:1px solid #1e3a5f; border-radius:10px; padding:16px; margin-bottom:16px; text-align:center; }
+.page-header h1 { font-size:17px; color:#4fc3f7; margin-bottom:6px; }
+.page-header p { font-size:12px; color:#7a9bbf; }
+.era-banner { display:flex; gap:8px; margin-bottom:14px; }
+.era-a { flex:1; background:#0d2137; border:1px solid #1e3a5f; border-radius:8px; padding:8px 12px; text-align:center; }
+.era-b { flex:1; background:#1a1400; border:1px solid #92400e; border-radius:8px; padding:8px 12px; text-align:center; }
+.era-a .era-label { font-size:11px; color:#4fc3f7; font-weight:700; }
+.era-b .era-label { font-size:11px; color:#fbbf24; font-weight:700; }
+.era-sub { font-size:11px; color:#7a9bbf; margin-top:2px; }
+.freq-table { width:100%; border-collapse:collapse; margin-bottom:14px; }
+.freq-table th { background:#0d2137; color:#4fc3f7; padding:7px 9px; text-align:left; font-size:12px; border-bottom:2px solid #1e3a5f; }
+.freq-table td { padding:6px 9px; border-bottom:1px solid #1a2540; font-size:12px; vertical-align:top; }
+.freq-table tr:hover td { background:#0f1c33; }
+.badge { display:inline-block; padding:2px 6px; border-radius:10px; font-size:11px; font-weight:bold; margin-right:2px; }
+.badge-red { background:#7f1d1d; color:#fca5a5; }
+.badge-orange { background:#78350f; color:#fde68a; }
+.badge-blue { background:#1e3a5f; color:#93c5fd; }
+.badge-gray { background:#1e2a45; color:#aaa; }
+.year-tag { display:inline-block; background:#1a2540; color:#7fafdf; border-radius:4px; padding:1px 5px; font-size:10px; margin:1px; }
+.year-tag.new { background:#1a2a00; color:#a3e635; border:1px solid #4d7c0f; }
+.card { background:#0d1628; border:1px solid #1e3050; border-radius:8px; margin-bottom:10px; overflow:hidden; }
+.card-header { padding:11px 14px; cursor:pointer; display:flex; justify-content:space-between; align-items:center; user-select:none; }
+.card-header:hover { background:#0f1e38; }
+.card-title { font-size:13px; color:#c9d8f0; font-weight:bold; flex:1; }
+.card-meta { display:flex; align-items:center; gap:6px; flex-shrink:0; }
+.arrow { color:#4fc3f7; font-size:14px; transition:transform .3s; }
+.card.open .arrow { transform:rotate(180deg); }
+.card-body { display:none; padding:0 14px 14px; border-top:1px solid #1a2540; }
+.card.open .card-body { display:block; }
+.section-title { color:#4fc3f7; font-size:12px; font-weight:bold; margin:12px 0 6px; border-left:3px solid #4fc3f7; padding-left:8px; }
+.content-box { background:#060d1a; border:1px solid #1a2a45; border-radius:6px; padding:10px 12px; margin-bottom:8px; font-size:12px; line-height:1.8; color:#c8d8ee; }
+.content-box .key { color:#ffd54f; font-weight:bold; }
+.content-box .num { color:#80cbc4; font-weight:bold; }
+.content-box .warn { color:#ef9a9a; font-weight:bold; }
+.content-box .ok { color:#a5d6a7; font-weight:bold; }
+.formula { background:#0a1824; border:1px solid #1e4060; border-radius:6px; padding:10px; margin:6px 0; font-family:monospace; font-size:12px; color:#80deea; line-height:1.9; white-space:pre-wrap; }
+.memo-box { background:#0d1f10; border:1px solid #166534; border-radius:6px; padding:10px 12px; margin:6px 0; font-size:12px; }
+.memo-box .memo-title { color:#4ade80; font-size:12px; font-weight:bold; margin-bottom:5px; }
+.memo-box li, .memo-box p { color:#bbf7d0; line-height:1.8; }
+.memo-box ol { padding-left:17px; color:#bbf7d0; }
+.warn-box { background:#1c1100; border:1px solid #d97706; border-radius:6px; padding:10px 12px; margin:6px 0; font-size:12px; }
+.warn-box .w-title { color:#fbbf24; font-size:12px; font-weight:bold; margin-bottom:5px; }
+.warn-box li, .warn-box p { color:#fde68a; line-height:1.8; }
+.stat-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-bottom:14px; }
+.stat-box { background:#0d1e35; border:1px solid #1e3a5f; border-radius:8px; padding:10px; text-align:center; }
+.stat-num { font-size:20px; font-weight:bold; color:#4fc3f7; }
+.stat-label { font-size:11px; color:#6a8aaa; margin-top:3px; }
+.qa-item { background:#060d1a; border:1px solid #1a2a45; border-radius:6px; margin-bottom:7px; overflow:hidden; }
+.qa-q { padding:9px 12px; color:#c9d8f0; font-size:12px; cursor:pointer; display:flex; justify-content:space-between; }
+.qa-q:hover { background:#0d1e35; }
+.qa-a { display:none; padding:9px 12px; background:#040910; border-top:1px solid #1a2a45; font-size:12px; color:#80cbc4; line-height:1.8; }
+.qa-item.show .qa-a { display:block; }
+.show-all-btn { background:#1a3a5c; color:#4fc3f7; border:1px solid #2a5a8c; padding:6px 14px; border-radius:6px; font-size:12px; cursor:pointer; margin-bottom:12px; font-family:inherit; }
+.show-all-btn:hover { background:#1e4a70; }
+hr.divider { border:none; border-top:1px solid #1a2540; margin:10px 0; }
+ul, ol { padding-left:17px; }
+li { margin-bottom:3px; line-height:1.7; }
+p { margin-bottom:5px; }
+.pill { display:inline-block; padding:1px 7px; border-radius:10px; font-size:11px; background:#1a3050; color:#80b4e0; margin:2px; }
+table.inner { width:100%; border-collapse:collapse; font-size:12px; margin:6px 0; }
+table.inner th { background:#0d2137; color:#4fc3f7; padding:6px 8px; border:1px solid #1e3a5f; text-align:left; }
+table.inner td { padding:6px 8px; border:1px solid #1a2540; vertical-align:top; }
+table.inner tr:nth-child(even) td { background:#080f1e; }
+</style>
+</head>
+<body>
+
+<div class="tab-bar">
+  <button class="tab-btn active"  onclick="switchTab('t-freq')">📊 출제분석</button>
+  <button class="tab-btn" onclick="switchTab('t-tort')">⚖️ 불법행위</button>
+  <button class="tab-btn" onclick="switchTab('t-liability')">🛡️ 배상책임</button>
+  <button class="tab-btn" onclick="switchTab('t-wc')">👷 근재·선원</button>
+  <button class="tab-btn" onclick="switchTab('t-calc')">🔢 계산공식</button>
+  <button class="tab-btn" onclick="switchTab('t-special')">📋 특약·약관</button>
+  <button class="tab-btn" onclick="switchTab('t-laws')">📖 법령요약</button>
+  <button class="tab-btn" onclick="switchTab('t-qa')">❓ 빠른암기</button>
+</div>
+
+<div id="t-freq" class="tab-content active">
+
+  <div class="page-header">
+    <h1>📊 37~48회 책임근재 기출 전체 분석</h1>
+    <p>2014~2025년 · 12개년 · 신체손해사정사 2차 · 책임·근로자재해보상보험의 이론과 실무</p>
+  </div>
+
+  <div class="era-banner">
+    <div class="era-a"><div class="era-label">🔵 37~43회 (2014~2020)</div><div class="era-sub">7개년 · 기초 반복 유형</div></div>
+    <div class="era-b"><div class="era-label">🟡 44~48회 (2021~2025)</div><div class="era-sub">5개년 · 심화·신출제 유형</div></div>
+  </div>
+
+  <div class="stat-grid">
+    <div class="stat-box"><div class="stat-num">12</div><div class="stat-label">분석 회차</div></div>
+    <div class="stat-box"><div class="stat-num">★★★</div><div class="stat-label">계산문제 비중</div></div>
+    <div class="stat-box"><div class="stat-num">7+</div><div class="stat-label">핵심 반복주제</div></div>
+  </div>
+
+  <table class="freq-table">
+    <tr><th style="width:33%">주제</th><th style="width:15%">빈도</th><th>출제 회차</th></tr>
+    <tr><td><b>지급보험금 산정 (계산)</b></td><td><span class="badge badge-red">★★★★★</span></td>
+      <td><span class="year-tag">37</span><span class="year-tag">38</span><span class="year-tag">39</span><span class="year-tag">40</span><span class="year-tag">41</span><span class="year-tag">42</span><span class="year-tag">43</span><span class="year-tag new">44</span><span class="year-tag new">45</span><span class="year-tag new">46</span><span class="year-tag new">47</span><span class="year-tag new">48</span></td></tr>
+    <tr><td><b>E/L 사용자배상책임 계산</b></td><td><span class="badge badge-red">★★★★★</span></td>
+      <td><span class="year-tag">37</span><span class="year-tag">38</span><span class="year-tag">39</span><span class="year-tag">40</span><span class="year-tag">41</span><span class="year-tag">42</span><span class="year-tag new">44</span><span class="year-tag new">45</span><span class="year-tag new">46</span><span class="year-tag new">47</span><span class="year-tag new">48</span></td></tr>
+    <tr><td><b>보상책임 검토 (면부책)</b></td><td><span class="badge badge-red">★★★★★</span></td>
+      <td><span class="year-tag">38</span><span class="year-tag">39</span><span class="year-tag">40</span><span class="year-tag new">44</span><span class="year-tag new">45</span><span class="year-tag new">46</span><span class="year-tag new">47</span><span class="year-tag new">48</span></td></tr>
+    <tr><td><b>선원 근재 재해보상 계산</b></td><td><span class="badge badge-red">★★★★★</span></td>
+      <td><span class="year-tag">37</span><span class="year-tag">40</span><span class="year-tag">42</span><span class="year-tag">43</span><span class="year-tag new">44</span><span class="year-tag new">46</span></td></tr>
+    <tr><td><b>손익상계 (산재급여 공제)</b></td><td><span class="badge badge-red">★★★★★</span></td>
+      <td><span class="year-tag">37</span>~<span class="year-tag">43</span> 전체 + <span class="year-tag new">45</span><span class="year-tag new">46</span><span class="year-tag new">47</span><span class="year-tag new">48</span></td></tr>
+    <tr><td><b>국문 영업배상책임보험 약관</b></td><td><span class="badge badge-red">★★★★★</span></td>
+      <td><span class="year-tag">37</span><span class="year-tag">38</span><span class="year-tag">39</span><span class="year-tag new">44</span><span class="year-tag new">45</span><span class="year-tag new">47</span><span class="year-tag new">48</span></td></tr>
+    <tr><td><b>복합장해율 계산</b></td><td><span class="badge badge-orange">★★★★</span></td>
+      <td><span class="year-tag">38</span><span class="year-tag">40</span><span class="year-tag">42</span><span class="year-tag">43</span></td></tr>
+    <tr><td><b>중복보험 독립책임액 안분</b></td><td><span class="badge badge-orange">★★★★</span></td>
+      <td><span class="year-tag">38</span><span class="year-tag">39</span><span class="year-tag">42</span><span class="year-tag new">45</span><span class="year-tag new">48</span></td></tr>
+    <tr><td><b>특수불법행위 5~6종 약술</b></td><td><span class="badge badge-orange">★★★★</span></td>
+      <td><span class="year-tag">37</span><span class="year-tag">39</span><span class="year-tag">43</span></td></tr>
+    <tr><td><b>담보기준 (발생/청구기준)</b></td><td><span class="badge badge-orange">★★★★</span></td>
+      <td><span class="year-tag">37</span><span class="year-tag">39</span><span class="year-tag new">44</span><span class="year-tag new">46</span><span class="year-tag new">47</span></td></tr>
+    <tr><td><b>제조물책임법</b></td><td><span class="badge badge-orange">★★★★</span></td>
+      <td><span class="year-tag">38</span><span class="year-tag">41</span><span class="year-tag new">44</span><span class="year-tag new">47</span></td></tr>
+    <tr><td><b>가스사고배상책임보험</b></td><td><span class="badge badge-orange">★★★★</span></td>
+      <td><span class="year-tag">38</span><span class="year-tag">41</span><span class="year-tag">42</span><span class="year-tag new">44</span><span class="year-tag new">48</span></td></tr>
+    <tr><td><b>상속 후 공제설</b></td><td><span class="badge badge-orange">★★★★</span></td>
+      <td><span class="year-tag new">45</span><span class="year-tag new">48</span> &nbsp;★49회 예상★</td></tr>
+    <tr><td><b>평균임금 / 통상임금</b></td><td><span class="badge badge-blue">★★★</span></td>
+      <td><span class="year-tag">37</span><span class="year-tag new">45</span><span class="year-tag new">46</span></td></tr>
+    <tr><td><b>일실퇴직금 계산</b></td><td><span class="badge badge-blue">★★★</span></td>
+      <td><span class="year-tag">38</span><span class="year-tag">42</span><span class="year-tag new">45</span></td></tr>
+    <tr><td><b>재난배상책임보험</b></td><td><span class="badge badge-blue">★★★</span></td>
+      <td><span class="year-tag">40</span><span class="year-tag">41</span></td></tr>
+    <tr><td><b>공작물 책임 (민법 758조)</b></td><td><span class="badge badge-blue">★★★</span></td>
+      <td><span class="year-tag">39</span><span class="year-tag new">45</span><span class="year-tag new">48</span></td></tr>
+    <tr><td><b>보험자대위 / 대위권</b></td><td><span class="badge badge-blue">★★★</span></td>
+      <td><span class="year-tag new">44</span><span class="year-tag new">47</span></td></tr>
+    <tr><td><b>중대재해처벌법 / 중대재해배책</b></td><td><span class="badge badge-blue">★★★</span></td>
+      <td><span class="year-tag new">45</span><span class="year-tag new">48</span></td></tr>
+    <tr><td><b>자기부담금 국문 vs CGL</b></td><td><span class="badge badge-blue">★★</span></td>
+      <td><span class="year-tag new">44</span><span class="year-tag new">48</span></td></tr>
+    <tr><td><b>피해자 직접청구권 + 지급절차</b></td><td><span class="badge badge-blue">★★</span></td>
+      <td><span class="year-tag">37</span><span class="year-tag new">47</span></td></tr>
+    <tr><td><b>위자료 산정기준</b></td><td><span class="badge badge-blue">★★</span></td>
+      <td><span class="year-tag new">47</span></td></tr>
+    <tr><td><b>출퇴근재해</b></td><td><span class="badge badge-blue">★★</span></td>
+      <td><span class="year-tag new">48</span> (신출제)</td></tr>
+    <tr><td><b>일시보상 (근기법 vs 선원법)</b></td><td><span class="badge badge-gray">★</span></td>
+      <td><span class="year-tag">43</span></td></tr>
+    <tr><td><b>부진정연대채무</b></td><td><span class="badge badge-gray">★</span></td>
+      <td><span class="year-tag">43</span></td></tr>
+    <tr><td><b>건설기계업자 특약 면부책</b></td><td><span class="badge badge-gray">★</span></td>
+      <td><span class="year-tag new">48</span></td></tr>
+  </table>
+
+  <div class="content-box">
+    <span class="key">🎯 49회 대비 전략</span><br>
+    ① <span class="key">상속 후 공제설</span> 공식 완벽 숙지 (배우자 1.5, 자녀 1 비율)<br>
+    ② <span class="key">독립책임액 안분</span> + 의무·임의 보험 분담 → 매년 반복<br>
+    ③ <span class="num">중대재해배상책임보험</span> 심화 출제 가능<br>
+    ④ <span class="key">선원법 유족보상 안분(1/n)</span> + 해외취업선원 특별보상 숫자 암기<br>
+    ⑤ <span class="key">배상청구기준 증권</span> 소급담보일·보험기간 판단 반복 연습<br>
+    ⑥ 계산문제 배점 40~50% → <span class="key">공식 완벽 암기 필수</span>
+  </div>
+
+</div>
+
+<div id="t-tort" class="tab-content">
+<!-- 일반불법행위 -->
+  <div class="card" onclick="toggleCard(this)">
+    <div class="card-header">
+      <div class="card-title">⚖️ 일반불법행위 성립요건 (민법 750조)</div>
+      <div class="card-meta"><span class="badge badge-orange">★★★</span><span class="arrow">▼</span></div>
+    </div>
+    <div class="card-body">
+      <div class="section-title">5가지 요건 (필수 암기)</div>
+      <div class="content-box">
+        <span class="key">① 유책성</span> - 가해자에게 <span class="num">고의 또는 과실</span>이 있어야 함<br>
+        <span class="key">② 위법성</span> - 가해행위가 <span class="num">위법</span>해야 함<br>
+        <span class="key">③ 책임능력</span> - 가해자에게 <span class="num">책임능력</span>이 있어야 함<br>
+        <span class="key">④ 손해 발생</span> - 피해자에게 <span class="num">손해가 발생</span>했어야 함<br>
+        <span class="key">⑤ 인과관계</span> - 가해행위와 손해 사이의 <span class="num">상당인과관계</span>
+      </div>
+      <div class="section-title">원칙</div>
+      <div class="content-box">
+        과실책임주의 / 자기책임의 원칙 → 타인의 행위에 대해서는 책임 없음
+      </div>
+    </div>
+  </div>
+
+  <!-- 특수불법행위 5종 -->
+  <div class="card" onclick="toggleCard(this)">
+    <div class="card-header">
+      <div class="card-title">🏛️ 특수불법행위 6종 (민법 755~760조)</div>
+      <div class="card-meta"><span class="badge badge-red">★★★★★</span><span class="arrow">▼</span></div>
+    </div>
+    <div class="card-body">
+      <div class="content-box">
+        <span class="key">① 책임무능력자 감독자 책임 (755조)</span><br>
+        미성년자·심신상실자의 불법행위 → <span class="num">법정감독의무자</span> 또는 <span class="num">대리감독자</span>가 배상<br>
+        입증책임 전환 (감독상 과실 없음을 감독자가 입증해야 면책)<br>
+        <hr class="divider">
+        <span class="key">② 사용자 책임 (756조)</span><br>
+        피용자의 업무집행 중 제3자에게 가한 손해 → <span class="num">사용자·대리감독자</span> 배상<br>
+        ※ E/L보험의 근거 조항<br>
+        <hr class="divider">
+        <span class="key">③ 도급인 책임 (757조)</span><br>
+        원칙: 도급인 무책임 / 예외: <span class="num">도급·지시에 중대한 과실</span>이 있으면 책임<br>
+        <hr class="divider">
+        <span class="key">④ 공작물 점유자·소유자 책임 (758조)</span><br>
+        설치·보존의 하자로 손해 → <span class="num">점유자 1차 책임</span> (주의 게을리 않으면 <span class="num">소유자 무과실책임</span>)<br>
+        <hr class="divider">
+        <span class="key">⑤ 동물 점유자 책임 (759조)</span><br>
+        동물이 타인에게 가한 손해 → <span class="num">점유자</span> 배상 (보관 주의 다하면 면책)<br>
+        점유자에 갈음하여 보관한 자도 동일 책임<br>
+        <hr class="divider">
+        <span class="key">⑥ 공동불법행위 책임 (760조)</span><br>
+        수인 공동의 불법행위 → <span class="num">연대 배상</span> (부진정연대채무)
+      </div>
+      <div class="section-title">⚡ 암기 팁: 책·사·도·공작·동·공동</div>
+      <div class="formula">755: 책임무능력자 감독자
+756: 사용자 (E/L 근거!)
+757: 도급인
+758: 공작물 점유자/소유자
+759: 동물 점유자
+760: 공동불법행위</div>
+    </div>
+  </div>
+
+  <!-- 부진정연대채무 -->
+  <div class="card" onclick="toggleCard(this)">
+    <div class="card-header">
+      <div class="card-title">🔗 부진정연대채무 vs 연대채무</div>
+      <div class="card-meta"><span class="badge badge-blue">43회</span><span class="arrow">▼</span></div>
+    </div>
+    <div class="card-body">
+      <div class="content-box">
+        <span class="key">【연대채무】</span><br>
+        - 채무자간 <span class="num">주관적 관련성 있음</span><br>
+        - 변제 외 사유도 다른 채무자에게 <span class="num">절대적 효력</span><br>
+        - 구상권 행사 가능<br>
+        <hr class="divider">
+        <span class="key">【부진정연대채무】</span><br>
+        - 채무자간 <span class="num">주관적 관련성 없음</span><br>
+        - <span class="num">변제(목적도달) 사유만</span> 다른 채무자에 영향<br>
+        - 구상권 원칙적 행사 <span class="warn">불가</span> (공동불법행위자 예외적 허용)<br>
+        <hr class="divider">
+        <span class="key">판례상 부진정연대채무 사례</span><br>
+        ① 민법 755조 : 법정감독의무자 + 대리감독자<br>
+        ② 민법 760조 : 공동불법행위자
+      </div>
+    </div>
+  </div>
+
+  <!-- 직접청구권 -->
+  <div class="card" onclick="toggleCard(this)">
+    <div class="card-header">
+      <div class="card-title">📩 피해자 직접청구권 법적 성질</div>
+      <div class="card-meta"><span class="badge badge-blue">37회</span><span class="arrow">▼</span></div>
+    </div>
+    <div class="card-body">
+      <div class="content-box">
+        <span class="key">근거</span>: 상법 제724조 2항<br><br>
+        <span class="key">법적 성질</span><br>
+        보험금청구권의 변형 <span class="warn">X</span> →<br>
+        보험자가 피보험자의 손해배상채무를 <span class="num">병존적으로 인수</span>한 것<br>
+        = 피해자가 보험자에 대해 갖는 <span class="num">독립된 손해배상청구권</span><br><br>
+        <span class="key">소멸시효 비교</span><br>
+        • 보험금청구권 : <span class="num">2년</span> (단기소멸시효)<br>
+        • 직접청구권 : <span class="num">3년</span> (손해·가해자 안 날부터) / <span class="num">10년</span> (불법행위일부터)<br><br>
+        <span class="key">기산점</span><br>
+        보험금청구권: 청구 가능 시점 / 직접청구권: 판결 확정 후
+      </div>
+    </div>
+  </div>
+
+  <!-- 소멸시효 -->
+  <div class="card" onclick="toggleCard(this)">
+    <div class="card-header">
+      <div class="card-title">⏱️ 손해배상청구권 소멸시효</div>
+      <div class="card-meta"><span class="badge badge-blue">★★</span><span class="arrow">▼</span></div>
+    </div>
+    <div class="card-body">
+      <div class="content-box">
+        <span class="key">불법행위 (민법 766조)</span><br>
+        • 손해·가해자 안 날부터 <span class="num">3년</span><br>
+        • 불법행위일부터 <span class="num">10년</span><br><br>
+        <span class="key">채무불이행</span><br>
+        • 민법 766조 소멸시효 규정 <span class="warn">적용 안 됨</span><br>
+        • 채권 일반소멸시효 적용<br><br>
+        <span class="key">E/L 특약 소멸시효 기산점</span><br>
+        산재보상 급부가 이루어진 시점 (산재 종결 후 청구 가능)<br><br>
+        <span class="warn">⚠️ E/L 특약 면책</span>: 재해발생일로부터 3년 경과 후 청구받은 배상책임<br>
+        → 그러나 판례: 보험계약자에게 불리하여 약관규제법상 <span class="ok">무효</span> 판단
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ===== 탭3: 배상책임보험 ===== -->
+
+  <div class="card" onclick="toggleCard(this)">
+    <div class="card-header">
+      <div class="card-title">📝 통상손해 vs 특별손해 (44회)</div>
+      <div class="card-meta"><span class="badge badge-gray">44회</span><span class="arrow">▼</span></div>
+    </div>
+    <div class="card-body">
+      <table class="inner">
+        <tr><th></th><th>통상손해</th><th>특별손해</th></tr>
+        <tr><td>개념</td><td>채무불이행으로 통상 생기는 손해</td><td>특별한 사정으로 인한 손해</td></tr>
+        <tr><td>배상</td><td>기본 범위</td><td>가해자가 사정 알았거나 알 수 있었을 때만</td></tr>
+        <tr><td>예시</td><td>치료비·일실수익·위자료</td><td>해외유학 취소 손해 → 배상 안 됨</td></tr>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<div id="t-liability" class="tab-content">
+<!-- 국문영업배상책임 -->
+  <div class="card" onclick="toggleCard(this)">
+    <div class="card-header">
+      <div class="card-title">🏢 국문 영업배상책임보험 보상하는 손해</div>
+      <div class="card-meta"><span class="badge badge-red">★★★★★</span><span class="arrow">▼</span></div>
+    </div>
+    <div class="card-body">
+      <div class="section-title">보상하는 손해 (제10조)</div>
+      <div class="content-box">
+        <span class="key">① 법률상 손해배상금</span><br>
+        <span class="key">② 비용</span><br>
+        가. 손해방지·경감 비용 → <span class="ok">한도 초과해도 전액 보상</span><br>
+        나. 대위권 보전비용 → <span class="ok">한도 초과해도 전액 보상</span><br>
+        다. 소송비용·변호사비용·중재·화해조정 → <span class="warn">보상한도 이내</span><br>
+        라. 공탁보증보험료 → <span class="warn">보상한도 이내</span><br>
+        마. 협력비용 → <span class="ok">한도 초과해도 전액 보상</span>
+      </div>
+      <div class="section-title">보상한도 적용 순서</div>
+      <div class="content-box">
+        <span class="num">① 면책금(자기부담금) 먼저 공제</span> → 법률상 손해배상금에서<br>
+        <span class="num">② 1인당 한도 적용</span><br>
+        <span class="num">③ 사고당 한도 적용</span><br>
+        <span class="warn">⚠️ 사고당 한도 먼저 적용 후 면책금 공제는 틀림!</span>
+      </div>
+      <div class="section-title">담보기준 (Coverage Trigger)</div>
+      <div class="content-box">
+        <span class="key">국문영업배상책임</span> → <span class="num">사고발생기준 (Occurrence Basis)</span><br>
+        <span class="key">의사·병원배상책임</span> → <span class="num">배상청구기준 (Claims-made Basis)</span><br>
+        <span class="key">금융기관종합보험·도난보험</span> → <span class="num">손해발견기준 (Discovery Basis)</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 담보기준 비교 -->
+  <div class="card" onclick="toggleCard(this)">
+    <div class="card-header">
+      <div class="card-title">🎯 담보기준 비교 (Occurrence vs Claims-made)</div>
+      <div class="card-meta"><span class="badge badge-red">★★★★</span><span class="arrow">▼</span></div>
+    </div>
+    <div class="card-body">
+      <div class="content-box">
+        <span class="key">【사고발생기준 Occurrence Basis】</span><br>
+        보험기간 중 사고 발생 → 보험기간 종료 후 청구해도 보상<br>
+        대부분 보험에 적용<br><br>
+        <span class="key">【배상청구기준 Claims-made Basis】</span><br>
+        ① 사고: 소급담보일자(Retroactive Date) ~ 보험기간 만료일 사이 발생<br>
+        ② 청구: 보험기간 개시일 ~ 만료일 사이에 제기<br>
+        ③ 보험자에게 통지<br>
+        ④ 해지·미갱신 시: 연장보고기간(ERP) 내 청구만 보상<br>
+        적용: 생산물배상·의사배상·임원배상책임<br><br>
+        <span class="key">【ERP 보고기간 연장담보】</span><br>
+        • 단기 자동연장: 만기 후 <span class="num">60일</span><br>
+        • 중기 자동연장: 60일 내 통보 사고, 만기 후 <span class="num">5년</span> 내 청구<br>
+        • 선택 연장: <span class="num">제한 없음</span> (추가보험료 200% 이내)
+      </div>
+    </div>
+  </div>
+
+  <!-- 가스배상책임 -->
+  <div class="card" onclick="toggleCard(this)">
+    <div class="card-header">
+      <div class="card-title">💧 가스사고배상책임보험 핵심</div>
+      <div class="card-meta"><span class="badge badge-red">★★★★</span><span class="arrow">▼</span></div>
+    </div>
+    <div class="card-body">
+      <div class="section-title">가입의무자 3종</div>
+      <div class="content-box">
+        ① <span class="key">가스사업자</span> - 시설소유·도급업자·제조물책임 포괄 담보<br>
+        ② <span class="key">가스용기 제조업자</span> - 제조물책임<br>
+        ③ <span class="key">가스사용자</span> - 시설소유관리 배상책임
+      </div>
+      <div class="section-title">중요 면책 (시험 단골)</div>
+      <div class="content-box">
+        <span class="warn">★ 피보험자 근로자가 업무 종사 중 입은 신체장해 → 면책 (보통약관 8조 9호)</span><br>
+        → 38회 : 가스배상책임보험에서 근로자 사망 → 지급 보험금 없음!
+      </div>
+      <div class="section-title">의무보험 우선 보상 원칙</div>
+      <div class="content-box">
+        다른 임의보험이 있으면 → 가스배상(의무) 먼저 법정한도 보상<br>
+        잔액을 임의보험에서 분담 (약관 22조)
+      </div>
+      <div class="section-title">LPG 소비자보장 특약</div>
+      <div class="content-box">
+        신체손해 → <span class="num">소비자 과실 불문</span>하고 보상 (무과실책임주의)<br>
+        보상하지 않는 손해: ① 소비자 고의 ② 임의 설비 변경 ③ 불비 지적 후 미개선
+      </div>
+      <div class="section-title">의무보험 대인 보상한도</div>
+      <div class="content-box">
+        <span class="key">일반 (제7조 2항)</span><br>
+        사망: 1인당 <span class="num">6,000만원</span> (실손해 1,500만원 미만 → 1,500만원)<br><br>
+        <span class="key">LPG충전소 등 (제7조 3항)</span><br>
+        사망: 1인당 <span class="num">8,000만원</span> (실손해 2,000만원 미만 → 2,000만원)
+      </div>
+    </div>
+  </div>
+
+  <!-- 재난배상 -->
+  <div class="card" onclick="toggleCard(this)">
+    <div class="card-header">
+      <div class="card-title">🏛️ 재난배상책임보험 핵심</div>
+      <div class="card-meta"><span class="badge badge-orange">★★★ (40·41회)</span><span class="arrow">▼</span></div>
+    </div>
+    <div class="card-body">
+      <div class="section-title">담보위험</div>
+      <div class="content-box">
+        피보험자 소유·관리·점유 시설에서<br>
+        <span class="key">화재·붕괴·폭발</span>로 타인에게 신체/재산 손해<br>
+        → <span class="num">피보험자 과실 불문</span> (무과실책임)
+      </div>
+      <div class="section-title">보상한도 (대인)</div>
+      <div class="content-box">
+        사망: 1인당 <span class="num">1억 5천만원</span> (실손해 2,000만원 미만 → 2,000만원)<br>
+        부상: 1급 <span class="num">3,000만원</span> ~ 14급 <span class="num">50만원</span><br>
+        후유장해: 1급 <span class="num">1억 5천만원</span> ~ 14급 <span class="num">1,000만원</span><br><br>
+        <span class="key">치료 중 사망</span> → 사망한도 + 부상한도 합산 범위에서 보상
+      </div>
+      <div class="section-title">가입면제 시설</div>
+      <div class="content-box">
+        화재로인한재해보상법상 <span class="key">신배책 화재보험 가입 특수건물</span>의 시설
+      </div>
+    </div>
+  </div>
+
+  <!-- 신배책 -->
+  <div class="card" onclick="toggleCard(this)">
+    <div class="card-header">
+      <div class="card-title">🔥 신체손해배상특약부 화재보험 (신배책)</div>
+      <div class="card-meta"><span class="badge badge-orange">★★★ (39·40회)</span><span class="arrow">▼</span></div>
+    </div>
+    <div class="card-body">
+      <div class="content-box">
+        <span class="key">대상</span>: 특수건물 소유자 무과실 책임<br>
+        <span class="key">타인</span>: 소유자·동거 직계가족(법인: 이사·업무집행기관) 이외의 자<br><br>
+        <span class="key">실손해액 (사망)</span><br>
+        월급액(또는 평균임금) × 취업가능기간 + <span class="num">남자평균임금 100일분</span>(장례비)<br><br>
+        <span class="key">실손해액 (부상)</span><br>
+        치료에 소요되는 모든 비용<br><br>
+        <span class="key">보상한도 (사망)</span><br>
+        <span class="num">8,000만원</span> (실손해 2,000만원 미만 → 2,000만원)
+      </div>
+    </div>
+  </div>
+
+  <!-- 다중이용업소 -->
+  <div class="card" onclick="toggleCard(this)">
+    <div class="card-header">
+      <div class="card-title">🏬 다중이용업소 화재배상책임보험</div>
+      <div class="card-meta"><span class="badge badge-orange">★★★</span><span class="arrow">▼</span></div>
+    </div>
+    <div class="card-body">
+      <div class="content-box">
+        <span class="key">보상한도 (2019.7.3 이후 계약)</span><br>
+        사망: <span class="num">1억원</span> (실손해 2,000만원 미만 → 2,000만원)<br>
+        부상: 1급 <span class="num">2,000만원</span> ~ 14급 <span class="num">40만원</span><br>
+        후유장해: 1급 <span class="num">1억원</span> ~ 14급 <span class="num">630만원</span><br><br>
+        <span class="key">과실</span>: 과실책임주의 적용 (신배책과 차이!)<br>
+        <span class="key">피보험자</span>: 임차인 포함, 임차인 본인은 담보 대상 아님
+      </div>
+    </div>
+  </div>
+
+  <!-- 중복보험 분담 -->
+  <div class="card" onclick="toggleCard(this)">
+    <div class="card-header">
+      <div class="card-title">⚖️ 중복보험 독립책임액 안분 방식</div>
+      <div class="card-meta"><span class="badge badge-red">★★★★</span><span class="arrow">▼</span></div>
+    </div>
+    <div class="card-body">
+      <div class="section-title">의무보험 vs 임의보험 우선순위</div>
+      <div class="content-box">
+        <span class="key">의무보험이 먼저</span> 법정한도까지 보상<br>
+        → 의무보험 보상액 차감 후 잔액을 임의보험에서 분담<br><br>
+        의무보험 상호간: 우선순위 없음 (독립책임액 안분)
+      </div>
+      <div class="section-title">독립책임액 안분 계산 순서</div>
+      <div class="formula">① 각 보험사의 독립책임액 산출
+   (손해액 - 자기부담금이 보상한도 초과 시 → 독립책임액 = 보상한도 - 자기부담금)
+
+② 독립책임액 합계 > 손해액 → 안분 필요
+
+③ 각사 지급보험금
+   = 손해액 × (각사 독립책임액 / 독립책임액 합계)</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ===== 탭4: 근재보험 ===== -->
+
+  <div class="card" onclick="toggleCard(this)">
+    <div class="card-header">
+      <div class="card-title">🔥 신배책·다중이용업소 타인 범위 (44·47회)</div>
+      <div class="card-meta"><span class="badge badge-blue">★★★</span><span class="arrow">▼</span></div>
+    </div>
+    <div class="card-body">
+      <table class="inner">
+        <tr><th>구분</th><th>신배책</th><th>다중이용업소 화재배책</th></tr>
+        <tr><td>타인 정의</td><td>소유자·동거직계가족(법인: 이사·업무집행기관) 이외의 자</td><td>약관 별도정의 없음 → 피보험자 제외한 자</td></tr>
+        <tr><td>운영자</td><td>타인 O</td><td>피보험자(타인 X)</td></tr>
+      </table>
+      <div class="warn-box"><div class="w-title">🚨 특수건물 입점 다중이용업소 → 의무보험 대상 아님 → 신배책 선보상 후 초과분 다중이용업소배책</div></div>
+    </div>
+  </div>
+
+  <div class="card" onclick="toggleCard(this)">
+    <div class="card-header">
+      <div class="card-title">🏗️ 공작물 점유자·소유자 책임 (민법 758조) (45·48회)</div>
+      <div class="card-meta"><span class="badge badge-blue">★★★</span><span class="arrow">▼</span></div>
+    </div>
+    <div class="card-body">
+      <div class="memo-box">
+        <div class="memo-title">🧠 성립요건 4가지</div>
+        <ol>
+          <li>공작물로부터 손해 발생</li>
+          <li>설치·보존의 하자 (안전성 결여)</li>
+          <li>하자와 손해 인과관계 (입증: 피해자)</li>
+          <li>점유자에게 면책사유 없음</li>
+        </ol>
+      </div>
+      <table class="inner">
+        <tr><th>순위</th><th>책임자</th><th>면책</th></tr>
+        <tr><td>1차</td><td><b>점유자</b></td><td>주의 다했음 증명 시 면책 (중간과실책임)</td></tr>
+        <tr><td>2차</td><td><b>소유자</b></td><td><span style="color:#fca5a5">면책 불가 (무과실책임)</span></td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="card" onclick="toggleCard(this)">
+    <div class="card-header">
+      <div class="card-title">📌 보험자대위 / 국문영배책 대위권 (44·47회)</div>
+      <div class="card-meta"><span class="badge badge-blue">★★</span><span class="arrow">▼</span></div>
+    </div>
+    <div class="card-body">
+      <div class="content-box">
+        <span class="key">의의</span>: 제3자 행위로 손해 → 보험금 지급 후 → 지급금액 범위 내에서 손해배상청구권 대위취득<br>
+        <span class="key">목적</span>: 이중이득 방지 (다수설)
+      </div>
+      <div class="memo-box">
+        <div class="memo-title">🧠 대위권 제한</div>
+        <ul>
+          <li>타인을 위한 보험계약 → 계약자 대위권 <b>포기</b></li>
+          <li>생계를 같이하는 가족 → 취득 못함 (고의 손해는 예외)</li>
+          <li>대위권 보전비용 → 보상한도 초과해도 보상</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" onclick="toggleCard(this)">
+    <div class="card-header">
+      <div class="card-title">💰 자기부담금 국문 vs CGL (44·48회)</div>
+      <div class="card-meta"><span class="badge badge-blue">★★</span><span class="arrow">▼</span></div>
+    </div>
+    <div class="card-body">
+      <div class="formula">【국문】 지급보험금 = Min[(손해액 - 자기부담금), 보상한도액]
+【CGL】 지급보험금 = Min[손해액, 보상한도액] - 자기부담금
+        (1사고당 한도 = 보상한도액 - 자기부담금)</div>
+    </div>
+  </div>
+
+  <div class="card" onclick="toggleCard(this)">
+    <div class="card-header">
+      <div class="card-title">📊 위자료 산정기준 (47회)</div>
+      <div class="card-meta"><span class="badge badge-blue">★★</span><span class="arrow">▼</span></div>
+    </div>
+    <div class="card-body">
+      <div class="formula">위자료 = 기준금액 × 노동능력상실률 × [1 - (피해자과실 × 6/10)]
+※ 과실상계 시 피해자 과실의 60%만 적용 (다른 손해항목과 차이!)</div>
+      <div class="memo-box">
+        <div class="memo-title">🧠 특칙</div>
+        <ul>
+          <li>영구장해 + 한시장해 중복 → 한시장해를 영구장해로 환산 후 산출</li>
+          <li>민법 751조: "정신상 고통, 재산 이외의 손해도 배상"</li>
+          <li>위자료 청구권: 상속·양도 가능</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div id="t-wc" class="tab-content">
+<!-- 국내 vs 선원 비교 -->
+  <div class="card" onclick="toggleCard(this)">
+    <div class="card-header">
+      <div class="card-title">📋 국내 근로자 vs 선원 재해보상 비교표</div>
+      <div class="card-meta"><span class="badge badge-red">★★★★★</span><span class="arrow">▼</span></div>
+    </div>
+    <div class="card-body">
+      <table style="width:100%;border-collapse:collapse;font-size:11px;">
+        <tr style="background:#0d2137;color:#4fc3f7;">
+          <th style="padding:6px;text-align:left;border:1px solid #1e3a5f;">구분</th>
+          <th style="padding:6px;text-align:center;border:1px solid #1e3a5f;">국내 근로자<br>(근기법)</th>
+          <th style="padding:6px;text-align:center;border:1px solid #1e3a5f;">선원 근로자<br>(선원법)</th>
+        </tr>
+        <tr style="border:1px solid #1a2540;">
+          <td style="padding:6px;color:#ffd54f;border:1px solid #1a2540;">요양보상</td>
+          <td style="padding:6px;border:1px solid #1a2540;">업무상 치료비 전액</td>
+          <td style="padding:6px;border:1px solid #1a2540;">직무상: 전액<br>승선중 직무외: 3개월 내</td>
+        </tr>
+        <tr style="background:#080f20;border:1px solid #1a2540;">
+          <td style="padding:6px;color:#ffd54f;border:1px solid #1a2540;">상병보상<br>(휴업보상)</td>
+          <td style="padding:6px;border:1px solid #1a2540;"><b style="color:#80cbc4;">평균임금 60%</b><br>(요양기간 중)</td>
+          <td style="padding:6px;border:1px solid #1a2540;">직무상: <b style="color:#80cbc4;">4개월까지 통상임금 100%</b><br>4개월 이후: 통상임금 70%<br>승선중 직무외: 통상임금 70%</td>
+        </tr>
+        <tr style="border:1px solid #1a2540;">
+          <td style="padding:6px;color:#ffd54f;border:1px solid #1a2540;">장해보상</td>
+          <td style="padding:6px;border:1px solid #1a2540;">평균임금<br>1급 1,340일~14급 50일</td>
+          <td style="padding:6px;border:1px solid #1a2540;"><b style="color:#80cbc4;">승선평균임금</b><br>1급 1,474일~14급 55일</td>
+        </tr>
+        <tr style="background:#080f20;border:1px solid #1a2540;">
+          <td style="padding:6px;color:#ffd54f;border:1px solid #1a2540;">유족보상</td>
+          <td style="padding:6px;border:1px solid #1a2540;">평균임금 <b style="color:#80cbc4;">1,000일</b></td>
+          <td style="padding:6px;border:1px solid #1a2540;">직무상사망: 승선평균임금 <b style="color:#80cbc4;">1,300일</b><br>직무외사망: 승선평균임금 <b style="color:#80cbc4;">1,000일</b></td>
+        </tr>
+        <tr style="border:1px solid #1a2540;">
+          <td style="padding:6px;color:#ffd54f;border:1px solid #1a2540;">장제비<br>(장의비)</td>
+          <td style="padding:6px;border:1px solid #1a2540;">평균임금 <b style="color:#80cbc4;">90일</b></td>
+          <td style="padding:6px;border:1px solid #1a2540;">승선평균임금 <b style="color:#80cbc4;">120일</b></td>
+        </tr>
+        <tr style="background:#080f20;border:1px solid #1a2540;">
+          <td style="padding:6px;color:#ffd54f;border:1px solid #1a2540;">행방불명</td>
+          <td style="padding:6px;border:1px solid #1a2540;"><b style="color:#ef9a9a;">없음</b></td>
+          <td style="padding:6px;border:1px solid #1a2540;"><b style="color:#80cbc4;">1개월 내</b>: 통상임금 1월 + 승선평균임금 3월<br><b style="color:#80cbc4;">1개월 후</b>: 유족보상 + 장제비</td>
+        </tr>
+        <tr style="border:1px solid #1a2540;">
+          <td style="padding:6px;color:#ffd54f;border:1px solid #1a2540;">일시보상</td>
+          <td style="padding:6px;border:1px solid #1a2540;">평균임금 <b style="color:#80cbc4;">1,340일</b><br>→ 모든 재해보상 면제</td>
+          <td style="padding:6px;border:1px solid #1a2540;">승선평균임금 <b style="color:#80cbc4;">1,474일</b><br>→ 요양·상병·장해만 면제<br>유족보상·장제비 면제 안됨</td>
+        </tr>
+      </table>
+      <div class="content-box" style="margin-top:10px;">
+        <span class="warn">⚠️ 일시보상 공통</span>: 요양 개시 후 2년 경과, 미완치 상태<br>
+        민법상 손해배상책임까지 면제 <span class="warn">안 됨</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 통상임금·평균임금 -->
+  <div class="card" onclick="toggleCard(this)">
+    <div class="card-header">
+      <div class="card-title">💰 통상임금 vs 평균임금</div>
+      <div class="card-meta"><span class="badge badge-orange">★★★ (37회)</span><span class="arrow">▼</span></div>
+    </div>
+    <div class="card-body">
+      <div class="content-box">
+        <span class="key">【평균임금】</span><br>
+        • 정의: 사유 발생 전 <span class="num">3개월</span> 지급 임금총액 ÷ 총일수<br>
+        • 용도: 퇴직금·휴업수당·재해보상·감급 기준<br>
+        • 산정 제외기간: 수습·사업주 귀책 휴업·산전후·업무상요양·육아휴직·쟁의행위<br><br>
+        <span class="key">【통상임금】</span><br>
+        • 정의: 정기적·일률적·소정근로에 지급하기로 정한 임금 (시·일·주·월·도급)<br>
+        • 요건: <span class="num">정기성 + 고정성 + 일률성</span><br>
+        • 용도: 해고예고수당·휴업수당·연장·야간·휴일 가산수당·연차유급휴가수당<br>
+        • 포함: 직무수당·기술수당·위험수당·정기상여금(1개월 초과 정기지급 시)<br>
+        • 불포함: 연장·야간수당, 명절상여·하계휴가비(특정시점 재직자만 지급 → 고정성 불충족)
+      </div>
+    </div>
+  </div>
+
+  <!-- 장해등급 조정 -->
+  <div class="card" onclick="toggleCard(this)">
+    <div class="card-header">
+      <div class="card-title">📊 장해등급 조정 원칙</div>
+      <div class="card-meta"><span class="badge badge-orange">★★★ (40·43회)</span><span class="arrow">▼</span></div>
+    </div>
+    <div class="card-body">
+      <div class="content-box">
+        <span class="key">2개 이상 장해 시 → 중한 등급 기준으로 인상</span><br><br>
+        <span class="num">5급 이상</span> 2개 이상 → <span class="ok">3등급 인상</span><br>
+        <span class="num">8급 이상</span> 2개 이상 → <span class="ok">2등급 인상</span><br>
+        <span class="num">13급 이상</span> 2개 이상 → <span class="ok">1등급 인상</span><br><br>
+        <span class="warn">⚠️ 조정 조건 미충족 시 → 중한 등급만 적용</span><br><br>
+        <span class="key">재해보상확장 추가특약 적용 시</span><br>
+        근기법 기준 일수 × <span class="num">1.1 (110%)</span> = 산재보험법 기준 일수<br><br>
+        <span class="key">기왕증 기여도</span><br>
+        재해보상금 산정 시 → <span class="warn">기여도 적용 안 함</span> (대법원 판례)
+      </div>
+    </div>
+  </div>
+
+  <!-- E/L 보험 -->
+  <div class="card" onclick="toggleCard(this)">
+    <div class="card-header">
+      <div class="card-title">🏗️ 사용자배상책임(E/L) 특약 핵심</div>
+      <div class="card-meta"><span class="badge badge-red">★★★★★</span><span class="arrow">▼</span></div>
+    </div>
+    <div class="card-body">
+      <div class="section-title">보상 구조</div>
+      <div class="content-box">
+        <span class="key">민사배상금 - 산재급여 (손익상계) = E/L 지급보험금</span><br><br>
+        ① 산재급여 발생 필수 (급부가 이루어진 경우에만 보상)<br>
+        ② 재해발생일로부터 3년 내 청구 (면책 조항, 판례상 무효 가능)<br>
+        ③ 보상한도 내에서 지급
+      </div>
+      <div class="section-title">손익상계 방법</div>
+      <div class="content-box">
+        <span class="key">치료비</span>: 민사치료비 × (1-과실) - 요양급여<br>
+        <span class="key">휴업손해</span>: 민사휴업손해 × (1-과실) - 휴업급여<br>
+        <span class="key">일실수익</span>: 민사일실수익 × (1-과실) - 장해급여<br>
+        <span class="key">장례비</span>: 민사장례비 × (1-과실) - 장의비<br>
+        <span class="key">위자료</span>: 손익상계 <span class="warn">적용 안 함</span><br><br>
+        <span class="warn">⚠️ 산재급여가 민사배상금보다 크면 → 해당 항목 0원</span>
+      </div>
+      <div class="section-title">위자료 계산 (사망)</div>
+      <div class="formula">위자료 = 8,000만원 × [1 - (피해자과실 × 60%)]
+* 피해자과실 반영시 60% 감경
+* 42회부터 1억원 기준 적용 사례도 있음</div>
+      <div class="section-title">사망시 일실수익 상속</div>
+      <div class="content-box">
+        배우자 법정상속분: <span class="num">1.5</span> / 자녀 각: <span class="num">1</span><br>
+        손익상계는 <span class="warn">산재수급권자(배우자)의 지분에서만</span> 실시
+      </div>
+    </div>
+  </div>
+
+  <!-- 안전배려의무 -->
+  <div class="card" onclick="toggleCard(this)">
+    <div class="card-header">
+      <div class="card-title">🦺 안전배려의무</div>
+      <div class="card-meta"><span class="badge badge-orange">★★★ (39회)</span><span class="arrow">▼</span></div>
+    </div>
+    <div class="card-body">
+      <div class="content-box">
+        <span class="key">의의</span>: 근로계약상 부수적 의무 - 근로자 생명·신체·건강을 해치지 않도록 인적·물적 환경 정비 의무<br>
+        <span class="key">근거</span>: 근로계약관계 신의칙 (계약상 본질적 의무)<br>
+        <span class="key">주체</span>: 고용계약 당사자 사용자 + 파견근로관계 사용사업주<br><br>
+        <span class="key">위반 효과</span><br>
+        ① 이행 청구 및 취로거부<br>
+        ② 채무불이행에 따른 손해배상청구 (민사 배상청구 가능)<br>
+        ③ 예측가능성 있는 사고에 대해서만 책임 인정
+      </div>
+    </div>
+  </div>
+
+  <!-- 특수형태근로 -->
+  <div class="card" onclick="toggleCard(this)">
+    <div class="card-header">
+      <div class="card-title">🚗 특수형태근로종사자</div>
+      <div class="card-meta"><span class="badge badge-blue">40회</span><span class="arrow">▼</span></div>
+    </div>
+    <div class="card-body">
+      <div class="content-box">
+        <span class="key">개념</span>: 근기법상 근로자 아니지만 유사하게 노무 제공 - 2007.12 산재법 개정으로 임의가입 가능<br><br>
+        <span class="key">적용 요건</span><br>
+        ① 주로 하나의 사업에 상시적 노무 제공<br>
+        ② 타인 사용하지 않을 것<br>
+        ③ 적용제외 신청 안 한 경우<br><br>
+        <span class="key">9개 직종</span><br>
+        보험설계사·콘크리트믹서트럭기사·학습지교사·골프장캐디·택배기사·전속퀵서비스기사·대출모집인·신용카드모집인·전속대리운전기사
+      </div>
+    </div>
+  </div>
+
+  <!-- 업무상재해 -->
+  <div class="card" onclick="toggleCard(this)">
+    <div class="card-header">
+      <div class="card-title">🏥 업무상재해 유형별 인정기준</div>
+      <div class="card-meta"><span class="badge badge-blue">42회</span><span class="arrow">▼</span></div>
+    </div>
+    <div class="card-body">
+      <div class="content-box">
+        ① <span class="key">업무수행 중 사고</span> - 용변 등 생리적 필요행위 포함<br>
+        ② <span class="key">시설물 결함 사고</span> - 사업주 제공 시설 결함·관리소홀<br>
+        ③ <span class="key">행사 중 사고</span> - 사업주 인정·지시·승인 행사<br>
+        ④ <span class="key">특수한 장소 사고</span> - 천재지변·돌발사태 (사적행위 명백 제외)<br>
+        ⑤ <span class="key">요양 중 사고</span> - 의료사고, 통원 과정 사고<br>
+        ⑥ <span class="key">제3자 행위 사고</span> - 업무가 가해행위 유발 성질일 것<br>
+        ⑦ <span class="key">업무상 질병</span> - 시행령 명기 질병<br>
+        ⑧ <span class="key">출퇴근 사고</span> - 사업주 교통수단 이용 or 통상 경로·방법<br>
+        ⑨ <span class="key">자해행위</span> - 업무상 사유로 정신이상 상태에서 자해<br>
+        ⑩ <span class="key">사망 추정</span> - 선박·항공기 사고 등 3개월간 생사 불명
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ===== 탭5: 계산공식 ===== -->
+
+  <div class="card" onclick="toggleCard(this)">
+    <div class="card-header">
+      <div class="card-title">📉 상속 후 공제설 (45·48회 핵심)</div>
+      <div class="card-meta"><span class="badge badge-red">★★★★★ 49회 예상</span><span class="arrow">▼</span></div>
+    </div>
+    <div class="card-body">
+      <div class="formula">【상속 후 공제설 - 사망사고 시】
+① 총 손해액 계산 (일실수익+위자료 등)
+② 상속지분별 배분
+   배우자+자녀1명: 배우자 1.5/2.5, 자녀 1/2.5
+   배우자+자녀2명: 배우자 1.5/3.5, 자녀 각 1/3.5
+③ 유족급여 수급자(배우자) 지분에서만 유족급여 공제
+④ 각 상속인 잔액에 과실상계 적용
+
+예) 48회 총일실수익 4억, 배우자+자녀1명, 과실 50%
+  배우자 지분: 4억×1.5/2.5=2.4억 → 유족급여 2.6억 공제 → 0원
+  자녀 지분: 4억×1/2.5=1.6억 → 유족급여 공제 없음 → 1.6억×(1-50%)=8,000만원</div>
+      <div class="warn-box">
+        <div class="w-title">🚨 제3자 과실 경합 시 (47회)</div>
+        <p>공제 후 과실상계: 손해액×사용자책임비율 - 산재급여×사용자책임비율</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" onclick="toggleCard(this)">
+    <div class="card-header">
+      <div class="card-title">⛴️ 해외취업선원 특별보상금 (44·46회)</div>
+      <div class="card-meta"><span class="badge badge-orange">★★★★</span><span class="arrow">▼</span></div>
+    </div>
+    <div class="card-body">
+      <table class="inner">
+        <tr><th>선박</th><th>사망 특별보상금</th><th>최저보장</th><th>현지화장 특별위로금</th></tr>
+        <tr><td>상선</td><td>USD 40,000</td><td>유족보상 USD 70,000 미만 → 70,000</td><td>승선평균임금 × 90일</td></tr>
+        <tr><td>어선</td><td>USD 20,000</td><td>유족보상 USD 50,000 미만 → 50,000</td><td>승선평균임금 × 60일</td></tr>
+      </table>
+      <div class="content-box">
+        이송비: 원칙 보상 안 함 / 예외(중환자·유해송환·긴급이송) → 편도 실비 1인당 <span class="num">500만원 한도</span><br>
+        <span class="warn">호송인 비용: 어떠한 경우도 보상 안 함</span><br>
+        유족 동순위자 2인 이상 → 균등 안분 (1/n)
+      </div>
+    </div>
+  </div>
+
+  <div class="card" onclick="toggleCard(this)">
+    <div class="card-header">
+      <div class="card-title">🚶 출퇴근재해 + 경로 일탈·중단 예외 (48회)</div>
+      <div class="card-meta"><span class="badge badge-gray">★ 48회 신출제</span><span class="arrow">▼</span></div>
+    </div>
+    <div class="card-body">
+      <div class="content-box">
+        ① 사업주 지배·관리 하 교통수단 이용 출퇴근 중 사고<br>
+        ② 통상적인 경로와 방법으로 출퇴근 중 사고
+      </div>
+      <div class="memo-box">
+        <div class="memo-title">🧠 일탈·중단 예외 7가지: 일학선아의돌준</div>
+        <ol>
+          <li><b>일</b>상생활 필요 용품 구입</li>
+          <li><b>학</b>교·직업교육훈련기관 교육·훈련</li>
+          <li><b>선</b>거권·국민투표권 행사</li>
+          <li><b>아</b>동·장애인을 보육/교육기관에 등하원</li>
+          <li><b>의</b>료기관·보건소 진료</li>
+          <li><b>돌</b>봄 필요한 가족 요양 돌봄</li>
+          <li>고용노동부장관이 인정하는 <b>준</b>하는 행위</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div id="t-calc" class="tab-content">
+<div class="card" onclick="toggleCard(this)">
+    <div class="card-header">
+      <div class="card-title">📐 복합장해율 공식</div>
+      <div class="card-meta"><span class="badge badge-red">★★★★★</span><span class="arrow">▼</span></div>
+    </div>
+    <div class="card-body">
+      <div class="formula">복합장해율 = 1 - {(1-a) × (1-b) × (1-c) × ...}
+
+예시 (38회):
+경추 50% × (1-20%기여도) = 40% → a
+요추 30% × (1-50%기여도) = 15% → b
+비장 10% → c
+
+= 1 - (0.6 × 0.85 × 0.9) = 54.1%</div>
+      <div class="content-box">
+        <span class="warn">⚠️ 기여도 적용 → 각 장해율을 먼저 조정한 후 복합장해율 계산</span><br>
+        민사 배상에서 기왕증 기여도는 장해율에만 반영 (E/L과 다름!)
+      </div>
+    </div>
+  </div>
+
+  <div class="card" onclick="toggleCard(this)">
+    <div class="card-header">
+      <div class="card-title">📐 민사 일실수익 계산 (배상책임)</div>
+      <div class="card-meta"><span class="badge badge-red">★★★★★</span><span class="arrow">▼</span></div>
+    </div>
+    <div class="card-body">
+      <div class="formula">【사망 일실수익】
+① 정년까지
+  월평균소득 × 100% × H계수(사고~정년) × (1-1/3) × (1-과실)
+
+② 정년 이후 ~ 60세 (가동기간)
+  도시보통인부 × 22일 × 100% × H계수(정년~60세) × 2/3 × (1-과실)
+
+생계비공제: 1/3 (미혼·무부양가족 여부 무관, 일반 사망 시 적용)
+
+【후유장해 일실수익】
+월평균소득 × 장해율 × H계수(치료종결~가동종료) × (1-과실) × (1-기여도)</div>
+      <div class="content-box">
+        <span class="key">가동연한</span>: 일반육체노동 <span class="num">60세</span> (최근 65세 판례 변경)<br>
+        <span class="key">정년 있는 경우</span>: 정년까지 현실소득, 정년 이후 도시보통인부 임금
+      </div>
+    </div>
+  </div>
+
+  <div class="card" onclick="toggleCard(this)">
+    <div class="card-header">
+      <div class="card-title">📐 일실퇴직금 계산</div>
+      <div class="card-meta"><span class="badge badge-orange">★★★ (38·42회)</span><span class="arrow">▼</span></div>
+    </div>
+    <div class="card-body">
+      <div class="formula">① 정년시 예상퇴직금 = 월평균임금 × 총근속년수
+
+② 예상퇴직금 현가화
+  = 예상퇴직금 × [1 / (1 + 0.05 × 잔여재직기간)]
+
+③ 사고 시까지 퇴직금 = 월평균임금 × 현재까지 근속년수
+
+④ 일실퇴직금(사망) = ② - ③
+   일실퇴직금(장해) = (② - ③) × 장해율
+
+⑤ 과실상계 후 = 일실퇴직금 × (1 - 과실비율)</div>
+    </div>
+  </div>
+
+  <div class="card" onclick="toggleCard(this)">
+    <div class="card-header">
+      <div class="card-title">📐 선원 행방불명보상</div>
+      <div class="card-meta"><span class="badge badge-red">★★★★★</span><span class="arrow">▼</span></div>
+    </div>
+    <div class="card-body">
+      <div class="formula">【1개월 이내 (실종 중)】
+통상임금 × 1개월 + 승선평균임금 × 3개월
+
+【1개월 후 (사망 처리)】
+유족보상 = 승선평균임금 × 1,300일 (직무상)
+장제비 = 승선평균임금 × 120일
+
+예시 (37회):
+통상임금 3,000,000원 × 1 = 3,000,000
+승선평균임금 3,600,000원 × 3 = 10,800,000
+행방불명보상 = 13,800,000원
+
+유족보상 = 120,000(일) × 1,300 = 156,000,000원
+장제비 = 120,000 × 120 = 14,400,000원</div>
+    </div>
+  </div>
+
+  <div class="card" onclick="toggleCard(this)">
+    <div class="card-header">
+      <div class="card-title">📐 선원 상병보상 (직무상)</div>
+      <div class="card-meta"><span class="badge badge-red">★★★★★</span><span class="arrow">▼</span></div>
+    </div>
+    <div class="card-body">
+      <div class="formula">직무상 재해:
+  사고 ~ 4개월: 통상임금 × 100% × 개월수
+  4개월 이후: 통상임금 × 70% × 개월수
+
+직무외 재해 (승선중):
+  3개월 한도로 통상임금 × 70%
+
+예시 (40회, 요양기간 8개월):
+① 4개월: 2,700,000 × 100% × 4 = 10,800,000
+② 4개월 후: 2,700,000 × 70% × 4 = 7,560,000
+③ 합계: 18,360,000원
+
+국내 근로자 휴업보상:
+  평균임금 × 60% × 요양일수</div>
+    </div>
+  </div>
+
+  <div class="card" onclick="toggleCard(this)">
+    <div class="card-header">
+      <div class="card-title">📐 개호비(간병비) 계산</div>
+      <div class="card-meta"><span class="badge badge-orange">★★★ (42회)</span><span class="arrow">▼</span></div>
+    </div>
+    <div class="card-body">
+      <div class="formula">개호비 = 도시보통인부 일당 × 30일 × 간병인수 × H계수 × (1-과실)
+
+예시 (42회):
+90,000원 × 30일 × 1인(8시간) × 160(=180-20) × (1-30%)
+= 302,400,000원</div>
+    </div>
+  </div>
+
+  <div class="card" onclick="toggleCard(this)">
+    <div class="card-header">
+      <div class="card-title">📐 중복보험 독립책임액 안분 예시</div>
+      <div class="card-meta"><span class="badge badge-red">★★★★</span><span class="arrow">▼</span></div>
+    </div>
+    <div class="card-body">
+      <div class="formula">【38회 예시】
+손해액: 1.7억, 가스배상(의무): 사망 8천만원 우선보상
+잔액: 1.7억 - 0.8억 = 9,000만원
+
+B보험(한도5천만, 면책100만): 독립책임액 = 5,000-100 = 4,900만 → 한도 5,000만 초과 → 독립책임액 5,000만
+C보험(한도10억, 면책2000만): 독립책임액 = 9,000-2,000 = 7,000만
+
+독립책임액 합 = 5,000+7,000 = 12,000만 > 9,000만 → 안분
+
+B: 9,000만 × (5,000/12,000) = 3,750만
+C: 9,000만 × (7,000/12,000) = 5,250만</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ===== 탭6: 빠른암기 Q&A ===== -->
+
+  <div class="card" onclick="toggleCard(this)">
+    <div class="card-header">
+      <div class="card-title">📐 치료비 - 대법원 전원합의체 (2018다287935) (44회)</div>
+      <div class="card-meta"><span class="badge badge-orange">★★★</span><span class="arrow">▼</span></div>
+    </div>
+    <div class="card-body">
+      <div class="formula">기왕치료비 = (전체치료비 - 공단부담금) × (1-과실)
+= 본인부담금 + 비급여 → 과실상계
+※ 전체에서 공단부담금 먼저 공제 → 과실상계</div>
+      <div class="warn-box"><div class="w-title">🚨 "피보험자 책임비율 30%"가 주어지면 피해자 과실로 적용 (44회 함정)</div></div>
+    </div>
+  </div>
+
+  <div class="card" onclick="toggleCard(this)">
+    <div class="card-header">
+      <div class="card-title">📐 기왕장해 vs 기왕증 기여도 차이 (45회)</div>
+      <div class="card-meta"><span class="badge badge-orange">★★★</span><span class="arrow">▼</span></div>
+    </div>
+    <div class="card-body">
+      <table class="inner">
+        <tr><th>구분</th><th>기왕장해</th><th>기왕증 기여도</th></tr>
+        <tr><td>산식</td><td>(100%-기왕장해율) × 신규장해율</td><td>(100%-기왕증기여도) × 해당부위 노동능력상실률</td></tr>
+        <tr><td>차이</td><td>기왕장해율을 <b>전체</b> 상실률에 공제</td><td>기여도를 <b>해당 부위</b>에서만 공제</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="card" onclick="toggleCard(this)">
+    <div class="card-header">
+      <div class="card-title">📐 독립책임액 안분 예시 (45·48회)</div>
+      <div class="card-meta"><span class="badge badge-red">★★★★</span><span class="arrow">▼</span></div>
+    </div>
+    <div class="card-body">
+      <div class="formula">【48회: 근재사배책 + 중대재해배책】
+산재 초과 손해액 1,000만원
+갑사(근재) 독립책임액: 1,000만 (< 한도 2억)
+을사(중대재해) 독립책임액: 1,000만 (< 한도 5억)
+합계 2,000만 > 손해액 1,000만 → 안분
+갑사: 1,000만 × 1/2 = 500만원
+을사: 500만원 + 형사방어비용 별도 (유죄면 면책)
+
+【기본 공식】
+각사 지급보험금 = 손해액 × (각사 독립책임액 / 독립책임액 합계)</div>
+    </div>
+  </div>
+
+</div>
+
+<div id="t-special" class="tab-content">
+<div class="section-title">📋 특약·약관 핵심 정리</div>
+
+  <!-- 건설기계업자 특약 -->
+  <div class="card-header" onclick="toggleCard(this)">
+    <span class="t-title">① 건설기계업자 특별약관 면책사항 <span class="freq freq-1">48회</span></span>
+    <span class="arrow">▼</span>
+  </div>
+  <div class="card-body">
+    <div class="sub-title">보상하는 손해</div>
+    <p>피보험자가 소유·사용·관리하는 <b>중장비(중기)</b> 및 그 용도에 따른 업무 수행 중 생긴 우연한 사고로 법률상 배상책임 → 보상</p>
+    <div class="memo-box">
+      <div class="memo-title">🧠 면책사유 (48회 핵심)</div>
+      <ol>
+        <li><b>통상적인 중기 용도에 따르지 않은 작업</b>이나 허용된 사용능력 <b>뚜렷이 초과</b>하여 사용 (단, 피보험자가 사용능력 초과와 무관함 입증 시 보상)</li>
+        <li>피보험자의 <b>근로자</b>가 업무 종사 중 입은 신체장해</li>
+        <li>벌과금 및 징벌적 손해 배상책임</li>
+      </ol>
+    </div>
+    <div class="warn-box">
+      <div class="w-title">🚨 48회 적용</div>
+      <p>지게차 포크 위에 올라가 작업 → 지게차 <b>통상적 용도(화물 운반)</b>가 아님 → 면책 ①</p>
+      <p>일당 지급 받는 피해자 → <b>근로자</b>에 해당 → 면책 ②</p>
+    </div>
+  </div>
+
+  <!-- 유도선 특약 -->
+  <div class="card-header" onclick="toggleCard(this)">
+    <span class="t-title">② 유도선 사업자 배상책임보험 <span class="freq freq-1">45회</span></span>
+    <span class="arrow">▼</span>
+  </div>
+  <div class="card-body">
+    <div class="memo-box">
+      <div class="memo-title">🧠 핵심 규정</div>
+      <ul>
+        <li>승선인원 초과가 <b>사고발생 원인이 아니면</b> → 정원을 한도로 보상</li>
+        <li>승객 이외 제3자 담보 특별약관: 당해 선박에 <b>승선한 승객 외 제3자</b>에게 <b>신체장해만</b> 보상</li>
+        <li>조의금·위로금: 배상책임 없는 경우에도 관습상 지급 → 피해승객 1인당 <b>30만원</b> 한도</li>
+        <li>휴대품 수리비용, 카메라 수리비용 → <b>보상 제외</b></li>
+        <li>수색구조비: 구조비 담보 특별약관으로 보상 (사고선박 예인비는 제외)</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 비업무상재해 확장특약 면책 -->
+  <div class="card-header" onclick="toggleCard(this)">
+    <span class="t-title">③ 비업무상재해 확장 추가특별약관 면책사항 <span class="freq freq-2">46·47회</span></span>
+    <span class="arrow">▼</span>
+  </div>
+  <div class="card-body">
+    <div class="memo-box">
+      <div class="memo-title">🧠 면책사항 8가지 (선원에게 4·7 제외 적용)</div>
+      <ol>
+        <li>중독·마취·만취</li>
+        <li>과격한 운동·위험한 오락(스카이다이빙, 스쿠버, 행글라이딩, 자동차경주)</li>
+        <li>자해·자살·자살미수</li>
+        <li style="color:#fca5a5">악성신생물·당뇨·만성류마티스심질환·고혈압·허혈성심질환·기타심질환·뇌혈관 질환 <b>(선원은 선원법 기준으로 보상)</b></li>
+        <li>매독·임질·AIDS</li>
+        <li>생리적 노화·시력감퇴</li>
+        <li style="color:#fca5a5">치아 관련 질병 <b>(선원은 선원법 기준으로 보상)</b></li>
+        <li>군사작전·군사훈련 중 손해 (군인이 아닌 자)</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- 승강기사고배책 -->
+  <div class="card-header" onclick="toggleCard(this)">
+    <span class="t-title">④ 승강기사고 배상책임보험 특이사항 <span class="freq freq-1">45회</span></span>
+    <span class="arrow">▼</span>
+  </div>
+  <div class="card-body">
+    <div class="memo-box">
+      <div class="memo-title">🧠 핵심</div>
+      <ul>
+        <li>직원(피용인) → <b>면책</b> (승강기배책, 시소유관리자 특약 모두)</li>
+        <li>의무보험이므로 → 시소유관리자 특약에서 초과분만 보상</li>
+        <li>장해 2개 이상 → 중한 등급에서 <b>1등급 상향</b></li>
+        <li>근로자의 경우 → 사배책 특약에서 산재급여 초과분 보상</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- CCC/CIC -->
+  <div class="card-header" onclick="toggleCard(this)">
+    <span class="t-title">⑤ Claims Control Clause / Co-Insurance of the Insured Clause <span class="freq freq-1">44회</span></span>
+    <span class="arrow">▼</span>
+  </div>
+  <div class="card-body">
+    <div class="sub-title">Claims Control Clause (클레임 통제 조항)</div>
+    <p>원보험자가 사고 발생 시 모든 상황을 즉시 재보험자에게 통지</p>
+    <p>재보험자가 모든 협상·조정·합의를 통제할 <b>조정자/대리인 임명권</b> 보유</p>
+    <p>재보험자 <b>사전 서면 승인 없이</b> 합의·책임 인정 불가</p>
+    <div class="warn-box">
+      <div class="w-title">차이: Claims Co-operation Clause</div>
+      <p>정보만 공유 → CCC는 재보험자가 직접 손해사정 주도</p>
+    </div>
+    <div class="sub-title">Co-Insurance of the Insured Clause (피보험자 공동보험 조항)</div>
+    <div class="formula-box">
+      <div class="f-title">📐 공제 순서</div>
+      <div class="formula">① 손해액 - Deductible = 잔여금액
+② 잔여금액 × Co-Insurance 피보험자 부담비율 = 피보험자 부담액
+③ 잔여금액 - 피보험자 부담액 = 지급보험금</div>
+    </div>
+  </div>
+
+  <!-- 보험금 지급절차 -->
+  <div class="card-header" onclick="toggleCard(this)">
+    <span class="t-title">⑥ 보험금 지급절차 + 직접청구권 <span class="freq freq-1">47회</span></span>
+    <span class="arrow">▼</span>
+  </div>
+  <div class="card-body">
+    <div class="sub-title">지급절차</div>
+    <ol>
+      <li>서류 접수 → 접수증 교부</li>
+      <li>지체 없이 지급보험금 결정 → 결정 후 <b>7일 이내</b> 지급</li>
+      <li>결정 전 청구 시 → 추정액의 <b>50% 가지급</b></li>
+      <li>7일 초과 미지급 → 연단위 복리 이자 추가 지급</li>
+    </ol>
+    <div class="sub-title">직접청구권 (피해자가 보험사에 직접 청구)</div>
+    <div class="memo-box">
+      <div class="memo-title">🧠 핵심</div>
+      <ul>
+        <li>보험사는 피보험자의 <b>항변</b>으로 피해자에게 대항 가능</li>
+        <li>직접청구 받으면 → 지체 없이 피보험자에게 <b>통지</b></li>
+        <li>보험사는 협조 또는 <b>대행</b> 가능</li>
+        <li>대행 안 하는 경우: ① 손배액이 한도 명백 초과 ② 피보험자 정당한 이유 없이 비협조</li>
+        <li>공탁금 대부 가능 (이자는 공탁금에 붙는 이율 적용), 피보험자는 회수청구권 회사에 양도</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ======================== 법령요약 ======================== -->
+</div>
+
+<div id="t-laws" class="tab-content">
+<div class="section-title">📖 관련 법령 핵심 요약</div>
+
+  <!-- 중대재해처벌법 -->
+  <div class="card-header" onclick="toggleCard(this)">
+    <span class="t-title">① 중대재해처벌법 중대재해 정의 <span class="freq freq-2">45·48회</span></span>
+    <span class="arrow">▼</span>
+  </div>
+  <div class="card-body">
+    <table>
+      <tr><th>구분</th><th>중대산업재해</th><th>중대시민재해</th></tr>
+      <tr><td>사망</td><td>1명 이상 사망</td><td>1명 이상 사망</td></tr>
+      <tr><td>부상</td><td>동일 사고로 <b>6개월 이상</b> 치료 부상자 <b>2명 이상</b></td><td>동일 사고로 <b>2개월 이상</b> 치료 부상자 <b>10명 이상</b></td></tr>
+      <tr><td>질병</td><td>동일 유해요인 급성중독 등 <b>1년 이내 3명 이상</b></td><td>동일 원인 <b>3개월 이상</b> 치료 질병자 <b>10명 이상</b></td></tr>
+    </table>
+    <div class="sub-title">중대재해 배상책임보험 보상항목</div>
+    <div class="memo-box">
+      <div class="memo-title">🧠 3가지 담보</div>
+      <ol>
+        <li><b>보통약관</b>: 중대재해로 피해자 손해배상청구 → 민사상 법률상 배상책임 보상</li>
+        <li><b>징벌적 손해배상책임 특약</b>: 사업주·법인·기관이 법률 제15조에 따른 배상책임 보상</li>
+        <li><b>중대사고 형사방어비용 특약</b>: 피의자/피고인 변호사비용·소송비용 보상 (<span class="hl-red">불송치/불기소 결정, "혐의없음"·"죄가안됨"에 한정</span>)</li>
+      </ol>
+    </div>
+    <div class="warn-box">
+      <div class="w-title">🚨 48회 핵심: 유죄 확정 시</div>
+      <p>형사방어비용 특약 → <b>유죄 확정</b> → <span class="hl-red">면책</span></p>
+    </div>
+  </div>
+
+  <!-- 일반불법행위 요건 -->
+  <div class="card-header" onclick="toggleCard(this)">
+    <span class="t-title">② 일반불법행위 책임 성립요건 (46회)</span>
+    <span class="arrow">▼</span>
+  </div>
+  <div class="card-body">
+    <div class="memo-box">
+      <div class="memo-title">🧠 4가지 요건</div>
+      <ol>
+        <li>가해자의 <b>고의 또는 과실</b></li>
+        <li>행위자에게 <b>책임능력</b></li>
+        <li>행위의 <b>위법성</b></li>
+        <li>위법 행위로 인한 <b>손해 발생</b></li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- 통상손해 vs 특별손해 -->
+  <div class="card-header" onclick="toggleCard(this)">
+    <span class="t-title">③ 통상손해 vs 특별손해 <span class="freq freq-1">44회</span></span>
+    <span class="arrow">▼</span>
+  </div>
+  <div class="card-body">
+    <table>
+      <tr><th>구분</th><th>통상손해</th><th>특별손해</th></tr>
+      <tr><td>개념</td><td>그 채무불이행으로 통상 생기는 손해</td><td>특별한 사정으로 인한 손해</td></tr>
+      <tr><td>배상기준</td><td>손해배상의 <b>기본 범위</b></td><td>가해자가 사정을 <b>알았거나 알 수 있었을 때</b>에만 배상</td></tr>
+      <tr><td>예시(44회)</td><td>치료비, 일실수익, 위자료</td><td>해외유학 취소 손해 → <b>배상 안 됨</b></td></tr>
+    </table>
+  </div>
+
+  <!-- 개인사업주 일실수익 -->
+  <div class="card-header" onclick="toggleCard(this)">
+    <span class="t-title">④ 개인사업주 일실수익 산정 (46회)</span>
+    <span class="arrow">▼</span>
+  </div>
+  <div class="card-body">
+    <div class="sub-title">객관적 자료 있는 경우</div>
+    <p>매출·필요경비·자본적 설비 → 수입금 확정 후 → <b>사업주 개인 기여도(노무가치)</b> 산정</p>
+    <div class="sub-title">객관적 자료 없는 경우</div>
+    <p>동등 학력·경력·능력 가진 사람 고용 시 보수상당액 → <b>대체고용비</b> 합리적 산출</p>
+    <p>법원: <b>고용형태별 근로실태조사보고서</b> 통계소득 기초</p>
+    <div class="memo-box">
+      <div class="memo-title">🧠 적용 기준</div>
+      <ul>
+        <li>보고서 '직종(중,소)·경력연수·성별' 소득금액 → 원칙</li>
+        <li>'산업(중)·근속연수·성별' 소득금액 → 예외 (직종 유사항목 없고, 실제 수입과 비슷한 경우)</li>
+        <li>개인사업주에 한해: 주로 사업주 노무에 의존, 자본적 수익이 미미한 경우만 대체고용비 적용</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 의무보험과의 관계 요약 -->
+  <div class="card-header" onclick="toggleCard(this)">
+    <span class="t-title">⑤ 의무보험과의 관계 전체 흐름 (정리)</span>
+    <span class="arrow">▼</span>
+  </div>
+  <div class="card-body">
+    <div class="formula-box">
+      <div class="f-title">📐 처리 순서</div>
+      <div class="formula">Step 1. 의무보험 있는지 확인
+Step 2. 의무보험 한도 내에서 선 보상
+Step 3. 의무보험 한도 초과분 → 임의보험에서 보상
+Step 4. 임의보험 둘 이상 → 독립책임액 안분
+
+특수건물(의무)+다중이용업소(의무):
+→ 신배책 선 보상 → 초과분 다중이용업소화재배책
+가스사고배책(의무)+영배책(임의):
+→ 가스배책 한도 내 지급 → 초과분 과실상계 후 영배책</div>
+    </div>
+  </div>
+
+  <!-- 불법행위 특수유형 -->
+  <div class="card-header" onclick="toggleCard(this)">
+    <span class="t-title">⑥ 사용자책임 (민법 756조) 요약</span>
+    <span class="arrow">▼</span>
+  </div>
+  <div class="card-body">
+    <div class="memo-box">
+      <div class="memo-title">🧠 성립 + 면책</div>
+      <ul>
+        <li>타인을 사용하여 어느 사무에 종사하게 한 자 → 그 <b>피용인이 사무집행 중</b> 타인에게 가한 손해 배상 책임</li>
+        <li>사용자가 피용자 선임·사무감독에 상당한 주의를 다한 때 → 면책 가능 (입증 어려움)</li>
+        <li>구상권: 사용자 → 피용자에게 구상 가능</li>
+      </ul>
+    </div>
+    <div class="warn-box">
+      <div class="w-title">🚨 간병인협회 사례 (47회)</div>
+      <p>간병인 소개약정 체결한 협회 → <b>사용자 위치 아님</b> → 사용자책임 없음</p>
+      <p>요양병원 → 간병인 감독·지시 → <b>사용자 위치 인정</b></p>
+    </div>
+  </div>
+</div>
+</div>
+
+<div id="t-qa" class="tab-content">
+  <button class="show-all-btn" onclick="toggleAllQA()">🔍 전체 답 보기/숨기기</button>
+  <p style="font-size:12px;color:#4fc3f7;margin-bottom:8px;font-weight:bold">━━ 37~43회 (2014~2020) ━━</p>
+
+
+  <div class="qa-item" onclick="toggleQA(this)">
+    <div class="qa-q">Q1. 복합장해율 공식은? <span>▶</span></div>
+    <div class="qa-a">1 - {(1-a)(1-b)(1-c)...} ← 각 부위별 기여도 적용 후 대입</div>
+  </div>
+  <div class="qa-item" onclick="toggleQA(this)">
+    <div class="qa-q">Q2. 선원 직무상 행방불명 보상 계산법은? <span>▶</span></div>
+    <div class="qa-a">1개월 내: 통상임금×1 + 승선평균임금×3 / 1개월 후: 유족보상(승선평균임금×1,300일) + 장제비(×120일)</div>
+  </div>
+  <div class="qa-item" onclick="toggleQA(this)">
+    <div class="qa-q">Q3. 국내 근로자 상병보상 기준은? <span>▶</span></div>
+    <div class="qa-a">평균임금 × 60% × 요양일수 (임금 일부 지급시: 평균임금 - 지급액의 60%)</div>
+  </div>
+  <div class="qa-item" onclick="toggleQA(this)">
+    <div class="qa-q">Q4. 선원 직무상 상병보상 4개월 기준은? <span>▶</span></div>
+    <div class="qa-a">4개월까지 통상임금 100% / 4개월 이후 통상임금 70% / 직무외 3개월 내 70%</div>
+  </div>
+  <div class="qa-item" onclick="toggleQA(this)">
+    <div class="qa-q">Q5. E/L 보험금에서 손익상계 원칙은? <span>▶</span></div>
+    <div class="qa-a">민사배상금(과실상계 후) - 산재급여 = 지급보험금 / 음수면 0원. 위자료는 손익상계 안 함</div>
+  </div>
+  <div class="qa-item" onclick="toggleQA(this)">
+    <div class="qa-q">Q6. 가스배상책임보험에서 근로자 사망 보상 여부? <span>▶</span></div>
+    <div class="qa-a">면책! (보통약관 8조 9호: 피보험자 근로자가 업무 중 입은 신체장해는 보상 안 함)</div>
+  </div>
+  <div class="qa-item" onclick="toggleQA(this)">
+    <div class="qa-q">Q7. 직접청구권 소멸시효는? <span>▶</span></div>
+    <div class="qa-a">손해·가해자 안 날부터 3년 / 불법행위일부터 10년 (보험금청구권 2년보다 김)</div>
+  </div>
+  <div class="qa-item" onclick="toggleQA(this)">
+    <div class="qa-q">Q8. 일실퇴직금 현가화 공식은? <span>▶</span></div>
+    <div class="qa-a">예상퇴직금 × 1/(1+0.05×잔여재직기간) → 기수령 퇴직금 차감 → 장해율·과실 적용</div>
+  </div>
+  <div class="qa-item" onclick="toggleQA(this)">
+    <div class="qa-q">Q9. 사망 일실수익 생계비 공제율은? <span>▶</span></div>
+    <div class="qa-a">1/3 공제 (잔존 가동율 = 2/3)</div>
+  </div>
+  <div class="qa-item" onclick="toggleQA(this)">
+    <div class="qa-q">Q10. 특수불법행위 6종을 나열하라 <span>▶</span></div>
+    <div class="qa-a">① 책임무능력자 감독자(755조) ② 사용자(756조) ③ 도급인(757조) ④ 공작물 점유자·소유자(758조) ⑤ 동물 점유자(759조) ⑥ 공동불법행위(760조)</div>
+  </div>
+  <div class="qa-item" onclick="toggleQA(this)">
+    <div class="qa-q">Q11. 담보기준 3종류는? <span>▶</span></div>
+    <div class="qa-a">① 사고발생기준(Occurrence) ② 배상청구기준(Claims-made) ③ 손해발견기준(Discovery)</div>
+  </div>
+  <div class="qa-item" onclick="toggleQA(this)">
+    <div class="qa-q">Q12. 재난배상책임보험 사망 보상한도는? <span>▶</span></div>
+    <div class="qa-a">1인당 1억 5천만원 (실손해 2,000만원 미만 → 2,000만원)</div>
+  </div>
+  <div class="qa-item" onclick="toggleQA(this)">
+    <div class="qa-q">Q13. 영업배상책임보험 면책금 적용 순서는? <span>▶</span></div>
+    <div class="qa-a">법률상 손해배상금에서 면책금 먼저 공제 → 1인당 한도 → 사고당 한도 순</div>
+  </div>
+  <div class="qa-item" onclick="toggleQA(this)">
+    <div class="qa-q">Q14. 일시보상 지급 후 선원법과 근기법의 효과 차이는? <span>▶</span></div>
+    <div class="qa-a">근기법: 모든 재해보상 면제 / 선원법: 요양·상병·장해만 면제 (유족보상·장제비는 면제 안 됨)</div>
+  </div>
+  <div class="qa-item" onclick="toggleQA(this)">
+    <div class="qa-q">Q15. 장해등급 조정 - 8급 이상 2개이면? <span>▶</span></div>
+    <div class="qa-a">중한 등급에서 2등급 인상 (5급이상 2개→3등급, 13급이상 2개→1등급)</div>
+  </div>
+  <div class="qa-item" onclick="toggleQA(this)">
+    <div class="qa-q">Q16. 부진정연대채무와 연대채무의 가장 큰 차이는? <span>▶</span></div>
+    <div class="qa-a">연대채무: 주관적 관련성 있음, 변제 외 사유도 절대적 효력 / 부진정: 관련성 없음, 변제사유만 영향</div>
+  </div>
+  <div class="qa-item" onclick="toggleQA(this)">
+    <div class="qa-q">Q17. ERP 단기·중기·선택 연장기간은? <span>▶</span></div>
+    <div class="qa-a">단기: 60일 / 중기: 60일 내 통보 후 5년 / 선택: 무기한 (추가보험료 200% 이내)</div>
+  </div>
+  <div class="qa-item" onclick="toggleQA(this)">
+    <div class="qa-q">Q18. 통상임금 인정 3요건은? <span>▶</span></div>
+    <div class="qa-a">정기성 + 고정성 + 일률성 모두 충족해야 통상임금 인정</div>
+  </div>
+  <div class="qa-item" onclick="toggleQA(this)">
+    <div class="qa-q">Q19. 선원 유족보상 직무상·직무외 차이는? <span>▶</span></div>
+    <div class="qa-a">직무상 사망: 승선평균임금 × 1,300일 / 직무외 사망: 승선평균임금 × 1,000일</div>
+  </div>
+  <div class="qa-item" onclick="toggleQA(this)">
+    <div class="qa-q">Q20. 안전배려의무 위반시 법적 책임 종류는? <span>▶</span></div>
+    <div class="qa-a">민법상 채무불이행책임 (근로계약 위반) + 불법행위책임 모두 가능</div>
+  </div>
+  <div class="qa-item" onclick="toggleQA(this)">
+    <div class="qa-q">Q21. 사망 위자료 피해자 과실 반영 공식은? <span>▶</span></div>
+    <div class="qa-a">기준금액(8천만 or 1억) × [1 - (피해자과실율 × 0.6)]</div>
+  </div>
+  <div class="qa-item" onclick="toggleQA(this)">
+    <div class="qa-q">Q22. 가스배상책임보험 LPG충전소 사망 한도는? <span>▶</span></div>
+    <div class="qa-a">1인당 8,000만원 (실손해 2,000만원 미만 → 2,000만원)</div>
+  </div>
+  <div class="qa-item" onclick="toggleQA(this)">
+    <div class="qa-q">Q23. 재해보상확장 추가특약 - 장해보상 국내 근기법 대비 비율은? <span>▶</span></div>
+    <div class="qa-a">근기법 기준 × 110% = 산재보험법 기준 일수 적용</div>
+  </div>
+  <div class="qa-item" onclick="toggleQA(this)">
+    <div class="qa-q">Q24. 재해보상금 산정시 기왕증 기여도 적용 여부는? <span>▶</span></div>
+    <div class="qa-a">적용 안 함 (대법원 판례) - 단 민사 손해배상에서는 기여도 차감 가능</div>
+  </div>
+  <div class="qa-item" onclick="toggleQA(this)">
+    <div class="qa-q">Q25. 동물 점유자책임에서 소유자 책임 여부는? <span>▶</span></div>
+    <div class="qa-a">동물을 타인에게 맡긴 경우 소유자는 원칙적으로 무책임 / 점유자(위탁받은 자)가 책임</div>
+  </div>
+</div>
+
+  <p style="font-size:12px;color:#fbbf24;margin:14px 0 8px;font-weight:bold">━━ 44~48회 (2021~2025) 신규 ━━</p>
+
+  <div class="qa-item" onclick="toggleQA(this)">
+    <div class="qa-q">Q21. 상속 후 공제설 적용 순서는? (45·48회) <span>▶</span></div>
+    <div class="qa-a">① 총 손해액 계산 → ② 상속지분별 배분(배우자1.5 자녀1) → ③ 유족급여 수급자(배우자) 지분에서만 공제 → ④ 각자 잔액에 과실상계</div>
+  </div>
+  <div class="qa-item" onclick="toggleQA(this)">
+    <div class="qa-q">Q22. LPG소비자보장특약 2025.5.15. 이후 사망 한도는? (48회) <span>▶</span></div>
+    <div class="qa-a">1억 5,000만원 (기존 8,000만원 → 상향) / 부상 1급 3,000만원 / 신체손해는 피해자 과실 불문</div>
+  </div>
+  <div class="qa-item" onclick="toggleQA(this)">
+    <div class="qa-q">Q23. 배상청구기준 증권에서 보상 2요건은? (44·46·47회) <span>▶</span></div>
+    <div class="qa-a">① 소급담보일 이후 사고 발생 + ② 보험기간 중 최초 청구 → 둘 다 충족 필요</div>
+  </div>
+  <div class="qa-item" onclick="toggleQA(this)">
+    <div class="qa-q">Q24. 국문영배책 분담조항 임의+의무 혼재 시 처리는? (45·48회) <span>▶</span></div>
+    <div class="qa-a">의무보험에서 보상되는 금액을 차감한 금액을 손해액으로 간주 → 독립책임액 안분 적용</div>
+  </div>
+  <div class="qa-item" onclick="toggleQA(this)">
+    <div class="qa-q">Q25. 중대재해 형사방어비용 특약이 지급 안 되는 경우는? (48회) <span>▶</span></div>
+    <div class="qa-a">유죄 확정 시 면책 (불기소·불송치 결정, "혐의없음" 또는 "죄가안됨"인 경우에만 지급)</div>
+  </div>
+  <div class="qa-item" onclick="toggleQA(this)">
+    <div class="qa-q">Q26. 자기부담금 국문과 CGL의 차이는? (44·48회) <span>▶</span></div>
+    <div class="qa-a">국문: 손해액에서 먼저 공제 후 한도 비교 / CGL: Min[손해액,한도]-공제액 (한도도 줄어듦)</div>
+  </div>
+  <div class="qa-item" onclick="toggleQA(this)">
+    <div class="qa-q">Q27. 공작물 점유자와 소유자 책임 차이는? (45·48회) <span>▶</span></div>
+    <div class="qa-a">점유자: 1차 책임, 주의 다하면 면책 가능(중간과실) / 소유자: 2차 보충 책임, 무과실(면책 불가)</div>
+  </div>
+  <div class="qa-item" onclick="toggleQA(this)">
+    <div class="qa-q">Q28. 제조물책임법 면책사유 4가지는? (44·47회) <span>▶</span></div>
+    <div class="qa-a">① 공급 안 했다는 사실 ② 과학기술 수준으로 결함 발견 불가 ③ 법령 기준 준수로 발생 ④ 설계·제작 지시로 결함 발생</div>
+  </div>
+  <div class="qa-item" onclick="toggleQA(this)">
+    <div class="qa-q">Q29. 위자료 과실상계 특이사항은? (47회) <span>▶</span></div>
+    <div class="qa-a">피해자 과실의 60%만 적용 → 기준금액 × 노동능력상실률 × [1-(피해자과실×6/10)]</div>
+  </div>
+  <div class="qa-item" onclick="toggleQA(this)">
+    <div class="qa-q">Q30. 출퇴근재해 경로 일탈 예외 7가지 암기법은? (48회) <span>▶</span></div>
+    <div class="qa-a">일학선아의돌준: ①일상용품구입 ②학교교육훈련 ③선거권행사 ④아동장애인 등하원 ⑤의료기관 진료 ⑥돌봄가족 돌봄 ⑦준하는 행위(고용부장관 인정)</div>
+  </div>
+  <div class="qa-item" onclick="toggleQA(this)">
+    <div class="qa-q">Q31. 선원 이송비 보상 원칙과 예외는? (46회) <span>▶</span></div>
+    <div class="qa-a">원칙: 보상 안 함 / 예외: 중환자·유해송환·긴급이송 → 편도 실비 1인당 500만원 한도 / 호송인 비용은 어떤 경우도 불가</div>
+  </div>
+  <div class="qa-item" onclick="toggleQA(this)">
+    <div class="qa-q">Q32. 건설기계 특약 지게차 포크 위 작업 사고 면책 이유는? (48회) <span>▶</span></div>
+    <div class="qa-a">① 지게차 통상용도(화물운반) 아닌 작업 → 면책① / ② 일당 받는 근로자=피용인 → 면책②</div>
+  </div>
+  <div class="qa-item" onclick="toggleQA(this)">
+    <div class="qa-q">Q33. 해외취업선원 상선 vs 어선 특별보상금 차이는? (44회) <span>▶</span></div>
+    <div class="qa-a">상선: USD 40,000 / 어선: USD 20,000 / 최저보장: 상선 USD 70,000, 어선 USD 50,000</div>
+  </div>
+  <div class="qa-item" onclick="toggleQA(this)">
+    <div class="qa-q">Q34. 평균임금 산정 제외기간 8가지 암기법은? (46회) <span>▶</span></div>
+    <div class="qa-a">수귀출업육쟁병사: 수습·귀책휴업·출산전후휴가·업무상요양휴업·육아휴직·쟁의행위·병역훈련·사용자승인 휴업</div>
+  </div>
+
+</div>
+
+<script>
+function switchTab(id) {
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.target.classList.add('active');
+}
+function toggleCard(card) {
+  card.classList.toggle('open');
+}
+function toggleQA(item) {
+  item.classList.toggle('show');
+}
+let allShown = false;
+function toggleAllQA() {
+  allShown = !allShown;
+  document.querySelectorAll('.qa-item').forEach(item => {
+    if (allShown) item.classList.add('show');
+    else item.classList.remove('show');
+  });
+}
+</script>
+</body>
+</html>
