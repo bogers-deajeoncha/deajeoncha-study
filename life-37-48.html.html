@@ -1,0 +1,1153 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>제3보험 기출분석 통합 (37~48회)</title>
+<style>
+  :root {
+    --bg: #0a0e1a;
+    --card: #131929;
+    --card2: #1a2235;
+    --border: #1e2d47;
+    --accent: #3b82f6;
+    --accent2: #f59e0b;
+    --accent3: #10b981;
+    --accent4: #ef4444;
+    --accent5: #8b5cf6;
+    --text: #e2e8f0;
+    --text2: #94a3b8;
+    --text3: #64748b;
+    --tag-bg: #1e3a5f;
+    --tag-text: #60a5fa;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: 'Malgun Gothic', sans-serif; font-size: 14px; line-height: 1.6; }
+
+  .header { background: linear-gradient(135deg, #0d1b2e 0%, #1a2a45 100%); padding: 18px 16px 14px; border-bottom: 2px solid var(--accent); }
+  .header h1 { font-size: 17px; font-weight: 700; color: #60a5fa; }
+  .header p { font-size: 12px; color: var(--text2); margin-top: 3px; }
+  .header .disclaimer { font-size: 11px; color: var(--text3); margin-top: 6px; }
+
+  .era-tabs { display: flex; background: #0d1221; border-bottom: 2px solid var(--border); }
+  .era-btn { flex: 1; padding: 10px 6px; font-size: 12px; font-weight: 700; cursor: pointer; text-align: center; color: var(--text2); border: none; background: transparent; border-bottom: 3px solid transparent; transition: all .2s; font-family: inherit; }
+  .era-btn.active { color: var(--accent2); border-bottom-color: var(--accent2); background: rgba(245,158,11,0.07); }
+  .era-btn:hover:not(.active) { color: var(--text); background: var(--card2); }
+
+  .sub-tabs { display: flex; overflow-x: auto; background: var(--card); border-bottom: 1px solid var(--border); }
+  .sub-tab { padding: 9px 12px; font-size: 12px; font-weight: 600; cursor: pointer; white-space: nowrap; color: var(--text2); border-bottom: 2px solid transparent; transition: all .2s; font-family: inherit; background: transparent; border-left: none; border-right: none; border-top: none; }
+  .sub-tab.active { color: var(--accent); border-bottom-color: var(--accent); background: rgba(59,130,246,0.08); }
+  .sub-tab:hover:not(.active) { color: var(--text); background: var(--card2); }
+
+  .search-bar { padding: 10px 14px; background: #0d1221; border-bottom: 1px solid var(--border); }
+  .search-bar input { width: 100%; padding: 7px 12px; background: var(--card); border: 1px solid var(--border); border-radius: 8px; color: var(--text); font-family: inherit; font-size: 13px; }
+  .search-bar input:focus { outline: none; border-color: var(--accent); }
+
+  .content-area { padding: 12px 14px; max-width: 940px; margin: 0 auto; }
+
+  .era-section { display: none; }
+  .era-section.active { display: block; }
+  .sub-section { display: none; }
+  .sub-section.active { display: block; }
+
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 14px; margin-bottom: 12px; }
+  .card-title { font-size: 14px; font-weight: 700; color: var(--accent); margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
+
+  .badge { padding: 2px 7px; border-radius: 4px; font-size: 11px; font-weight: 600; }
+  .badge-blue { background: #1e3a5f; color: #60a5fa; }
+  .badge-gold { background: #3d2e10; color: #f59e0b; }
+  .badge-green { background: #0f3327; color: #34d399; }
+  .badge-red { background: #3b1111; color: #f87171; }
+  .badge-purple { background: #2d1f5e; color: #a78bfa; }
+  .badge-count { background: var(--accent4); color: #fff; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 700; }
+
+  .q-item { background: var(--card2); border-radius: 8px; padding: 12px; margin-bottom: 8px; cursor: pointer; border: 1px solid var(--border); transition: border-color 0.2s; }
+  .q-item:hover { border-color: var(--accent); }
+  .q-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }
+  .q-title { font-size: 13px; font-weight: 600; color: var(--text); flex: 1; }
+  .q-meta { display: flex; gap: 4px; flex-wrap: wrap; margin-top: 6px; }
+  .q-answer { display: none; margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--border); font-size: 13px; color: var(--text2); line-height: 1.8; }
+  .q-answer.show { display: block; }
+  .toggle-btn { background: var(--tag-bg); color: var(--tag-text); border: none; padding: 3px 9px; border-radius: 5px; font-size: 11px; cursor: pointer; white-space: nowrap; font-weight: 600; font-family: inherit; }
+
+  .key-box { background: rgba(59,130,246,0.08); border-left: 3px solid var(--accent); padding: 9px 12px; border-radius: 0 6px 6px 0; margin: 8px 0; }
+  .warn-box { background: rgba(245,158,11,0.08); border-left: 3px solid var(--accent2); padding: 9px 12px; border-radius: 0 6px 6px 0; margin: 8px 0; }
+  .ok-box { background: rgba(16,185,129,0.08); border-left: 3px solid var(--accent3); padding: 9px 12px; border-radius: 0 6px 6px 0; margin: 8px 0; }
+  .err-box { background: rgba(239,68,68,0.08); border-left: 3px solid var(--accent4); padding: 9px 12px; border-radius: 0 6px 6px 0; margin: 8px 0; }
+
+  .tbl { width: 100%; border-collapse: collapse; margin: 8px 0; font-size: 12px; }
+  .tbl th { background: #1e2d47; color: #60a5fa; padding: 7px 8px; text-align: left; font-weight: 600; }
+  .tbl td { padding: 6px 8px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  .tbl tr:hover td { background: rgba(59,130,246,0.04); }
+
+  .freq-bar { display: flex; align-items: center; gap: 8px; margin: 4px 0; }
+  .freq-label { width: 150px; font-size: 12px; color: var(--text); flex-shrink: 0; }
+  .freq-track { flex: 1; background: var(--border); border-radius: 4px; height: 8px; }
+  .freq-fill { height: 8px; border-radius: 4px; background: var(--accent); }
+  .freq-fill.hot { background: var(--accent4); }
+  .freq-fill.med { background: var(--accent2); }
+  .freq-num { font-size: 11px; color: var(--accent2); font-weight: 700; width: 34px; text-align: right; }
+
+  .memo-card { background: var(--card2); border: 1px solid var(--border); border-radius: 8px; padding: 12px; margin-bottom: 8px; cursor: pointer; }
+  .memo-q { font-size: 13px; font-weight: 600; color: var(--accent2); }
+  .memo-a { display: none; margin-top: 8px; font-size: 13px; color: var(--text); line-height: 1.8; border-top: 1px solid var(--border); padding-top: 8px; }
+  .memo-a.show { display: block; }
+
+  .qcard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 8px; }
+  .qcard { background: var(--card2); border: 1px solid var(--border); border-radius: 8px; padding: 12px; cursor: pointer; }
+  .qcard:hover { border-color: var(--accent); }
+  .qcard .qq { font-size: 13px; font-weight: 600; color: #fff; margin-bottom: 6px; }
+  .qcard .qa { display: none; font-size: 12px; color: var(--accent3); border-top: 1px solid var(--border); padding-top: 7px; margin-top: 5px; }
+  .qcard .qa.show { display: block; }
+  .qcard .qhint { font-size: 11px; color: var(--text3); margin-top: 3px; }
+
+  .sec { font-weight: 700; color: var(--accent); margin: 10px 0 4px; font-size: 13px; }
+  ul { padding-left: 18px; }
+  li { margin-bottom: 3px; }
+  strong { color: #fbbf24; }
+  em { color: var(--accent3); font-style: normal; }
+
+  .tag { display: inline-block; padding: 1px 6px; border-radius: 3px; font-size: 10px; font-weight: 700; margin-right: 3px; }
+  .tag-必 { background: #3b1111; color: #f87171; }
+  .tag-출 { background: #1e3a5f; color: #60a5fa; }
+
+  .year-pill { display: inline-block; padding: 1px 7px; background: #1e3a5f; border-radius: 10px; font-size: 11px; color: #93c5fd; margin: 2px; }
+  .stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 8px; margin-bottom: 14px; }
+  .stat-box { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 12px; text-align: center; }
+  .stat-box .num { font-size: 22px; font-weight: 700; color: var(--accent); }
+  .stat-box .lbl { font-size: 11px; color: var(--text2); margin-top: 2px; }
+
+  @media (max-width:600px) {
+    .qcard-grid { grid-template-columns: 1fr; }
+    .freq-label { width: 110px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>🏥 신체손해사정사 2차 — 제3보험(질병·상해보험) 기출분석 통합</h1>
+  <p>제37회(2014) ~ 제48회(2025) · 12개 시험(43회는 2종 답안 병합) · 핵심암기 총정리</p>
+  <p class="disclaimer">※ 본 정리는 강사 예시답안(이용욱·윤금옥 등)을 학습용으로 재구성한 것으로, 확정 모범답안이 아니며 실제 출제와 배점은 다를 수 있습니다.</p>
+</div>
+
+<div class="era-tabs">
+  <button class="era-btn active" onclick="switchEra('old', this)">📚 37~43회<br><span style="font-size:10px;font-weight:400">(2014~2020)</span></button>
+  <button class="era-btn" onclick="switchEra('new', this)">📖 44~48회<br><span style="font-size:10px;font-weight:400">(2021~2025)</span></button>
+  <button class="era-btn" onclick="switchEra('total', this)">🔥 통합빈도<br><span style="font-size:10px;font-weight:400">(12회 전체)</span></button>
+  <button class="era-btn" onclick="switchEra('numbers', this)">🔢 숫자암기<br><span style="font-size:10px;font-weight:400">(전 회차)</span></button>
+  <button class="era-btn" onclick="switchEra('qcard', this)">⚡ 퀵암기<br><span style="font-size:10px;font-weight:400">(클릭정답)</span></button>
+</div>
+
+<div class="sub-tabs" id="subTabsOld">
+  <button class="sub-tab active" onclick="switchSub('old','overview',this)">📊 출제빈도</button>
+  <button class="sub-tab" onclick="switchSub('old','topic1',this)">계약법리</button>
+  <button class="sub-tab" onclick="switchSub('old','topic2',this)">후유장해</button>
+  <button class="sub-tab" onclick="switchSub('old','topic3',this)">실손의료비</button>
+  <button class="sub-tab" onclick="switchSub('old','topic4',this)">암보험금</button>
+  <button class="sub-tab" onclick="switchSub('old','topic5',this)">사망·상속</button>
+  <button class="sub-tab" onclick="switchSub('old','topic6',this)">간병·특수담보</button>
+  <button class="sub-tab" onclick="switchSub('old','topic7',this)">약술정리</button>
+  <button class="sub-tab" onclick="switchSub('old','gichul',this)">회차별기출</button>
+  <button class="sub-tab" onclick="switchSub('old','memo',this)">📝 암기노트</button>
+</div>
+<div class="sub-tabs" id="subTabsNew" style="display:none">
+  <button class="sub-tab active" onclick="switchSub('new','overview44',this)">📊 출제현황</button>
+  <button class="sub-tab" onclick="switchSub('new','topics44',this)">주제별 요약</button>
+  <button class="sub-tab" onclick="switchSub('new','gichul44',this)">회차별기출</button>
+  <button class="sub-tab" onclick="switchSub('new','predict',this)">🎯 출제예측</button>
+</div>
+
+<div class="search-bar">
+  <input type="text" id="searchInput" placeholder="🔍 키워드 검색 (예: 청약철회, 후유장해, 실손의료비, 고지의무...)" oninput="doSearch()">
+</div>
+
+<div class="content-area">
+
+<!-- ========== ERA: 37~43회 ========== -->
+<div class="era-section active" id="era-old">
+
+  <div class="sub-section active" id="old-overview">
+    <div class="card">
+      <div class="card-title">📊 주제별 출제빈도 (37~43회, 7개 시험 · 43회는 1개로 집계)</div>
+      <div class="freq-bar"><div class="freq-label">실손의료비 계산</div><div class="freq-track"><div class="freq-fill hot" style="width:100%"></div></div><div class="freq-num">7회</div></div>
+      <div class="freq-bar"><div class="freq-label">후유장해보험금 계산</div><div class="freq-track"><div class="freq-fill hot" style="width:100%"></div></div><div class="freq-num">7회</div></div>
+      <div class="freq-bar"><div class="freq-label">계약법리·표준약관 약술</div><div class="freq-track"><div class="freq-fill hot" style="width:100%"></div></div><div class="freq-num">7회</div></div>
+      <div class="freq-bar"><div class="freq-label">사망보험금·상속</div><div class="freq-track"><div class="freq-fill med" style="width:57%"></div></div><div class="freq-num">4회</div></div>
+      <div class="freq-bar"><div class="freq-label">청력·코·안구 등 특수장해</div><div class="freq-track"><div class="freq-fill med" style="width:57%"></div></div><div class="freq-num">4회</div></div>
+      <div class="freq-bar"><div class="freq-label">암보험금 계산</div><div class="freq-track"><div class="freq-fill" style="width:43%"></div></div><div class="freq-num">3회</div></div>
+      <div class="freq-bar"><div class="freq-label">간병보험·중대질병 정의</div><div class="freq-track"><div class="freq-fill" style="width:43%"></div></div><div class="freq-num">3회</div></div>
+      <div class="freq-bar"><div class="freq-label">계약전알릴의무(고지의무) 사례</div><div class="freq-track"><div class="freq-fill" style="width:43%"></div></div><div class="freq-num">3회</div></div>
+      <div class="freq-bar"><div class="freq-label">복수보험 비례보상</div><div class="freq-track"><div class="freq-fill" style="width:29%"></div></div><div class="freq-num">2회</div></div>
+      <div class="freq-bar"><div class="freq-label">후유장해 판정시기·유보</div><div class="freq-track"><div class="freq-fill" style="width:29%"></div></div><div class="freq-num">2회</div></div>
+    </div>
+    <div class="card">
+      <div class="card-title">💡 회차별 1번(또는 핵심) 문제 쟁점</div>
+      <table class="tbl">
+        <tr><th>회차</th><th>연도</th><th>핵심 쟁점</th><th>배점</th></tr>
+        <tr><td>37회</td><td>2014</td><td>청약철회 기간·제한계약유형 + 계약무효 3가지</td><td>15점</td></tr>
+        <tr><td>38회</td><td>2015</td><td>직업변경 + 상해후유장해보험금 계산(1·2차 진단)</td><td>30점</td></tr>
+        <tr><td>39회</td><td>2016</td><td>후유장해보험금 + 사망보험금(대습상속) + 장해판정시기</td><td>-</td></tr>
+        <tr><td>40회</td><td>2017</td><td>제3자 심의 + 서면동의 철회권 + 관상동맥우회술</td><td>-</td></tr>
+        <tr><td>41회</td><td>2018</td><td>승낙전보험사고 + 계약내용의 변경 + 약관해석의 원칙</td><td>-</td></tr>
+        <tr><td>42회</td><td>2019</td><td>보험료 납입지체(최고절차·준용조항)</td><td>-</td></tr>
+        <tr><td>43회</td><td>2020</td><td>고지의무 위반 해지권 제한사유(다수 소문제형)</td><td>-</td></tr>
+      </table>
+    </div>
+    <div class="card">
+      <div class="card-title">🔥 반드시 나오는 3대 핵심 유형</div>
+      <div class="ok-box"><strong>유형①</strong> 보험금 계산 — 매회 출제<br>→ 후유장해(장해율 산정) + 실손의료비(급여·비급여·공제금액) + 암보험금 혼합 출제</div>
+      <div class="ok-box"><strong>유형②</strong> 계약법리 약술(10~20점) — 매회 3~5문제<br>→ 청약철회, 계약전·후 알릴의무, 해지환급금, 부활, 소멸시효, 약관해석원칙</div>
+      <div class="ok-box"><strong>유형③</strong> 면부책 사례문제 — 고지의무 위반 + 인과관계 + 지급책임 판단 3단계</div>
+    </div>
+  </div>
+
+  <!-- 계약법리 -->
+  <div class="sub-section" id="old-topic1">
+    <div class="q-item" onclick="toggleQ(this)">
+      <div class="q-header"><div class="q-title">청약철회 제도 — 기간·제한계약유형·업무처리</div><button class="toggle-btn">보기 ▼</button></div>
+      <div class="q-meta"><span class="badge badge-gold">必암기</span><span class="badge badge-blue">37·45회</span></div>
+      <div class="q-answer">
+        <div class="key-box">청약철회 기간: <strong>증권수령일로부터 15일</strong> 이내</div>
+        <div class="sec">청약철회를 제한하는 계약유형(37회 기준)</div>
+        <ul>
+          <li>피보험자가 건강진단을 받아야 하는 보험계약</li>
+          <li>보험기간이 1년 미만인 보험계약</li>
+          <li>단체보험계약</li>
+          <li>청약일로부터 30일을 초과한 계약</li>
+        </ul>
+        <div class="warn-box">개정 후(45회 기준) 제한사유: ①회사가 건강상태 진단을 지원하는 계약 ②보험기간 90일 이내인 계약 ③전문금융소비자가 체결한 계약 ④청약일로부터 30일 초과 계약<br>→ 단체보험 항목이 빠지고 <strong>90일 이내 계약·전문금융소비자</strong> 항목이 신설됨(개정 흐름 주의)</div>
+        <div class="sec">청약철회 접수 시 업무처리</div>
+        <ul>
+          <li>현금 납입분: 접수일로부터 3일 이내 반환(지연 시 보험계약대출이율 가산)</li>
+          <li>신용카드 납입분: 청구금액을 영(0)으로 처리</li>
+          <li>철회 전 이미 보험사고 발생 시: 철회 효력 발생하지 않음</li>
+          <li>손해배상·위약금 등 금전 청구 금지</li>
+        </ul>
+      </div>
+    </div>
+    <div class="q-item" onclick="toggleQ(this)">
+      <div class="q-header"><div class="q-title">계약의 무효 사유 3가지</div><button class="toggle-btn">보기 ▼</button></div>
+      <div class="q-meta"><span class="badge badge-blue">37회 15점</span></div>
+      <div class="q-answer">
+        <ul>
+          <li><strong>피보험자 서면동의 결여</strong>(상법 §731①) — 타인 사망보험에서 서면동의 없는 계약</li>
+          <li><strong>심신상실자 등의 사망보험</strong>(상법 §732) — 15세 미만자·심신상실자·심신박약자의 사망을 보험사고로 하는 계약</li>
+          <li><strong>보험연령 미달·초과 계약</strong> — 단, 착오 발견 시 이미 나이에 도달했다면 유효(단, 15세 미만자 사망보험은 예외 불인정)</li>
+        </ul>
+      </div>
+    </div>
+    <div class="q-item" onclick="toggleQ(this)">
+      <div class="q-header"><div class="q-title">계약취소 사유(사기에 의한 계약)와 제척기간</div><button class="toggle-btn">보기 ▼</button></div>
+      <div class="q-meta"><span class="badge badge-gold">必암기</span><span class="badge badge-blue">38·40·43회</span></div>
+      <div class="q-answer">
+        <div class="key-box">계약자·피보험자가 ①대리진단 ②약물사용으로 진단절차 통과 ③진단서 위·변조 ④청약일 이전 암 또는 HIV 감염 확정진단을 숨기고 가입 등 사기로 계약이 성립되었음을 회사가 증명한 때</div>
+        <div class="warn-box">제척기간: <strong>계약일로부터 5년 이내</strong> 또는 <strong>사기사실을 안 날부터 1개월 이내</strong></div>
+      </div>
+    </div>
+    <div class="q-item" onclick="toggleQ(this)">
+      <div class="q-header"><div class="q-title">계약전 알릴의무 위반에 대한 해지권 제한사유 5가지</div><button class="toggle-btn">보기 ▼</button></div>
+      <div class="q-meta"><span class="badge badge-gold">必암기</span><span class="badge badge-blue">43회 다수 소문제</span></div>
+      <div class="q-answer">
+        <ol>
+          <li>회사가 계약당시 그 사실을 알았거나 과실로 알지 못한 때</li>
+          <li>제척기간 경과: 안 날부터 1개월 / 제1회 보험료 받은 때부터 2년(진단계약 질병은 1년) / 계약체결일부터 3년 경과</li>
+          <li>건강진단서 등 기초자료에 따라 승낙한 사항으로 보험금 지급사유가 발생한 때(단, 중요사항을 고의로 다르게 작성 시 해지 가능)</li>
+          <li>보험설계사 등이 고지 기회를 주지 않았거나 고지를 방해·부실고지를 권유한 때</li>
+        </ol>
+        <div class="key-box">해지권 제한사유의 취지: 계약의 계속계약성에 따른 법적안정성 확보 + 보험자·계약자간 이익조정</div>
+      </div>
+    </div>
+    <div class="q-item" onclick="toggleQ(this)">
+      <div class="q-header"><div class="q-title">부활계약의 효력·준용조항</div><button class="toggle-btn">보기 ▼</button></div>
+      <div class="q-meta"><span class="badge badge-blue">38·42·44회</span></div>
+      <div class="q-answer">
+        <div class="key-box">부활계약은 종전계약과 동일한 효력. 단, <strong>계약전 알릴의무 위반 효과·사기에 의한 계약·계약의 성립·제1회 보험료 납입과 보장개시·면책(감액)기간</strong>은 <strong>부활일을 계약일로 보아</strong> 준용</div>
+        <div class="err-box">44회 분쟁례: 부활 시 <strong>면책기간</strong>은 부활일 기준 준용하나, <strong>감액기간</strong>은 별도 규정이 없어 준용하지 않음(분쟁례 2016-13호)</div>
+      </div>
+    </div>
+    <div class="q-item" onclick="toggleQ(this)">
+      <div class="q-header"><div class="q-title">소멸시효 — 청구권 종류와 기간</div><button class="toggle-btn">보기 ▼</button></div>
+      <div class="q-meta"><span class="badge badge-blue">43·48회</span></div>
+      <div class="q-answer">
+        <div class="key-box">보험금청구권·만기환급금청구권·보험료반환청구권·해지환급금청구권·책임준비금반환청구권·배당금청구권 → 모두 <strong>3년</strong></div>
+        <div class="sec">48회: 질병보험 지급사유별 기산점</div>
+        <ul>
+          <li>후유장해보험금: 원칙 <strong>장해진단 확정 시점</strong>(장해분류표에 별도 판정시기 있으면 그에 따름)</li>
+          <li>입원·통원보험금: 입원 또는 통원을 개시한 시점</li>
+          <li>수술보험금: 수술을 한 시점</li>
+          <li>각종 진단보험금: 최초 진단받은 시점</li>
+        </ul>
+      </div>
+    </div>
+    <div class="q-item" onclick="toggleQ(this)">
+      <div class="q-header"><div class="q-title">서면동의 철회권</div><button class="toggle-btn">보기 ▼</button></div>
+      <div class="q-meta"><span class="badge badge-blue">40·44회</span></div>
+      <div class="q-answer">
+        <div class="key-box">타인의 사망보험에서 서면동의를 한 피보험자는 계약 유지기간 중 <strong>언제든지 장래를 향해</strong> 서면동의를 철회할 수 있음(실질적으로 계약해지와 동일 효과)</div>
+        <div class="sec">취지</div>
+        <div class="ok-box">이혼·퇴직 등 서면동의 전제사정 변경 시 피보험자 권리 보호 + 도덕적 위험 방지</div>
+        <div class="warn-box">철회로 계약 해지 시 해지환급금은 <strong>계약자</strong>에게 지급</div>
+      </div>
+    </div>
+    <div class="q-item" onclick="toggleQ(this)">
+      <div class="q-header"><div class="q-title">승낙전 보험사고 — 회사가 책임지지 않는 경우</div><button class="toggle-btn">보기 ▼</button></div>
+      <div class="q-meta"><span class="badge badge-blue">41·46회</span></div>
+      <div class="q-answer">
+        <ul>
+          <li>계약전 알린 내용·건강진단 내용이 보험금 지급사유에 영향을 미쳤음을 회사가 입증하는 경우</li>
+          <li>고지의무 위반의 효과를 준용하여 보상하지 않을 수 있는 경우</li>
+          <li>진단계약에서 지급사유 발생시까지 진단을 받지 않은 경우(단, 진단 전 발생한 <strong>상해사고</strong>는 보상)</li>
+          <li>사기에 의한 계약·중대사유 위반 등</li>
+        </ul>
+      </div>
+    </div>
+    <div class="q-item" onclick="toggleQ(this)">
+      <div class="q-header"><div class="q-title">약관해석의 원칙 3가지</div><button class="toggle-btn">보기 ▼</button></div>
+      <div class="q-meta"><span class="badge badge-gold">必암기</span><span class="badge badge-blue">41·46회</span></div>
+      <div class="q-answer">
+        <table class="tbl">
+          <tr><th>원칙</th><th>내용</th></tr>
+          <tr><td>신의성실의 원칙</td><td>공정하게 해석, 계약자에 따라 다르게 해석 금지</td></tr>
+          <tr><td>작성자불이익의 원칙</td><td>약관의 뜻이 명백하지 않을 때 계약자에게 유리하게 해석</td></tr>
+          <tr><td>축소제한 해석의 원칙(면책약관)</td><td>계약자·피보험자에게 불리한 내용은 확대해석 금지</td></tr>
+        </table>
+        <div class="ok-box">46회 사례: KCD(한국표준질병사인분류) 개정시점 규정이 없는 약관 → 작성자불이익원칙 적용해 계약자에게 유리하게 해석(대법원 2017다256828)</div>
+      </div>
+    </div>
+    <div class="q-item" onclick="toggleQ(this)">
+      <div class="q-header"><div class="q-title">계약내용의 변경 / 지정대리청구서비스특약</div><button class="toggle-btn">보기 ▼</button></div>
+      <div class="q-meta"><span class="badge badge-blue">41회</span></div>
+      <div class="q-answer">
+        <div class="sec">계약내용의 변경(사망보험계약 제외)</div>
+        <ul><li>보험종목·보험기간·납입주기·납입방법·납입기간</li><li>계약자·피보험자</li><li>보험가입금액·보험료</li></ul>
+        <div class="sec">지정대리청구서비스특약</div>
+        <div class="key-box">적용대상: 계약자·피보험자·보험수익자가 모두 동일한 계약<br>지정대리청구인: ①동거·생계를 같이하는 배우자 ②동거·생계를 같이하는 3촌 이내 친족</div>
+      </div>
+    </div>
+    <div class="q-item" onclick="toggleQ(this)">
+      <div class="q-header"><div class="q-title">보험료 납입지체 — 최고절차와 준용조항</div><button class="toggle-btn">보기 ▼</button></div>
+      <div class="q-meta"><span class="badge badge-gold">必암기</span><span class="badge badge-blue">42회</span></div>
+      <div class="q-answer">
+        <div class="sec">납입최고기간</div>
+        <ul><li>보험기간 1년 이상: <strong>14일 이상</strong></li><li>보험기간 1년 미만: <strong>7일 이상</strong></li></ul>
+        <div class="sec">최고기간 내 알려야 할 사항</div>
+        <ul><li>연체보험료 납입 안내</li><li>미납 시 최고기간 종료 다음날 계약 해지 안내</li><li>해지 시 해지환급금에서 보험계약대출원리금 차감 안내</li></ul>
+        <div class="warn-box">부활 시 준용조항: 계약의 성립, 계약전 알릴의무, 알릴의무 위반의 효과, 제1회 보험료 납입과 보장개시, 사기에 의한 계약 규정 등은 부활일을 청약일로 보아 준용</div>
+      </div>
+    </div>
+    <div class="q-item" onclick="toggleQ(this)">
+      <div class="q-header"><div class="q-title">직업·직무변경 통지의무(계약 후 알릴의무)</div><button class="toggle-btn">보기 ▼</button></div>
+      <div class="q-meta"><span class="badge badge-blue">42회</span></div>
+      <div class="q-answer">
+        <ul>
+          <li>보험증권 등에 기재된 직업·직무의 변경(변경/취직/그만둠)</li>
+          <li>운전 목적의 변경(자가용↔영업용)</li>
+          <li>운전여부의 변경(비운전자↔운전자)</li>
+          <li>이륜자동차·원동기장치자전거를 계속적으로 사용하게 된 경우</li>
+        </ul>
+        <div class="warn-box">통지 위반 후 사고 발생 시 <strong>변경 전·후 보험요율 비율</strong>로 비례보상. 단, 변경사실과 사고 간 인과관계 없음이 증명되면 전액 지급</div>
+      </div>
+    </div>
+    <div class="q-item" onclick="toggleQ(this)">
+      <div class="q-header"><div class="q-title">전화계약 자필서명 생략 / 지급기일 30영업일 초과사유</div><button class="toggle-btn">보기 ▼</button></div>
+      <div class="q-meta"><span class="badge badge-blue">43회</span></div>
+      <div class="q-answer">
+        <div class="sec">전화계약 자필서명 생략 가능 경우</div>
+        <ul><li>계약자·피보험자·보험수익자가 동일한 계약</li><li>계약자·피보험자가 동일하고 보험수익자가 계약자의 법정상속인인 계약</li></ul>
+        <div class="sec">지급예정일 30영업일 초과 사유</div>
+        <ul><li>소송제기 ②분쟁조정 신청 ③수사기관 조사 ④해외 발생 사고 조사 ⑤청구권자 책임있는 사유로 조사 지연 ⑥제3자 의견에 따르기로 한 경우</li></ul>
+      </div>
+    </div>
+    <div class="q-item" onclick="toggleQ(this)">
+      <div class="q-header"><div class="q-title">중대사유로 인한 해지</div><button class="toggle-btn">보기 ▼</button></div>
+      <div class="q-meta"><span class="badge badge-blue">46회</span></div>
+      <div class="q-answer">
+        <div class="sec">중대사유 2가지</div>
+        <ul>
+          <li>보험금을 지급받을 목적으로 고의로 보험금 지급사유를 발생시킨 경우</li>
+          <li>보험금 청구서류를 위조·변조하거나 사실과 다르게 기재한 경우</li>
+        </ul>
+        <div class="warn-box">해지: 그 사실을 안 날부터 <strong>1개월 이내</strong> 계약 해지 가능 + 해지환급금 지급<br>단, <strong>이미 발생한 보험금 지급사유</strong>에는 영향 없음(46회: 한시장해→영구장해 위조해도 기지급 대상 후유장해·입원일당은 지급)</div>
+      </div>
+    </div>
+    <div class="q-item" onclick="toggleQ(this)">
+      <div class="q-header"><div class="q-title">위법계약 해지(금융소비자보호법)</div><button class="toggle-btn">보기 ▼</button></div>
+      <div class="q-meta"><span class="badge badge-purple">44회 신규</span></div>
+      <div class="q-answer">
+        <div class="key-box">계약체결에 회사의 법위반이 있는 경우 계약자는 <strong>계약체결일로부터 5년 이내</strong> 범위에서 <strong>위반 안 날부터 1년 이내</strong>에 해지요구서로 위법계약 해지 요구 가능</div>
+        <ul>
+          <li>회사는 해지요구를 받은 날부터 <strong>10일 이내</strong> 수락여부 통지(거절 시 사유 포함)</li>
+          <li>해지 시 회사는 해지 당시 <strong>책임준비금을 반환</strong></li>
+        </ul>
+      </div>
+    </div>
+    <div class="q-item" onclick="toggleQ(this)">
+      <div class="q-header"><div class="q-title">보험나이 계산방법 및 미달·초과</div><button class="toggle-btn">보기 ▼</button></div>
+      <div class="q-meta"><span class="badge badge-blue">45회</span></div>
+      <div class="q-answer">
+        <div class="key-box">계약일 현재 만 나이 기준 <strong>6개월 미만 끝수는 버림, 6개월 이상은 1년으로 절상</strong>, 매년 계약해당일에 나이 증가</div>
+        <div class="warn-box">나이 미달·초과 계약은 무효(단, 착오 발견 시 이미 계약나이 도달했다면 유효 / 15세 미만자 사망보험은 예외 불인정)</div>
+      </div>
+    </div>
+    <div class="q-item" onclick="toggleQ(this)">
+      <div class="q-header"><div class="q-title">실종선고와 사망 간주 시점</div><button class="toggle-btn">보기 ▼</button></div>
+      <div class="q-meta"><span class="badge badge-blue">39·48회</span></div>
+      <div class="q-answer">
+        <div class="key-box">부재자 생사불명 5년 → 법원이 이해관계인·검사 청구로 실종선고 → <strong>실종기간이 끝나는 때</strong>(실종일로부터 5년, 특별실종은 1년)에 사망한 것으로 간주</div>
+        <div class="warn-box">실종선고일이 아니라 <strong>실종기간 만료일</strong> 기준으로 상속인·수익자를 결정(48회 핵심)</div>
+        <div class="key-box">관공서 재난 통보 사망: <strong>가족관계등록부 기재 사망년월일</strong> 기준</div>
+      </div>
+    </div>
+    <div class="q-item" onclick="toggleQ(this)">
+      <div class="q-header"><div class="q-title">보험안내자료의 효력</div><button class="toggle-btn">보기 ▼</button></div>
+      <div class="q-meta"><span class="badge badge-purple">48회 신규</span></div>
+      <div class="q-answer">
+        <div class="key-box">보험설계사 등이 모집과정에서 사용한 <strong>회사 제작</strong> 안내자료 내용이 약관과 다르면 계약자에게 유리한 내용으로 계약 성립 간주</div>
+        <div class="sec">효력 발생요건 3가지</div>
+        <ul><li>등록·신고된 보험설계사 등이 사용</li><li>모집과정에서 사용(교육·참고용 제외)</li><li>회사(본사+지역본부+지점 포함)가 제작</li></ul>
+        <div class="err-box">설계사가 회사 승인 없이 임의 작성한 안내자료는 계약 내용에 편입되지 않음(48회)</div>
+      </div>
+    </div>
+    <div class="q-item" onclick="toggleQ(this)">
+      <div class="q-header"><div class="q-title">상해의 정의 / 상법·보험업법상 분류 / 손해사정사 업무</div><button class="toggle-btn">보기 ▼</button></div>
+      <div class="q-meta"><span class="badge badge-blue">47회</span></div>
+      <div class="q-answer">
+        <div class="key-box">상해: 보험기간 중 발생한 <strong>급격·우연·외래</strong>의 사고로 신체(의수·의족·의안·의치 등 신체보조장구 제외, 인공장기·부분의치 등 신체 이식물은 포함)에 입은 손해</div>
+        <table class="tbl">
+          <tr><th>구분</th><th>분류</th></tr>
+          <tr><td>상법</td><td>손해보험 / 인보험(생명보험·상해보험) — 상해보험은 인보험의 일종(§737)</td></tr>
+          <tr><td>보험업법</td><td>생명보험 / 손해보험 / 제3보험(상해·질병·간병보험) — 상해보험은 제3보험의 일종</td></tr>
+        </table>
+        <div class="sec">손해사정사 업무(보험업법 §188)</div>
+        <ul><li>손해 발생사실 확인</li><li>약관·관계법규 적용의 적정성 판단</li><li>손해액·보험금 사정</li><li>관련 서류 작성·제출 대행</li><li>보험회사에 대한 의견 진술</li></ul>
+        <div class="ok-box">신체손해사정사 업무범위(시행규칙 §52③): 책임보험·제3보험(상해·질병·간병)·자동차사고 등 <strong>사람의 신체와 관련된 손해액</strong> 사정</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 후유장해 -->
+  <div class="sub-section" id="old-topic2">
+    <div class="q-item" onclick="toggleQ(this)">
+      <div class="q-header"><div class="q-title">후유장해 지급률 산정 기본원칙</div><button class="toggle-btn">보기 ▼</button></div>
+      <div class="q-meta"><span class="badge badge-gold">必암기</span><span class="badge badge-blue">매회 출제</span></div>
+      <div class="q-answer">
+        <ul>
+          <li><strong>동일부위 장해</strong>는 그 중 높은 지급률 하나만 인정(합산 불가)</li>
+          <li><strong>팔·다리의 관절기능장해</strong>는 서로 합산 가능(가관절 등 상실장해와는 비교하여 높은 쪽 적용)</li>
+          <li>여러 신체부위 장해는 원칙적으로 <strong>합산</strong></li>
+          <li>기왕장해가 있는 경우 <strong>최종 상태 지급률 − 기왕장해 지급률</strong>을 지급보험금에서 차감</li>
+          <li>고도후유장해(50%·80% 등 이상) 특약은 복수사고 최종 상태 기준으로 판단하되 기지급분 공제</li>
+        </ul>
+      </div>
+    </div>
+    <div class="q-item" onclick="toggleQ(this)">
+      <div class="q-header"><div class="q-title">후유장해 판정시기 및 유보기간</div><button class="toggle-btn">보기 ▼</button></div>
+      <div class="q-meta"><span class="badge badge-gold">必암기</span><span class="badge badge-blue">39·47회</span></div>
+      <div class="q-answer">
+        <div class="key-box">원칙: 증세가 고정되어 치료효과를 기대할 수 없을 때 진단. 사고 후 180일 경과해도 고정되지 않으면 <strong>180일 시점</strong> 의사 판단으로 진단</div>
+        <div class="sec">별도로 정한 판정시기(39회)</div>
+        <ul>
+          <li>안구 운동장해: 외상 후 <strong>1년</strong> 후 평가</li>
+          <li>안구 조절기능장해: 45세 이상 인정 안 함(→ 44회 기준 <strong>2018.4.1. 이후 50세 이상</strong>으로 개정)</li>
+          <li>추상장해: 성형수술 후 평가</li>
+          <li>팔다리 내고정물: 제거 후 평가</li>
+          <li>신경계 장해: 뚜렷한 향상·단기 사망 예상 시 <strong>6개월</strong> 유보</li>
+          <li>정신행동장해: 상해 후 <strong>24개월</strong> 경과 평가(상해 후 1개월 이상 의식상실 시 <strong>18개월</strong>)</li>
+          <li>척추 유합술 등: 사고일로부터 180일 미경과 시 판정 유보(47회)</li>
+        </ul>
+      </div>
+    </div>
+    <div class="q-item" onclick="toggleQ(this)">
+      <div class="q-header"><div class="q-title">척추의 장해 — 기형·운동장해 판정</div><button class="toggle-btn">보기 ▼</button></div>
+      <div class="q-meta"><span class="badge badge-blue">38·43·44·46·48회</span></div>
+      <div class="q-answer">
+        <table class="tbl">
+          <tr><th>장해상태</th><th>지급률</th></tr>
+          <tr><td>제1·2경추 모두 유합·고정(심한 운동장해)</td><td>40%</td></tr>
+          <tr><td>척추 골절·탈구로 <strong>15°(20°) 이상</strong> 척추전만·후만증(뚜렷한 기형)</td><td>30%</td></tr>
+          <tr><td>탈구로 측만 변형 <strong>20° 이상</strong>(심한 기형)</td><td>50%</td></tr>
+          <tr><td>경도의 척추전만증(약간의 기형)</td><td>15%</td></tr>
+          <tr><td>골반뼈 2.5cm 이상 분리 부정유합(체간골 뚜렷한 기형)</td><td>15%</td></tr>
+        </table>
+        <div class="warn-box">동일부위(운동장해+기형장해) 경합 시 <strong>높은 지급률 하나만</strong> 인정</div>
+      </div>
+    </div>
+    <div class="q-item" onclick="toggleQ(this)">
+      <div class="q-header"><div class="q-title">청력장해 계산 — 6분법·4분법</div><button class="toggle-btn">보기 ▼</button></div>
+      <div class="q-meta"><span class="badge badge-blue">40·48회</span></div>
+      <div class="q-answer">
+        <div class="key-box">6분법: (a+2b+2c+d)/6 방식 · 4분법: (a+2b+c)/4 방식으로 평균순음역치 산정(500·1000·2000·4000Hz 가중)</div>
+        <div class="warn-box">평균순음역치 <strong>90dB 이상</strong> → 한 귀의 청력을 완전히 잃었을 때(25%)<br>순음청력검사 곤란·검증 필요 시 언어청력검사·임피던스청력검사·뇌간유발반응청력검사(ABR)·자기청력계기검사·이음향방사검사 등 추가 실시</div>
+      </div>
+    </div>
+    <div class="q-item" onclick="toggleQ(this)">
+      <div class="q-header"><div class="q-title">코의 장해 / 눈의 장해</div><button class="toggle-btn">보기 ▼</button></div>
+      <div class="q-meta"><span class="badge badge-blue">37·38·43·46회</span></div>
+      <div class="q-answer">
+        <div class="key-box">코 결손이 일정 비율(1/4~1/5) 미만이면 장해로 불인정. 코의 <strong>후각기능 완전상실</strong>은 5%(코의 추상장해 수반 시 기능장해+추상장해 합산이 원칙이나 결손 미달 시 미인정)</div>
+        <div class="key-box">한 눈이 멀었을 때 50% / 한 눈에 뚜렷한 시야장해(정상시야범위 60% 이하로 제한) 5% / 안구 조절기능장해 — 연령기준 초과 시 불인정</div>
+      </div>
+    </div>
+    <div class="q-item" onclick="toggleQ(this)">
+      <div class="q-header"><div class="q-title">치아의 결손 장해</div><button class="toggle-btn">보기 ▼</button></div>
+      <div class="q-meta"><span class="badge badge-purple">48회 신규</span></div>
+      <div class="q-answer">
+        <div class="key-box">치아 결손 = 상실 또는 발치. 금관치료(크라운)는 <strong>1/2개 결손</strong>으로 인정</div>
+        <ul>
+          <li>보철을 위한 발치·자연발치·보철(레진·인레이 등)·기존 의치는 상실로 불인정</li>
+          <li>어린이 유치는 원칙 대상 제외(선천적 영구치 결손 시는 예외)</li>
+          <li>가철성 보철물(틀니 등) 파손은 대상 아님</li>
+        </ul>
+        <table class="tbl">
+          <tr><th>결손 개수</th><th>지급률</th></tr>
+          <tr><td>14개 이상</td><td>20%</td></tr>
+          <tr><td>7개 이상</td><td>10%</td></tr>
+          <tr><td>5개 이상</td><td>5%</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="q-item" onclick="toggleQ(this)">
+      <div class="q-header"><div class="q-title">고도후유장해특약(20%·50%·80% 이상) 해석</div><button class="toggle-btn">보기 ▼</button></div>
+      <div class="q-meta"><span class="badge badge-red">43·45회 핵심쟁점</span></div>
+      <div class="q-answer">
+        <div class="key-box">약관: 보험기간 중 <strong>상해로 장해지급률이 일정 % 이상</strong>에 해당하는 장해상태가 되었을 때 가입금액 전액 지급</div>
+        <div class="warn-box">복수사고로 최종 상태가 기준 지급률 이상이 되면 지급하되, 기왕(기지급)장해에 해당하는 보험금은 공제. 기왕증과 상해가 경합해도 최종 상태 기준으로 판단(대법원 2004다52033 취지 참고)</div>
+      </div>
+    </div>
+    <div class="q-item" onclick="toggleQ(this)">
+      <div class="q-header"><div class="q-title">능력장해 평가기준(간병·CI 관련)</div><button class="toggle-btn">보기 ▼</button></div>
+      <div class="q-meta"><span class="badge badge-blue">41회</span></div>
+      <div class="q-answer">
+        <div class="key-box">적절한 음식섭취 · 대소변관리 · 세면·목욕·청소 등 청결유지 · 적절한 대화기술 및 협조적 대인관계 · 규칙적 통원·약물복용 · 소지품·금전관리·구매행위 · 대중교통·공공시설 이용</div>
+      </div>
+    </div>
+    <div class="q-item" onclick="toggleQ(this)">
+      <div class="q-header"><div class="q-title">파생장해 3원칙</div><button class="toggle-btn">보기 ▼</button></div>
+      <div class="q-meta"><span class="badge badge-blue">42회</span></div>
+      <div class="q-answer">
+        <ol>
+          <li>하나의 장해가 관찰방법에 따라 2가지 이상 부위 장해로 평가되면 <strong>높은 지급률</strong> 적용</li>
+          <li>하나의 장해가 다른 장해와 통상 파생관계이면 <strong>높은 지급률만</strong> 적용</li>
+          <li>하나의 장해로 둘 이상 파생장해가 발생하면 <strong>파생장해 합산 지급률</strong>과 <strong>최초장해 지급률</strong> 중 높은 것 적용</li>
+        </ol>
+      </div>
+    </div>
+    <div class="q-item" onclick="toggleQ(this)">
+      <div class="q-header"><div class="q-title">후유장해·사망보험금 중복지급 판례</div><button class="toggle-btn">보기 ▼</button></div>
+      <div class="q-meta"><span class="badge badge-purple">47회 신규 판례</span></div>
+      <div class="q-answer">
+        <div class="key-box">동일 사고라도 후유장해와 사망이 <strong>각각 독립적으로 발생</strong>한 사유라면 후유장해보험금과 상해사망보험금을 <strong>모두</strong> 지급(대법원 2022.3.17. 선고 2021다284462)</div>
+        <div class="warn-box">사망원인이 기존 장해상태와 무관한 별개의 상해(외상성 뇌출혈 등)라면 장해→사망의 단순 진행단계로 보지 않음</div>
+      </div>
+    </div>
+    <div class="q-item" onclick="toggleQ(this)">
+      <div class="q-header"><div class="q-title">방광·요도·장루 등 흉복부 장기장해</div><button class="toggle-btn">보기 ▼</button></div>
+      <div class="q-meta"><span class="badge badge-blue">42회</span></div>
+      <div class="q-answer">
+        <table class="tbl">
+          <tr><th>장해상태</th><th>지급률</th></tr>
+          <tr><td>방광용량이 50cc 이하로 위축</td><td>15%</td></tr>
+          <tr><td>영구적 인공요도괄약근 설치</td><td>30%</td></tr>
+          <tr><td>영구적 장루(인공항문) 설치</td><td>30%</td></tr>
+        </table>
+        <div class="warn-box">모두 흉복부 장기장해 → 동일부위로 보아 <strong>높은 지급률 하나만</strong> 인정</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 실손의료비 -->
+  <div class="sub-section" id="old-topic3">
+    <div class="q-item" onclick="toggleQ(this)">
+      <div class="q-header"><div class="q-title">통원의료비·처방조제비 계산 기본구조</div><button class="toggle-btn">보기 ▼</button></div>
+      <div class="q-meta"><span class="badge badge-gold">必암기</span><span class="badge badge-blue">매회 출제</span></div>
+      <div class="q-answer">
+        <div class="key-box">공식: <strong>보상대상의료비 − MAX[정액공제금, 보상대상의료비×정률공제율]</strong></div>
+        <ul>
+          <li>하루에 동일 질환으로 중복통원 시 <strong>공제금은 높은 것 1회만</strong> 공제(1회 외래로 간주)</li>
+          <li>통원(외래) 공제: MAX[1~2만원, 20%] / 처방조제비 공제: MAX[0.8~1만원, 20%], 처방조제 한도 5만원</li>
+          <li>3세대 이후: 비급여 공제율 <strong>30%</strong>로 상향(급여는 20% 유지)</li>
+        </ul>
+      </div>
+    </div>
+    <div class="q-item" onclick="toggleQ(this)">
+      <div class="q-header"><div class="q-title">입원의료비 — 급여·비급여·병실차액 계산</div><button class="toggle-btn">보기 ▼</button></div>
+      <div class="q-meta"><span class="badge badge-gold">必암기</span><span class="badge badge-blue">매회 출제</span></div>
+      <div class="q-answer">
+        <div class="key-box">급여: (본인부담+비급여 등 보상대상의료비) × 80%(1·2세대) / 급여80%·비급여70%(3세대 이후 구분)</div>
+        <div class="warn-box">상급병실료(병실차액): <strong>min[병실차액×50%, 1일 평균금액×입원일수]</strong> 한도로 별도 가산</div>
+        <div class="ok-box">한방병원 비급여 항목은 원칙 면책(2·3세대), 한방 요양급여는 보상대상</div>
+      </div>
+    </div>
+    <div class="q-item" onclick="toggleQ(this)">
+      <div class="q-header"><div class="q-title">3세대 vs 4세대 실손의료보험 비교</div><button class="toggle-btn">보기 ▼</button></div>
+      <div class="q-meta"><span class="badge badge-purple">44회 신규</span></div>
+      <div class="q-answer">
+        <table class="tbl">
+          <tr><th>구분</th><th>3세대</th><th>4세대</th></tr>
+          <tr><td>비만(E66)</td><td>보통약관·특약 모두 면책</td><td>비급여만 면책, 급여는 보상</td></tr>
+          <tr><td>안구 조절기능장해 연령</td><td>45세 이상 제외(2018.4.1 이전)</td><td>50세 이상 제외(2018.4.1 이후)</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="q-item" onclick="toggleQ(this)">
+      <div class="q-header"><div class="q-title">비급여 3대 특약 — 도수치료·체외충격파·증식치료</div><button class="toggle-btn">보기 ▼</button></div>
+      <div class="q-meta"><span class="badge badge-gold">必암기</span><span class="badge badge-blue">40·45·46·47·48회</span></div>
+      <div class="q-answer">
+        <div class="key-box">계약일(매년 계약해당일)로부터 1년 이내 <strong>350만원 한도·50회까지</strong> 보상(구세대 250만원 한도 시기도 있었음)</div>
+        <ul>
+          <li>도수치료: 손으로 근골격계 기능개선·통증감소 시행하는 치료</li>
+          <li>체외충격파치료: 체외 충격파로 건·힘줄·뼈 치유 자극(체외충격파쇄석술 제외)</li>
+          <li>증식치료: 인대·건·관절·연골에 증식물질 주사</li>
+        </ul>
+        <div class="warn-box">공제금액: MAX[2~3만원, 보장대상의료비×30%] · 병변호전 없는 추가검사(반복치료)는 보상대상에서 제외되는 경우가 있음(48회 쟁점)</div>
+        <div class="ok-box">MRI·주사료도 유사한 방식(공제 MAX[2~3만원,30%])으로 별도 특약 한도 내 보상</div>
+      </div>
+    </div>
+    <div class="q-item" onclick="toggleQ(this)">
+      <div class="q-header"><div class="q-title">본인부담금 상한제와 실손보험 처리</div><button class="toggle-btn">보기 ▼</button></div>
+      <div class="q-meta"><span class="badge badge-blue">39·47회</span></div>
+      <div class="q-answer">
+        <div class="key-box">본인부담상한제: 소득분위별 본인부담 상한액을 초과하는 <strong>요양급여</strong>는 국민건강보험공단이 부담·환급하는 제도. 실손보험에서는 <strong>요양급여에만</strong> 적용되며 공단 환급금은 <strong>면책</strong></div>
+        <div class="warn-box">입원기간 중 발생한 다른 입원 건과 상한액을 합산 적용하여 초과분만 보상(47회 사례)</div>
+      </div>
+    </div>
+    <div class="q-item" onclick="toggleQ(this)">
+      <div class="q-header"><div class="q-title">복수보험 비례보상 — 독립책임액 방식</div><button class="toggle-btn">보기 ▼</button></div>
+      <div class="q-meta"><span class="badge badge-gold">必암기</span><span class="badge badge-blue">38·42·47·48회</span></div>
+      <div class="q-answer">
+        <div class="key-box">각 계약의 <strong>독립책임액</strong>(각자 단독 가입 시 지급액) 비율로 나누어 지급</div>
+        <div class="key-box">지급보험금 = (총 보상대상의료비 − 최소 공제금액) × 자사 독립책임액 / 전사 독립책임액 합계</div>
+        <div class="warn-box">각 계약 보상책임액 합계가 [최고 보장대상의료비 − 최소 공제금액]을 <strong>초과하지 않으면</strong> 비례보상하지 않고 각자 가입금액 한도 내 전액 지급(47회)</div>
+        <div class="ok-box">해외여행실손: 보험기간 종료 후 180일 경과 입원은 보상하지 않음(39회)</div>
+      </div>
+    </div>
+    <div class="q-item" onclick="toggleQ(this)">
+      <div class="q-header"><div class="q-title">비급여주사제 특약</div><button class="toggle-btn">보기 ▼</button></div>
+      <div class="q-meta"><span class="badge badge-blue">42·46·47회</span></div>
+      <div class="q-answer">
+        <div class="key-box">비급여 주사제는 상해·질병입원 관계없이 특약에서 보상(항암제·항생제 등은 보통약관에서 별도 보상)</div>
+        <div class="warn-box">1회 입원기회에 다수 주사제 투약 시 <strong>1회만 공제</strong> · 연 250만원, 50회 한도(개정 이후는 특약 세분화 및 한도 상이)</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 암보험금 -->
+  <div class="sub-section" id="old-topic4">
+    <div class="q-item" onclick="toggleQ(this)">
+      <div class="q-header"><div class="q-title">암보험금 계산 기본구조 — 진단·수술급여금</div><button class="toggle-btn">보기 ▼</button></div>
+      <div class="q-meta"><span class="badge badge-gold">必암기</span><span class="badge badge-blue">37·41·42회</span></div>
+      <div class="q-answer">
+        <div class="key-box">각 보험회사별 보상책임을 먼저 정한 후, 담보(진단비·수술비·사망) 별로 적용</div>
+        <ul>
+          <li>일차암과 전이암(동일 계통)은 중복 진단비 지급 대상이 아님(기지급 시 해당무)</li>
+          <li>비고형암(백혈병 등)의 중심정맥관 수술은 통상 1회 수술로 볼 여지 있음(수술명 불명 시 개별 산정)</li>
+        </ul>
+      </div>
+    </div>
+    <div class="q-item" onclick="toggleQ(this)">
+      <div class="q-header"><div class="q-title">중대한 질병 정의 — 말기간질환·말기폐질환</div><button class="toggle-btn">보기 ▼</button></div>
+      <div class="q-meta"><span class="badge badge-blue">38·41·42회</span></div>
+      <div class="q-answer">
+        <div class="sec">말기폐질환</div>
+        <div class="key-box">양쪽 폐 모두 비가역적 기능부전으로 도보동작 지속적 제한 + 아래 중 1가지 이상<br>① FEV1.0이 정상예측치의 30%(일부 25%) 이하 ② 안정상태 동맥혈 산소분압(PaO2) 60mmHg 이하</div>
+        <div class="sec">말기간질환</div>
+        <div class="key-box">회복불능상태: ①영구적 황달 ②복수 ③간성혼수 ④식도정맥류</div>
+      </div>
+    </div>
+    <div class="q-item" onclick="toggleQ(this)">
+      <div class="q-header"><div class="q-title">수술의 정의(6하원칙)</div><button class="toggle-btn">보기 ▼</button></div>
+      <div class="q-meta"><span class="badge badge-gold">必암기</span><span class="badge badge-blue">41·42회</span></div>
+      <div class="q-answer">
+        <div class="key-box">의사 자격을 가진 자 + 질병(상해)의 치료가 필요하다고 인정 + 국내외 의료기관 + 의사의 관리 + 치료 목적 + 기구를 사용하여 생체에 절단·적제 등 조작(흡인·천자·신경차단 등은 제외)</div>
+      </div>
+    </div>
+    <div class="q-item" onclick="toggleQ(this)">
+      <div class="q-header"><div class="q-title">암 진단확정시기 — 결과보고일 기준</div><button class="toggle-btn">보기 ▼</button></div>
+      <div class="q-meta"><span class="badge badge-red">45·47회 핵심 판례</span></div>
+      <div class="q-answer">
+        <div class="key-box">병리과 의사가 조직검사 결과를 <strong>주치의에게 보고하는 시점(결과보고일)</strong>에 진단 확정된 것으로 판단(내원일·조직채취일·판독일·결과통보일과 구분)</div>
+        <div class="warn-box">계약일로부터 90일 이내 진단확정 시 <strong>특약 무효 또는 감액지급(50%)</strong> 여부를 반드시 확인</div>
+      </div>
+    </div>
+    <div class="q-item" onclick="toggleQ(this)">
+      <div class="q-header"><div class="q-title">제자리암(유사암)·경계성종양·침습암 구분</div><button class="toggle-btn">보기 ▼</button></div>
+      <div class="q-meta"><span class="badge badge-blue">45·46회</span></div>
+      <div class="q-answer">
+        <div class="key-box">세침흡인검사 등에서 제자리(관상선종 등)로 확인되면 <strong>유사암(제자리암) 진단비</strong>, 침습성 암종 확인 시 <strong>일반암 진단비</strong> 지급</div>
+        <div class="warn-box">가입 후 <strong>1년 미만 진단 시 감액(가입금액의 10~50%)</strong>, 1년 경과 시 전액 지급</div>
+        <div class="ok-box">46회: 4차 개정 KCD 당시 악성신생물로 분류된 질병 → 계약자 유리하게 해석(작성자불이익원칙) / 9차 개정 이후 약관은 진단시점 KCD를 명시 적용</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 사망·상속 -->
+  <div class="sub-section" id="old-topic5">
+    <div class="q-item" onclick="toggleQ(this)">
+      <div class="q-header"><div class="q-title">사망보험금 산정 및 법정상속분</div><button class="toggle-btn">보기 ▼</button></div>
+      <div class="q-meta"><span class="badge badge-gold">必암기</span><span class="badge badge-blue">37·39·42·43회</span></div>
+      <div class="q-answer">
+        <div class="key-box">배우자:자녀 = <strong>1.5 : 1</strong> 비율로 법정상속(수인의 자녀는 균등)</div>
+        <div class="warn-box">보험수익자가 고의로 피보험자를 해친 경우 그 수익자분은 지급하지 않고, 나머지 수익자에게는 지급(37·43회)</div>
+      </div>
+    </div>
+    <div class="q-item" onclick="toggleQ(this)">
+      <div class="q-header"><div class="q-title">동시사망 추정과 상속 처리</div><button class="toggle-btn">보기 ▼</button></div>
+      <div class="q-meta"><span class="badge badge-blue">39회</span></div>
+      <div class="q-answer">
+        <div class="key-box">동일 위난으로 수인이 사망하고 사망의 전후가 불분명하면 <strong>동시에 사망한 것으로 추정</strong> → 상호간 상속 불성립 → 각자의 다음 순위 상속인이 상속</div>
+      </div>
+    </div>
+    <div class="q-item" onclick="toggleQ(this)">
+      <div class="q-header"><div class="q-title">대습상속의 요건과 적용</div><button class="toggle-btn">보기 ▼</button></div>
+      <div class="q-meta"><span class="badge badge-gold">必암기</span><span class="badge badge-blue">39·47·48회</span></div>
+      <div class="q-answer">
+        <div class="key-box">상속인이 될 직계비속·형제자매가 <strong>상속개시 전 사망·결격</strong>된 경우 그 직계비속(배우자 포함)이 대신 상속</div>
+        <div class="warn-box">사실혼 배우자는 법정상속·대습상속 권리자에 해당하지 않음(47회 유의)</div>
+      </div>
+    </div>
+    <div class="q-item" onclick="toggleQ(this)">
+      <div class="q-header"><div class="q-title">태아의 상속권</div><button class="toggle-btn">보기 ▼</button></div>
+      <div class="q-meta"><span class="badge badge-blue">45회</span></div>
+      <div class="q-answer">
+        <div class="key-box">태아의 상속능력에 관하여 판례는 <strong>정지조건설</strong>(살아서 출생할 것을 조건으로 상속개시 시로 소급하여 상속능력 인정)의 입장을 취함</div>
+      </div>
+    </div>
+    <div class="q-item" onclick="toggleQ(this)">
+      <div class="q-header"><div class="q-title">실종선고 사망간주와 수익자 결정 사례</div><button class="toggle-btn">보기 ▼</button></div>
+      <div class="q-meta"><span class="badge badge-purple">48회 신규</span></div>
+      <div class="q-answer">
+        <div class="key-box">실종선고 심판이 늦게 확정되어도 <strong>실종기간 만료일</strong>을 사망시점으로 보아 그 시점 기준 법정상속인을 확정</div>
+        <div class="warn-box">직계비속이 사망시점 이전에 이미 사망했다면 대습상속자 유무를 확인, 없으면 직계존속이 단독 상속인이 됨</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 간병·특수담보 -->
+  <div class="sub-section" id="old-topic6">
+    <div class="q-item" onclick="toggleQ(this)">
+      <div class="q-header"><div class="q-title">장기간병보험 — 중증치매 분류코드 & ADLs</div><button class="toggle-btn">보기 ▼</button></div>
+      <div class="q-meta"><span class="badge badge-gold">必암기</span><span class="badge badge-blue">37회</span></div>
+      <div class="q-answer">
+        <div class="sec">중증치매 질병코드</div>
+        <ul><li>알츠하이머병 치매(F00)</li><li>혈관성 치매(F01)</li><li>기타 질환에서의 치매(F02)</li><li>상세불명 치매(F03)</li><li>치매에 병발된 섬망(F05.1)</li></ul>
+        <div class="sec">ADLs(일상생활 기본동작) 장해 예시</div>
+        <ul><li>이동동작(30%): 휠체어·타인 도움 없이 방밖 이동 불가</li><li>음식물섭취(20%): 튜브·경정맥 수액 등 전적 영양공급</li><li>배뇨/배변(10%): 뒤처리에 타인 도움 필요</li><li>목욕(3%): 신체 일부만 씻을 수 있음</li><li>옷입고벗기(5%): 상·하의 중 하나만 착용 가능</li></ul>
+      </div>
+    </div>
+    <div class="q-item" onclick="toggleQ(this)">
+      <div class="q-header"><div class="q-title">중대한 뇌졸중 — 정의와 보상제외질병</div><button class="toggle-btn">보기 ▼</button></div>
+      <div class="q-meta"><span class="badge badge-blue">39회</span></div>
+      <div class="q-answer">
+        <div class="key-box">지주막하출혈(I60)·뇌내출혈(I61)·비외상성 두개내출혈(I62)·뇌경색(I63)으로 급격한 뇌혈액순환 차단 → 영구적 신경학적 결손(지급률 25% 이상)이 남는 질병</div>
+        <div class="sec">보상제외 질병</div>
+        <ul><li>일과성허혈발작</li><li>가역적허혈성신경학적결손</li><li>외상에 의한 뇌출혈</li><li>뇌종양으로 인한 뇌출혈</li><li>뇌수술 합병증으로 인한 뇌출혈</li><li>신경학적결손을 가져오는 안동맥의 폐색</li></ul>
+      </div>
+    </div>
+    <div class="q-item" onclick="toggleQ(this)">
+      <div class="q-header"><div class="q-title">관상동맥(심장동맥) 우회술 — 정의와 제외수술</div><button class="toggle-btn">보기 ▼</button></div>
+      <div class="q-meta"><span class="badge badge-blue">40회</span></div>
+      <div class="q-answer">
+        <div class="key-box">관상동맥질환의 근본치료 목적으로 개흉술 후 대복재정맥·내유동맥 등 자가우회도관을 협착부위보다 원위부 관상동맥에 연결하는 수술</div>
+        <div class="err-box">제외수술: 카테터 이용 수술, 개흉술을 동반하지 않는 수술(관상동맥성형술·스텐트삽입술·회전죽상반절제술 등)</div>
+      </div>
+    </div>
+    <div class="q-item" onclick="toggleQ(this)">
+      <div class="q-header"><div class="q-title">장기요양진단 보험사고 확정시점 판례</div><button class="toggle-btn">보기 ▼</button></div>
+      <div class="q-meta"><span class="badge badge-purple">47회 신규 판례</span></div>
+      <div class="q-answer">
+        <div class="key-box">국민건강보험공단 장기요양등급 <strong>판정을 받기 전</strong> 사망한 경우, 심신상태가 수급 대상에 해당한다고 하더라도 <strong>보험기간 중 지급사유가 발생했다고 볼 수 없음</strong>(대법원 2023.10.12. 선고 2020다232709 등)</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 약술 정리 -->
+  <div class="sub-section" id="old-topic7">
+    <div class="card">
+      <div class="card-title">📝 약술형 반복 출제 주제 정리 (37~43회)</div>
+      <table class="tbl">
+        <tr><th>주제</th><th>출제회차</th><th>핵심키워드</th></tr>
+        <tr><td>청약철회 제도</td><td>37회</td><td>15일·제한계약유형·업무처리(현금/카드)</td></tr>
+        <tr><td>계약의 무효 3가지</td><td>37회</td><td>서면동의결여·심신상실자·연령미달초과</td></tr>
+        <tr><td>계약취소·부활·해지환급금</td><td>38회</td><td>사기계약·준용조항·해지사유별 환급</td></tr>
+        <tr><td>후유장해 판정시기·별도판정</td><td>39회</td><td>180일·안구1년·정신행동24개월</td></tr>
+        <tr><td>중대한 뇌졸중</td><td>39회</td><td>I60~I63·보상제외6가지</td></tr>
+        <tr><td>실종선고·손해배상책임</td><td>39회</td><td>세월호 관련 출제·보험업법102조</td></tr>
+        <tr><td>서면동의철회·관상동맥우회술</td><td>40회</td><td>장래철회·개흉술 원위부 연결</td></tr>
+        <tr><td>계약후 알릴의무·사기계약취소</td><td>40회</td><td>비례보상·5년/1개월</td></tr>
+        <tr><td>승낙전사고·약관해석원칙</td><td>41회</td><td>진단전 상해보상·신의성실</td></tr>
+        <tr><td>지정대리청구서비스특약</td><td>41회</td><td>동일계약자·3촌이내 친족</td></tr>
+        <tr><td>납입지체·최고절차</td><td>42회</td><td>14일/7일·부활준용</td></tr>
+        <tr><td>직업직무변경통지의무</td><td>42회</td><td>비례보상·인과관계</td></tr>
+        <tr><td>고지의무 해지권 제한사유</td><td>43회</td><td>2년/1년·3년·기초자료</td></tr>
+        <tr><td>전화계약·30영업일 초과사유</td><td>43회</td><td>자필서명생략·소송제기 등</td></tr>
+        <tr><td>소멸시효·계약취소 제척기간</td><td>43회</td><td>3년·5년/1개월</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- 회차별 기출 -->
+  <div class="sub-section" id="old-gichul">
+    <div class="q-item" onclick="toggleQ(this)"><div class="q-header"><div class="q-title">제37회 (2014) — 청약철회·계약무효 + 실손·간병·암보험금 계산</div><button class="toggle-btn">보기 ▼</button></div><div class="q-answer"><ul><li>1번: 청약철회 기간·제한계약유형 + 계약무효 3가지(15점)</li><li>2번: 실손의료비 계산(통원·처방조제·입원)</li><li>3~4번: 장기간병보험 중증치매 분류코드, ADLs 장해상태</li><li>5번: 사망·후유장해보험금(장해율 산정, 상속분 계산)</li><li>6번: 암보험금 계산(2개 보험사, 진단·수술급여금)</li></ul></div></div>
+    <div class="q-item" onclick="toggleQ(this)"><div class="q-header"><div class="q-title">제38회 (2015) — 직업변경 후유장해 계산 40점 + 표준약관 종합</div><button class="toggle-btn">보기 ▼</button></div><div class="q-answer"><ul><li>1번(30점): 직업변경 사고 — 1차·2차 장해진단, 일반상해/교통상해/신주말/80%이상 담보 계산 + 말기폐질환 진단기준·분류코드</li><li>2번: 특정신체부위·질병 보장제한부 특약(부담보) 사례 3문항</li><li>3번(15점): 질병·상해보험 표준약관 — 계약취소사유·부활 준용조항·해지환급금 지급조항</li><li>4번: 실손의료비(해외/국내, A·B사 비례보상)</li></ul></div></div>
+    <div class="q-item" onclick="toggleQ(this)"><div class="q-header"><div class="q-title">제39회 (2016) — 후유장해·사망보험금·중대한 뇌졸중</div><button class="toggle-btn">보기 ▼</button></div><div class="q-answer"><ul><li>1번: 후유장해보험금(동일부위·팔다리합산) + 사망보험금(대습상속) + 장해판정시기</li><li>2번: 후유장해 별도판정경우(안구·추상·신경계·정신행동) + 중대한 뇌졸중(의의·보상제외)</li><li>3번: 보험업법상 손보사 질병사망담보 요건 + 손해배상책임(임직원고의과실·부당한합의)</li><li>4번: 실종선고 + 실손의료비계산(본인부담상한제) + 개정사항</li><li>5번: 교통상해사망·대중교통이용중사망 특약 면책사유·범위</li></ul></div></div>
+    <div class="q-item" onclick="toggleQ(this)"><div class="q-header"><div class="q-title">제40회 (2017) — 서면동의철회·관상동맥우회술·청력장해</div><button class="toggle-btn">보기 ▼</button></div><div class="q-answer"><ul><li>1번: 제3자 심의절차 + 서면동의철회권(의의·시기·효과)</li><li>2번: 관상동맥우회술 정의·제외수술 + 청력장해(6분법·4분법) + CI보험금계산 + 청력검사 대체법</li><li>4번: 계약후알릴의무(의의·위반효과) + 후유장해 판정(정신행동·안구·슬관절)</li><li>6번: 계약전알릴의무 고지판단 + 외래치료비지급(상법651·655조) + 사기계약취소</li><li>비급여 도수치료·체외충격파·증식치료 특약 신설 조항</li></ul></div></div>
+    <div class="q-item" onclick="toggleQ(this)"><div class="q-header"><div class="q-title">제41회 (2018) — 승낙전사고·약관해석·후유장해·암보험금</div><button class="toggle-btn">보기 ▼</button></div><div class="q-answer"><ul><li>1번: 승낙전보험사고 + 계약내용의변경 + 약관해석의원칙</li><li>2번: 지정대리청구서비스특약(적용대상·지정대리청구인)</li><li>3번: 실손의료비(입원·통원)</li><li>4번: 암보험금(말기간질환·수술정의·보험금계산)</li><li>5번: 후유장해보험금(장해율산정·계산) + 능력장해평가기준 + 흉복부장해100%</li></ul></div></div>
+    <div class="q-item" onclick="toggleQ(this)"><div class="q-header"><div class="q-title">제42회 (2019) — 납입지체·상해사망 고지의무·후유장해</div><button class="toggle-btn">보기 ▼</button></div><div class="q-answer"><ul><li>1번: 보험료 납입지체(최고절차·준용조항)</li><li>2번: 상해사망보험금 지급책임(A·B사 고지의무·비례보상) + 직업직무변경통지의무</li><li>3번: 후유장해(방광·인공요도괄약근·장루) + 파생장해 + 장해진단과목</li><li>4번: 사망사고건 보상책임(사례1·2 — 고지의무·심신상실·중대사유·질병사망담보)</li><li>5번: 실손의료비(비례분담·200만원초과금·비급여주사제·보상제외기간)</li></ul></div></div>
+    <div class="q-item" onclick="toggleQ(this)"><div class="q-header"><div class="q-title">제43회 (2020) — 고지의무 해지권제한(2종 답안) + 후유장해·실손</div><button class="toggle-btn">보기 ▼</button></div><div class="q-answer"><ul><li>1번: 고지의무 해지권제한사유 5가지, 전화계약자필서명생략, 30영업일초과사유, 소멸시효, 계약취소사유·제척기간</li><li>2번: 사망보험금(고의사고 면책·휴일사망·대습상속)</li><li>3번: 후유장해보험금(고도후유장해특약 해석 쟁점) + 후유장해분류표(청력·치아 등 각도/dB 기준)</li><li>4번: 실손의료비 및 입원보험금(3대특약·입원일당, 5개 입원 건 종합계산)</li></ul><div class="warn-box">동일 회차의 이용욱·윤금옥 두 강사 답안이 세부 산식에서 소폭 차이(교육상 참고용 예시답안 성격)</div></div></div>
+  </div>
+
+  <!-- 암기노트 -->
+  <div class="sub-section" id="old-memo">
+    <div class="card"><div class="card-title">📝 보험금 계산 3단계 접근법</div><div class="key-box"><strong>1단계</strong> 담보사항·가입금액 확인<br>↓<br><strong>2단계</strong> 면부책(고지의무·부담보·인과관계) 검토<br>↓<br><strong>3단계</strong> 지급률·공제금액 적용 계산<br>↓<br><strong>결론</strong>: 담보별 지급보험금</div></div>
+    <div class="memo-card" onclick="toggleMemo(this)"><div class="memo-q">Q. 통원의료비 공제금액 계산 공식은?</div><div class="memo-a">보상대상의료비 − <strong>MAX[정액공제금, 보상대상의료비×정률(20%, 3세대 비급여는 30%)]</strong><br>하루 중복통원은 높은 공제금 1회만 적용</div></div>
+    <div class="memo-card" onclick="toggleMemo(this)"><div class="memo-q">Q. 복수보험 비례보상은 언제 적용?</div><div class="memo-a">각 계약 보상책임액 합계가 [최고 보장대상의료비 − 최소 공제금액]을 <strong>초과할 때만</strong> 비례보상. 초과하지 않으면 각자 가입한도 내 전액 지급</div></div>
+    <div class="memo-card" onclick="toggleMemo(this)"><div class="memo-q">Q. 동일부위 후유장해가 여러 개면?</div><div class="memo-a"><strong>높은 지급률 하나만</strong> 인정(합산 불가). 단, 팔다리의 관절기능장해끼리는 합산 후 상실장해와 비교하여 높은 쪽 적용</div></div>
+    <div class="memo-card" onclick="toggleMemo(this)"><div class="memo-q">Q. 계약전 알릴의무 위반 해지권 제척기간은?</div><div class="memo-a">안 날부터 <strong>1개월</strong> / 제1회 보험료 받은 때부터 <strong>2년</strong>(진단계약 질병은 1년) / 계약체결일부터 <strong>3년</strong> 중 먼저 도래하는 시점에 해지권 소멸</div></div>
+    <div class="memo-card" onclick="toggleMemo(this)"><div class="memo-q">Q. 고지의무 위반이 있어도 보험금을 지급해야 하는 경우는?</div><div class="memo-a">위반사실과 보험사고 사이에 <strong>인과관계가 없음이 증명된 때</strong>(상법 §655) — 이때는 계약을 해지할 수는 있어도 보험금은 지급</div></div>
+    <div class="memo-card" onclick="toggleMemo(this)"><div class="memo-q">Q. 암 진단확정 시점을 판단하는 기준은?</div><div class="memo-a">병리과 의사가 조직검사 결과를 <strong>주치의에게 보고한 날(결과보고일)</strong> — 내원일·조직채취일·통보일이 아님</div></div>
+    <div class="memo-card" onclick="toggleMemo(this)"><div class="memo-q">Q. 부활계약에서 준용되는 조항은?</div><div class="memo-a">계약의 성립, 계약전 알릴의무·위반의 효과, 제1회 보험료 납입과 보장개시, 사기에 의한 계약, 면책(감액)기간이 있는 경우 책임개시일 → <strong>부활일을 계약일(청약일)로 간주</strong></div></div>
+  </div>
+</div>
+
+<!-- ========== ERA: 44~48회 ========== -->
+<div class="era-section" id="era-new">
+
+  <div class="sub-section active" id="new-overview44">
+    <div class="stats-row">
+      <div class="stat-box"><div class="num">5</div><div class="lbl">분석 회차 (44~48회)</div></div>
+      <div class="stat-box"><div class="num" style="color:var(--accent4)">5회</div><div class="lbl">후유장해 계산 출제</div></div>
+      <div class="stat-box"><div class="num" style="color:var(--accent2)">5회</div><div class="lbl">실손의료비 계산 출제</div></div>
+      <div class="stat-box"><div class="num" style="color:var(--accent3)">4회</div><div class="lbl">최신 대법원 판례 인용</div></div>
+    </div>
+    <div class="card">
+      <div class="card-title">📋 44~48회 출제 일람표</div>
+      <table class="tbl">
+        <tr><th>회차</th><th>연도</th><th>1번</th><th>2번</th><th>3번</th><th>4번</th><th>5번</th><th>6번</th></tr>
+        <tr><td><strong>48회</strong></td><td>2025</td><td>소멸시효 기산점·실손감면전기준·치아결손</td><td>실종선고·사망간주·수익자결정</td><td>보험안내자료의 효력</td><td>후유장해(대퇴골·체간골)</td><td>후유장해(청력·치아)</td><td>복수보험 실손 비례보상</td></tr>
+        <tr><td><strong>47회</strong></td><td>2024</td><td>상해정의·상법/보험업법 분류·손사업무</td><td>후유장해+사망보험금 중복지급 판례</td><td>고지의무·암진단비(3사)</td><td>고지의무판례·대습상속 수익자</td><td>장기요양진단 판례</td><td>실손의료비+국민건강보험 비교</td></tr>
+        <tr><td><strong>46회</strong></td><td>2023</td><td>승낙전사고 요건·해지권제한</td><td>후유장해(눈·귀·신경계)</td><td>암 KCD개정·약관해석원칙</td><td>후유장해(척추·팔)</td><td>실손의료비(비례보상)</td><td>중대사유 해지</td></tr>
+        <tr><td><strong>45회</strong></td><td>2022</td><td>상해정의·계약해지제한사유</td><td>후유장해판정유보기간</td><td>보험나이 계산·변경보험료</td><td>암진단확정시기·암보험금</td><td>실손의료비(A~I병원)</td><td>암보험금(제자리암 등)</td></tr>
+        <tr><td><strong>44회</strong></td><td>2021</td><td>서면동의철회권 사례</td><td>금소법 위법계약해지</td><td>부활계약효력·지급기일·암진단비감액</td><td>계약전알릴의무 사례(간경화·간암)</td><td>실손의료비(3세대vs4세대)</td><td>후유장해(2018.4.1 전후비교)</td></tr>
+      </table>
+    </div>
+    <div class="ok-box">✅ <strong>44~48회 특징:</strong> 대법원 최신판례 인용형 서술문제 급증(고지·통지의무 구분, 후유장해·사망 중복지급, 장기요양 확정시점, 대습상속 등) + 실손 계산은 <strong>독립책임액 비례보상 방식</strong>으로 정형화</div>
+    <div class="warn-box" style="margin-top:8px">⚠️ <strong>패턴:</strong> 배점이 큰 1번 문제가 계약법리 약술형으로 굳어지는 추세, 뒷 문제에서 후유장해·실손·암보험금 계산이 배분되는 구조</div>
+  </div>
+
+  <!-- 주제별 요약 -->
+  <div class="sub-section" id="new-topics44">
+    <div class="q-item" onclick="toggleQ(this)">
+      <div class="q-header"><div class="q-title">계약전 알릴의무 vs 계약후 통지의무 — 구분 판례</div><button class="toggle-btn">보기 ▼</button></div>
+      <div class="q-meta"><span class="badge badge-red">47회 핵심 판례</span></div>
+      <div class="q-answer">
+        <div class="key-box">계약체결 당시 존재하던 위험을 고지하지 않고 그 위험이 계약 이후에도 계속되었다는 사정만으로는 <strong>계약후 알릴의무(통지의무) 위반이 아님</strong></div>
+        <div class="err-box">보험자는 §651 고지의무 위반으로는 해지 가능해도, §652 통지의무 위반으로는 해지 불가(제척기간 경과로 고지의무 해지가 막힌 경우도 마찬가지) — 대법원 2024.6.27. 선고 2024다219766</div>
+      </div>
+    </div>
+    <div class="q-item" onclick="toggleQ(this)">
+      <div class="q-header"><div class="q-title">암진단비 감액규정과 부활 시 준용범위</div><button class="toggle-btn">보기 ▼</button></div>
+      <div class="q-meta"><span class="badge badge-blue">44·45·47회</span></div>
+      <div class="q-answer">
+        <div class="key-box">계약일(부활일)로부터 <strong>1년 미만</strong> 암 진단 시 가입금액의 <strong>50%</strong> 지급(상품별로 상이할 수 있음), 1년 경과 시 전액</div>
+        <div class="warn-box">부활 시 <strong>면책기간</strong>은 부활일을 계약일로 보아 준용하나 <strong>감액기간 준용 규정은 없음</strong>(분쟁례 2016-13호) → 44회 핵심 쟁점</div>
+      </div>
+    </div>
+    <div class="q-item" onclick="toggleQ(this)">
+      <div class="q-header"><div class="q-title">실손의료비 — 독립책임액 방식 비례보상 정형화</div><button class="toggle-btn">보기 ▼</button></div>
+      <div class="q-meta"><span class="badge badge-red">47·48회 계산 정형</span></div>
+      <div class="q-answer">
+        <div class="key-box">① 각 계약의 <strong>독립책임액</strong> = 보상대상의료비 − MAX[정액공제금, 정률공제] 각각 산출<br>② 지급보험금 = (실제 보상대상의료비 − 최소공제금액) × 자사 독립책임액 / 전사 독립책임액 합</div>
+        <div class="warn-box">48회: 3세대·4세대 등 세대가 다른 복수계약도 각자 독립책임액을 산출해 동일 공식 적용</div>
+      </div>
+    </div>
+    <div class="q-item" onclick="toggleQ(this)">
+      <div class="q-header"><div class="q-title">치아의 결손장해 신설(48회)</div><button class="toggle-btn">보기 ▼</button></div>
+      <div class="q-meta"><span class="badge badge-purple">48회 신규</span></div>
+      <div class="q-answer">
+        <div class="key-box">치아 5개/7개/14개 이상 결손 시 각 5%/10%/20%, 크라운(금관)은 1/2개로 인정, 임플란트·틀니 등 기존 보철물 자체의 손상은 제외</div>
+      </div>
+    </div>
+    <div class="q-item" onclick="toggleQ(this)">
+      <div class="q-header"><div class="q-title">후유장해·사망보험금 동시 청구 인정 판례</div><button class="toggle-btn">보기 ▼</button></div>
+      <div class="q-meta"><span class="badge badge-red">47회 핵심 판례</span></div>
+      <div class="q-answer">
+        <div class="key-box">동일 사고라도 후유장해와 사망이 <strong>독립적으로 발생한 사유</strong>라면 두 보험금 모두 지급(대법원 2022.3.17. 선고 2021다284462)</div>
+      </div>
+    </div>
+    <div class="q-item" onclick="toggleQ(this)">
+      <div class="q-header"><div class="q-title">장기요양진단 보험사고 확정시점</div><button class="toggle-btn">보기 ▼</button></div>
+      <div class="q-meta"><span class="badge badge-purple">47회 신규 판례</span></div>
+      <div class="q-answer">
+        <div class="key-box">장기요양등급 <strong>판정 전 사망</strong>하면 심신상태가 수급대상에 해당해도 보험기간 중 지급사유 발생으로 볼 수 없음(대법원 2023.10.12. 선고 2020다232709 등)</div>
+      </div>
+    </div>
+    <div class="q-item" onclick="toggleQ(this)">
+      <div class="q-header"><div class="q-title">실종선고·대습상속 복합 사례</div><button class="toggle-btn">보기 ▼</button></div>
+      <div class="q-meta"><span class="badge badge-blue">47·48회</span></div>
+      <div class="q-answer">
+        <div class="key-box">실종선고는 <strong>실종기간 만료일</strong> 기준으로 사망을 간주 → 그 시점 기준 법정상속인·대습상속 여부 판단</div>
+        <div class="warn-box">사실혼 배우자는 상속권자 아님 / 자녀가 피보험자보다 먼저 사망 시 그 자녀(피보험자의 손자녀)가 대습상속</div>
+      </div>
+    </div>
+    <div class="q-item" onclick="toggleQ(this)">
+      <div class="q-header"><div class="q-title">위법계약 해지(금소법) — 신설 조문 완전정리</div><button class="toggle-btn">보기 ▼</button></div>
+      <div class="q-meta"><span class="badge badge-purple">44회 신규</span></div>
+      <div class="q-answer">
+        <div class="key-box">계약체결일 <strong>5년 이내</strong> + 위반 <strong>안 날 1년 이내</strong> 해지요구 → 회사는 <strong>10일 이내</strong> 수락여부 통지 → 해지 시 <strong>책임준비금</strong> 반환</div>
+      </div>
+    </div>
+    <div class="q-item" onclick="toggleQ(this)">
+      <div class="q-header"><div class="q-title">보험안내자료 효력 — 임의작성 vs 회사승인</div><button class="toggle-btn">보기 ▼</button></div>
+      <div class="q-meta"><span class="badge badge-purple">48회 신규</span></div>
+      <div class="q-answer">
+        <div class="key-box">회사가 제작·승인한 모집용 안내자료 내용이 약관과 다르면 <strong>계약자 유리하게</strong> 계약 성립 간주</div>
+        <div class="err-box">설계사 개인이 회사 승인 없이 임의 제작한 안내자료는 계약 내용에 편입되지 않음(48회 결론)</div>
+      </div>
+    </div>
+    <div class="q-item" onclick="toggleQ(this)">
+      <div class="q-header"><div class="q-title">국민건강보험 vs 실손의료보험 비교(47회)</div><button class="toggle-btn">보기 ▼</button></div>
+      <div class="q-meta"><span class="badge badge-blue">47회 10점</span></div>
+      <div class="q-answer">
+        <table class="tbl">
+          <tr><th>구분</th><th>국민건강보험</th><th>실손의료보험</th></tr>
+          <tr><td>강제성</td><td>전국민 의무가입(국가 운영)</td><td>자유 가입(보험회사 운영)</td></tr>
+          <tr><td>보장한도</td><td>없음</td><td>상품별 한도 존재</td></tr>
+          <tr><td>보상범위</td><td>공단부담금(법정 급여)</td><td>비급여 포함 보상</td></tr>
+          <tr><td>보험료 산정</td><td>소득·재산 기준 차등부과</td><td>위험발생률 기반 대수의 법칙</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- 회차별 기출 -->
+  <div class="sub-section" id="new-gichul44">
+    <div class="q-item" onclick="toggleQ(this)"><div class="q-header"><div class="q-title">제44회 (2021) — 서면동의철회·위법계약해지·부활·암진단비감액</div><button class="toggle-btn">보기 ▼</button></div><div class="q-answer"><ul><li>1번: 서면동의 철회권(이혼 사례)</li><li>2번: 금소법 위법계약해지(요건·검토기간·효과)</li><li>3번: 부활계약 효력 + A사 지급보험금(지급기일·지연이자·암진단비 감액여부)</li><li>4번: 계약전알릴의무 위반(간경화→간암 인과관계 사례 2건)</li><li>5번: 실손의료비 3세대 vs 4세대 비교계산(E66 비만 등)</li><li>6번: 후유장해(2018.4.1 전후 A/B사 장해지급률 비교)</li></ul></div></div>
+    <div class="q-item" onclick="toggleQ(this)"><div class="q-header"><div class="q-title">제45회 (2022) — 계약해지제한·보험나이·암보험금·실손</div><button class="toggle-btn">보기 ▼</button></div><div class="q-answer"><ul><li>1번: 상해보험 표준약관(6시간 이상 정의) + 계약해지 제한사유 4가지</li><li>2번: 후유장해 판정유보기간(①~⑤ 빈칸)</li><li>3번: 보험나이 계산방법·미달초과 + 변경 후 월보험료 계산</li><li>4번: 암 진단확정시기(결과보고일) + 지급보험금</li><li>5번: 실손의료비 계산(A~I 병원 9개 사례)</li><li>6번: 암보험금(제자리암·침습암 감액규정 종합사례)</li></ul></div></div>
+    <div class="q-item" onclick="toggleQ(this)"><div class="q-header"><div class="q-title">제46회 (2023) — 승낙전사고·후유장해·KCD개정·중대사유</div><button class="toggle-btn">보기 ▼</button></div><div class="q-answer"><ul><li>1번: 승낙전사고 회사 면책요건 + 해지권제한 제척기간·이율</li><li>2번: 후유장해(눈·외모·귀·신경계 5항목 종합)</li><li>3번: 암 KCD개정시점 적용(A·B사 비교) + 약관해석 3원칙</li><li>4번: 후유장해(외모·척추·팔) + 각종 특약(골절진단·상해수술 등)</li><li>5번: 실손의료비(급여·비급여·병차, 계약해당일 한도초과)</li><li>6번: 복수보험 비례보상 계산</li><li>7번: 중대사유로 인한 해지(장해진단서 위변조 사례)</li></ul></div></div>
+    <div class="q-item" onclick="toggleQ(this)"><div class="q-header"><div class="q-title">제47회 (2024) — 상해정의·판례종합·실손·건강보험비교</div><button class="toggle-btn">보기 ▼</button></div><div class="q-answer"><ul><li>1번: 상해의 정의 + 상법/보험업법상 분류 + 손해사정사 업무범위</li><li>2번: 후유장해+사망보험금 중복지급 판례 사례</li><li>3번: 추가검사 정의 + 3개사 고지의무·암진단비 계산</li><li>4번: 고지의무·통지의무 구분 판례 + 대습상속 수익자 결정</li><li>5번: 장기요양진단 확정시점 판례 + 암사망 특약 무효</li><li>6번: 실손의료비(3건 입원사례) + 국민건강보험 비교</li></ul></div></div>
+    <div class="q-item" onclick="toggleQ(this)"><div class="q-header"><div class="q-title">제48회 (2025) — 소멸시효·실종선고·후유장해·실손비례보상</div><button class="toggle-btn">보기 ▼</button></div><div class="q-answer"><ul><li>1번: 소멸시효 기산점(질병보험 지급사유별) + 감면전의료비 기준 + 치아결손장해</li><li>2번: 실종선고·사망간주시점 + 3개 계약 수익자 결정</li><li>3번: 보험안내자료의 효력(요건·심사 적정성)</li><li>4번: 후유장해(대퇴골·체간골 계산)</li><li>5번: 후유장해(귀·치아 계산)</li><li>6번: 복수보험 실손 독립책임액 비례보상(A·B사)</li></ul></div></div>
+  </div>
+
+  <!-- 출제 예측 -->
+  <div class="sub-section" id="new-predict">
+    <div class="err-box" style="margin-bottom:12px">🎯 <strong>다음 회차 출제 가능성 높은 주제</strong></div>
+    <div class="q-item" onclick="toggleQ(this)"><div class="q-header"><div class="q-title">🔴 최고위험 — 반드시 준비</div><button class="toggle-btn">보기 ▼</button></div><div class="q-answer"><ul><li><strong>실손의료비 독립책임액 비례보상</strong> — 47·48회 연속, 계산 숙달 필수</li><li><strong>후유장해 장해율 산정+보험금계산</strong> — 12회 전 회차, 매년 필출</li><li><strong>계약전알릴의무 vs 계약후통지의무 구분</strong> — 47회 신규판례, 재출제 가능성 높음</li><li><strong>대습상속·실종선고·태아상속 등 상속법리</strong> — 45·47·48회 연속 출제</li><li><strong>암보험금(진단확정시기·감액규정·유사암구분)</strong> — 44~47회 연속</li></ul></div></div>
+    <div class="q-item" onclick="toggleQ(this)"><div class="q-header"><div class="q-title">🟡 중위험 — 준비 권장</div><button class="toggle-btn">보기 ▼</button></div><div class="q-answer"><ul><li><strong>부활계약의 준용범위(면책기간 vs 감액기간)</strong> — 44회 출제, 심화 재출제 가능</li><li><strong>중대사유 해지</strong> — 46회 출제, 서류위변조 사례 변형 가능</li><li><strong>위법계약해지(금소법)</strong> — 44회 신규, 재출제 여지</li><li><strong>장기요양진단·간병보험 확정시점</strong> — 47회 판례, 심화 가능</li><li><strong>3세대·4세대 실손 비교(비만·조절기능장해 연령 등 개정사항)</strong></li></ul></div></div>
+    <div class="q-item" onclick="toggleQ(this)"><div class="q-header"><div class="q-title">🟢 신규논점 주의</div><button class="toggle-btn">보기 ▼</button></div><div class="q-answer"><ul><li><strong>치아의 결손장해</strong> — 48회 첫 출제, 세부 판정기준 완벽 암기</li><li><strong>보험안내자료의 효력</strong> — 48회 신규, 요건 3가지 정리 필요</li><li><strong>후유장해·사망보험금 중복지급 판례</strong> — 47회 신규, 유사판례 확장 가능</li><li><strong>실손 비급여 3대특약 개정(도수치료 등 병변호전 요건)</strong> — 48회 쟁점화</li></ul></div></div>
+  </div>
+</div>
+
+<!-- ========== ERA: 통합 빈도 ========== -->
+<div class="era-section" id="era-total">
+  <div class="card">
+    <div class="card-title">📊 37~48회 통합 출제빈도 TOP (12회 시험, 43회 1개로 집계)</div>
+    <div class="freq-bar"><div class="freq-label">후유장해 계산(장해율)</div><div class="freq-track"><div class="freq-fill hot" style="width:100%"></div></div><div class="freq-num">12회</div></div>
+    <div class="freq-bar"><div class="freq-label">실손의료비 계산</div><div class="freq-track"><div class="freq-fill hot" style="width:100%"></div></div><div class="freq-num">12회</div></div>
+    <div class="freq-bar"><div class="freq-label">계약법리·표준약관 약술</div><div class="freq-track"><div class="freq-fill hot" style="width:100%"></div></div><div class="freq-num">12회</div></div>
+    <div class="freq-bar"><div class="freq-label">사망보험금·상속(대습·동시사망 등)</div><div class="freq-track"><div class="freq-fill med" style="width:58%"></div></div><div class="freq-num">7회</div></div>
+    <div class="freq-bar"><div class="freq-label">암보험금 계산</div><div class="freq-track"><div class="freq-fill med" style="width:58%"></div></div><div class="freq-num">7회</div></div>
+    <div class="freq-bar"><div class="freq-label">계약전알릴의무(고지의무) 사례</div><div class="freq-track"><div class="freq-fill med" style="width:50%"></div></div><div class="freq-num">6회</div></div>
+    <div class="freq-bar"><div class="freq-label">청력·코·안구·치아 등 특수장해</div><div class="freq-track"><div class="freq-fill" style="width:42%"></div></div><div class="freq-num">5회</div></div>
+    <div class="freq-bar"><div class="freq-label">비급여 3대특약(도수·체외충격파·증식)</div><div class="freq-track"><div class="freq-fill" style="width:42%"></div></div><div class="freq-num">5회</div></div>
+    <div class="freq-bar"><div class="freq-label">복수보험 비례보상</div><div class="freq-track"><div class="freq-fill" style="width:33%"></div></div><div class="freq-num">4회</div></div>
+    <div class="freq-bar"><div class="freq-label">간병보험·중대질병(뇌졸중·관상동맥 등)</div><div class="freq-track"><div class="freq-fill" style="width:33%"></div></div><div class="freq-num">4회</div></div>
+    <div class="freq-bar"><div class="freq-label">부활·소멸시효·해지환급금</div><div class="freq-track"><div class="freq-fill" style="width:33%"></div></div><div class="freq-num">4회</div></div>
+    <div class="freq-bar"><div class="freq-label">최신 대법원 판례 인용형 서술</div><div class="freq-track"><div class="freq-fill" style="width:33%"></div></div><div class="freq-num">4회</div></div>
+    <div class="freq-bar"><div class="freq-label">후유장해 판정시기·유보</div><div class="freq-track"><div class="freq-fill" style="width:25%"></div></div><div class="freq-num">3회</div></div>
+    <div class="freq-bar"><div class="freq-label">척추의 장해(기형·운동장해)</div><div class="freq-track"><div class="freq-fill" style="width:25%"></div></div><div class="freq-num">3회</div></div>
+    <div class="freq-bar"><div class="freq-label">본인부담금 상한제</div><div class="freq-track"><div class="freq-fill" style="width:17%"></div></div><div class="freq-num">2회</div></div>
+  </div>
+  <div class="card">
+    <div class="card-title">📅 37~48회 전 회차 요약표</div>
+    <table class="tbl">
+      <tr><th>회차</th><th>연도</th><th>핵심주제</th></tr>
+      <tr><td>37회</td><td>2014</td><td>청약철회·계약무효3가지·실손·간병보험·사망후유장해·암보험금</td></tr>
+      <tr><td>38회</td><td>2015</td><td>직업변경 후유장해계산·표준약관(취소·부활·해지환급금)·비례보상실손</td></tr>
+      <tr><td>39회</td><td>2016</td><td>후유장해·대습상속·중대한뇌졸중·실종선고·본인부담상한제</td></tr>
+      <tr><td>40회</td><td>2017</td><td>서면동의철회·관상동맥우회술·청력장해·비급여3대특약 신설</td></tr>
+      <tr><td>41회</td><td>2018</td><td>승낙전사고·약관해석원칙·지정대리청구·암보험금·능력장해</td></tr>
+      <tr><td>42회</td><td>2019</td><td>납입지체·직업직무통지의무·고지의무 상해사망·파생장해</td></tr>
+      <tr><td>43회</td><td>2020</td><td>고지의무해지권제한·소멸시효·고도후유장해특약·실손종합</td></tr>
+      <tr><td>44회</td><td>2021</td><td>서면동의철회·위법계약해지(금소법)·부활·암감액·3세대vs4세대실손</td></tr>
+      <tr><td>45회</td><td>2022</td><td>계약해지제한·보험나이·암진단확정시기·실손9사례·제자리암</td></tr>
+      <tr><td>46회</td><td>2023</td><td>승낙전사고·후유장해5항목·KCD개정·중대사유해지·비례보상</td></tr>
+      <tr><td>47회</td><td>2024</td><td>상해정의·손사업무·고지/통지의무판례·후유장해사망중복판례·대습상속</td></tr>
+      <tr><td>48회</td><td>2025</td><td>소멸시효기산점·치아결손장해·실종선고·보험안내자료효력·실손비례보상</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- ========== ERA: 숫자 암기 ========== -->
+<div class="era-section" id="era-numbers">
+  <div class="card"><div class="card-title">🔢 반드시 암기할 숫자·기간·비율 총정리</div>
+    <table class="tbl">
+      <tr><th>항목</th><th>수치</th><th>비고</th></tr>
+      <tr><td>청약철회 기간</td><td style="color:var(--accent2);font-weight:700">증권수령일로부터 15일</td><td>청약일로부터 30일 초과 계약은 철회 제한</td></tr>
+      <tr><td>청약철회 반환기간</td><td>접수일로부터 3일 이내</td><td>지연 시 보험계약대출이율 가산</td></tr>
+      <tr><td>계약취소(사기계약) 제척기간</td><td style="color:var(--accent4);font-weight:700">계약일 5년 / 안 날 1개월</td><td>대리진단·약물·위변조·암·HIV 은닉</td></tr>
+      <tr><td>위법계약해지(금소법) 제척기간</td><td>계약체결일 5년 / 안 날 1년</td><td>회사 검토기간 10일 이내</td></tr>
+      <tr><td>고지의무 해지권 제척기간</td><td style="color:var(--accent3);font-weight:700">1개월 / 2년(진단계약 질병 1년) / 3년</td><td>안 날 1개월, 제1회보험료 후 2년, 계약체결일 3년</td></tr>
+      <tr><td>소멸시효 기간</td><td>3년</td><td>보험금·환급금·보험료반환 등 전 청구권</td></tr>
+      <tr><td>납입최고기간 (보험기간 1년 이상)</td><td>14일 이상</td><td></td></tr>
+      <tr><td>납입최고기간 (보험기간 1년 미만)</td><td>7일 이상</td><td></td></tr>
+      <tr><td>지급예정일(원칙)</td><td>서류접수 후 30영업일 이내</td><td>소송·분쟁조정 등 6가지 예외 시 초과 가능</td></tr>
+      <tr><td>중대사유 해지</td><td>사실을 안 날부터 1개월 이내</td><td>고의사고·서류위변조</td></tr>
+      <tr><td>실종선고 기간</td><td>생사불명 5년(보통실종) / 1년(특별실종)</td><td>실종기간 만료 시 사망 간주</td></tr>
+      <tr><td>암 진단비 감액기간</td><td style="color:var(--accent4);font-weight:700">계약일(부활일)로부터 1년 미만</td><td>가입금액의 50% 지급(상품별 상이)</td></tr>
+      <tr><td>실손 급여 본인부담(보상비율)</td><td>80%</td><td>공제 후 급여의 80% 보상</td></tr>
+      <tr><td>실손 비급여 보상비율(3세대 이후)</td><td>70%</td><td>1·2세대는 80%</td></tr>
+      <tr><td>실손 비급여 정률공제(3세대 이후)</td><td>30%</td><td>1·2세대는 20%</td></tr>
+      <tr><td>비급여 3대특약(도수·체외충격파·증식) 한도</td><td style="color:var(--accent2);font-weight:700">연 350만원 · 50회</td><td>계약일(해당일) 기준 1년 단위</td></tr>
+      <tr><td>비급여 3대특약 공제금액</td><td>MAX[2~3만원, 30%]</td><td></td></tr>
+      <tr><td>도수치료 등 회당 발생액 산식</td><td>총발생액 ÷ 시행횟수</td><td>48회 사례 참고</td></tr>
+      <tr><td>본인부담상한액 초과금</td><td>소득분위별 상이(예 250·400만원 등)</td><td>공단 환급금은 면책</td></tr>
+      <tr><td>보험나이 절상 기준</td><td>6개월 이상 → 1년 절상</td><td>6개월 미만은 버림</td></tr>
+      <tr><td>안구 조절기능장해 제외 연령</td><td>45세 이상(~2018.4.1) → 50세 이상(2018.4.1~)</td><td>개정 전후 비교 필수</td></tr>
+      <tr><td>안구 운동장해 판정시기</td><td>외상 후 1년</td><td></td></tr>
+      <tr><td>신경계 장해 판정유보</td><td>6개월</td><td>뚜렷한 향상·단기사망 예상 시</td></tr>
+      <tr><td>정신행동장해 판정시기</td><td>24개월(원칙) / 18개월(의식상실 1개월 이상)</td><td></td></tr>
+      <tr><td>척추 기형장해 각도 기준</td><td>15°·20° 이상</td><td>뚜렷한 기형 30% / 심한 기형 50%</td></tr>
+      <tr><td>청력 완전상실 기준</td><td>평균순음역치 90dB 이상</td><td>지급률 25%</td></tr>
+      <tr><td>치아결손 지급률</td><td>5개(5%) / 7개(10%) / 14개(20%)</td><td>크라운은 1/2개로 산정</td></tr>
+      <tr><td>고도후유장해특약 후유장해 지급률 기준</td><td>20% / 50% / 80% 이상 등 상품별 상이</td><td>가입금액 전액 지급형</td></tr>
+      <tr><td>사망보험금 법정상속 비율(배우자:자녀)</td><td>1.5 : 1</td><td>자녀 복수 시 균등분할</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- ========== ERA: 퀵 암기 ========== -->
+<div class="era-section" id="era-qcard">
+  <p style="color:var(--text2);margin-bottom:10px;font-size:12px">👆 카드 클릭 시 정답 표시 — 전 회차(37~48회) 핵심 암기 항목</p>
+  <div class="qcard-grid" id="qcardGrid"></div>
+</div>
+
+</div><!-- content-area -->
+
+<script>
+// ========== 퀵 암기 데이터 ==========
+const qcards = [
+  // 계약법리 숫자
+  {q:'청약철회 가능 기간', a:'증권수령일로부터 15일', h:'청약일로부터 30일 초과 계약은 철회 제한'},
+  {q:'청약철회 후 보험료 반환기간', a:'접수일로부터 3일 이내', h:''},
+  {q:'계약취소(사기에 의한 계약) 제척기간', a:'계약일로부터 5년 이내 + 사기사실 안 날 1개월 이내', h:'대리진단·약물사용·서류위변조·암/HIV은닉'},
+  {q:'고지의무 위반 해지권 제척기간 3가지', a:'안 날 1개월 / 제1회보험료 후 2년(진단계약 질병 1년) / 계약체결일 3년', h:''},
+  {q:'소멸시효 기간', a:'3년', h:'보험금·환급금·보험료반환청구권 등'},
+  {q:'위법계약 해지(금소법) 요건', a:'계약체결일 5년 이내 + 위반 안 날 1년 이내', h:'회사 검토기간 10일 이내'},
+  {q:'위법계약 해지 시 회사 반환금', a:'해지 당시 책임준비금', h:''},
+  {q:'중대사유 해지 가능 기간', a:'사실을 안 날부터 1개월 이내', h:'고의사고·서류위변조'},
+  {q:'납입최고기간 (보험기간 1년 이상)', a:'14일 이상', h:''},
+  {q:'납입최고기간 (보험기간 1년 미만)', a:'7일 이상', h:''},
+  {q:'실종선고 요건 기간', a:'생사불명 5년(보통) / 1년(특별)', h:'실종기간 만료 시 사망 간주'},
+  {q:'전화계약 자필서명 생략 요건 2가지', a:'①계약자·피보험자·수익자 동일 ②계약자·피보험자 동일+수익자가 법정상속인', h:''},
+  {q:'지급예정일 원칙과 예외 6가지 유형', a:'원칙 30영업일 이내 / 예외: 소송·분쟁조정·수사조사·해외사고조사·청구권자귀책지연·제3자의견', h:''},
+  {q:'서면동의 철회 가능 시기', a:'계약 유지기간 중 언제든지(장래를 향하여)', h:''},
+  {q:'보험나이 절상 기준', a:'6개월 이상 끝수는 1년으로 절상, 미만은 버림', h:''},
+  {q:'사망보험 무효 예외 불인정 대상', a:'만 15세 미만자를 피보험자로 하는 사망보험계약', h:'나이 착오 발견해도 무효 유지'},
+  // 후유장해
+  {q:'동일부위 복수장해 처리 원칙', a:'높은 지급률 하나만 인정(합산 불가)', h:'팔다리 관절기능장해는 예외적으로 합산'},
+  {q:'안구 조절기능장해 제외 연령 (2018.4.1 이전/이후)', a:'45세 이상 → 50세 이상으로 개정', h:'44회 핵심 비교'},
+  {q:'안구 운동장해 판정시기', a:'외상 후 1년', h:''},
+  {q:'신경계 장해 판정유보 기간', a:'6개월', h:'뚜렷한 향상·단기사망 예상 시'},
+  {q:'정신행동장해 판정시기(원칙/의식상실시)', a:'24개월 / 18개월(1개월 이상 의식상실)', h:''},
+  {q:'청력 완전상실 판정 기준', a:'평균순음역치 90dB 이상 (지급률 25%)', h:''},
+  {q:'척추 뚜렷한 기형 기준 각도', a:'15°(또는 20°) 이상', h:'지급률 30%'},
+  {q:'치아결손 지급률 (5개/7개/14개)', a:'5% / 10% / 20%', h:'크라운은 1/2개로 인정'},
+  {q:'고도후유장해특약 최종 판단 기준', a:'복수사고라도 보험기간 중 최종 상태 지급률로 판단, 기지급분 공제', h:'43·45회 핵심'},
+  {q:'파생장해 원칙 — 하나의 장해가 2부위로 평가될 때', a:'높은 지급률 하나만 적용', h:'42회'},
+  {q:'후유장해 판정 원칙 시기', a:'증세 고정 시 (미고정 시 사고 후 180일 시점 의사판단)', h:''},
+  // 실손의료비
+  {q:'실손 통원 공제금액 계산식', a:'보상대상의료비 − MAX[정액공제금, 보상대상의료비×정률(20~30%)]', h:''},
+  {q:'복수보험 비례보상 판단 기준', a:'각 계약 보상책임액 합계가 [최고 보장대상의료비－최소공제금액] 초과 시에만 비례보상', h:'47회'},
+  {q:'복수보험 지급보험금 공식', a:'(보상대상의료비－최소공제금액) × 자사 독립책임액/전사 독립책임액 합', h:''},
+  {q:'비급여 3대특약(도수·체외충격파·증식) 연간 한도', a:'350만원, 50회', h:'공제 MAX[2~3만원,30%]'},
+  {q:'실손 비급여 보상비율 (1·2세대 / 3세대 이후)', a:'80% / 70%', h:''},
+  {q:'본인부담상한제 적용 범위', a:'요양급여에만 적용, 공단환급금은 면책', h:''},
+  {q:'해외여행실손 보상 제외 시점', a:'보험기간 종료 후 180일 경과 입원', h:''},
+  {q:'3세대 vs 4세대 실손 — 비만(E66) 처리', a:'3세대: 전면 면책 / 4세대: 비급여만 면책, 급여는 보상', h:''},
+  // 암보험금
+  {q:'암 진단확정 시점 판단 기준', a:'병리과 의사가 주치의에게 결과를 보고한 날(결과보고일)', h:'45·47회 판례'},
+  {q:'암 진단비 감액 기준', a:'계약일(부활일)로부터 1년 미만 진단 시 가입금액의 50%', h:''},
+  {q:'유사암(제자리암) vs 일반암(침습암) 구분', a:'조직검사상 제자리 병변이면 유사암, 침습이면 일반암', h:''},
+  {q:'수술의 정의 핵심요소', a:'의사자격자+치료목적+의료기관+생체절단·적제 조작(흡인·천자 제외)', h:''},
+  {q:'말기폐질환 진단기준 2가지', a:'①FEV1.0 정상예측치 30%(일부25%) 이하 ②PaO2 60mmHg 이하', h:''},
+  {q:'말기간질환 회복불능상태 4가지', a:'영구적 황달·복수·간성혼수·식도정맥류', h:''},
+  // 상속·사망보험금
+  {q:'법정상속 비율(배우자:자녀)', a:'1.5 : 1', h:'자녀 복수는 균등분할'},
+  {q:'대습상속 요건', a:'상속인이 될 직계비속·형제자매가 상속개시 전 사망·결격 → 그 직계비속(배우자 포함)이 대신', h:''},
+  {q:'동시사망 추정 시 상속 처리', a:'상호 상속 불성립, 각자의 다음 순위 상속인이 상속', h:''},
+  {q:'태아의 상속능력 판례 입장', a:'정지조건설 (출생을 조건으로 상속개시시로 소급 인정)', h:''},
+  {q:'실종선고 시 사망 간주 시점', a:'실종선고 심판일이 아니라 실종기간 만료일', h:'48회 핵심'},
+  {q:'보험수익자가 고의로 피보험자를 해친 경우', a:'그 수익자분은 면책, 나머지 수익자에게는 지급', h:''},
+  // 간병·특수담보
+  {q:'중증치매 질병코드 5가지', a:'F00(알츠하이머)·F01(혈관성)·F02(기타)·F03(상세불명)·F05.1(섬망)', h:''},
+  {q:'중대한 뇌졸중 해당 질병코드', a:'I60(지주막하출혈)·I61(뇌내출혈)·I62(비외상성두개내출혈)·I63(뇌경색)', h:''},
+  {q:'관상동맥우회술 제외수술 3가지', a:'관상동맥성형술·스텐트삽입술·회전죽상반절제술', h:'카테터 이용, 비개흉술'},
+  {q:'장기요양진단 보험사고 확정시점', a:'장기요양등급 판정을 받은 시점 (판정 전 사망은 지급사유 부정)', h:'47회 판례'},
+  // 판례·최신쟁점
+  {q:'고지의무 vs 통지의무 구분 판례 핵심', a:'계약체결 당시 위험 미고지 상태가 계속됐다는 사정만으로는 통지의무 위반 아님', h:'대법원 2024다219766'},
+  {q:'후유장해·사망보험금 중복지급 인정 요건', a:'후유장해와 사망이 독립적으로 발생한 사유일 것', h:'대법원 2021다284462'},
+  {q:'보험안내자료 효력 발생요건 3가지', a:'①등록된 설계사 등 사용 ②모집과정 사용 ③회사가 제작', h:'48회'},
+];
+
+// 렌더링
+function renderQcards() {
+  const grid = document.getElementById('qcardGrid');
+  qcards.forEach(item => {
+    const c = document.createElement('div');
+    c.className = 'qcard';
+    c.innerHTML = `<div class="qq">Q. ${item.q}</div>${item.h?`<div class="qhint">💡 ${item.h}</div>`:''}<div class="qa">✅ ${item.a}</div>`;
+    c.onclick = () => c.querySelector('.qa').classList.toggle('show');
+    grid.appendChild(c);
+  });
+}
+renderQcards();
+
+// ========== 탭 전환 ==========
+function switchEra(era, btn) {
+  document.querySelectorAll('.era-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.era-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('era-' + era).classList.add('active');
+  btn.classList.add('active');
+  document.getElementById('subTabsOld').style.display = (era === 'old') ? 'flex' : 'none';
+  document.getElementById('subTabsNew').style.display = (era === 'new') ? 'flex' : 'none';
+  document.getElementById('searchInput').value = '';
+}
+
+function switchSub(era, sub, btn) {
+  const parent = document.getElementById('era-' + era);
+  const el = document.getElementById(era + '-' + sub);
+  if (el) { parent.querySelectorAll('.sub-section').forEach(s=>s.classList.remove('active')); el.classList.add('active'); }
+  const tabBar = era === 'old' ? document.getElementById('subTabsOld') : document.getElementById('subTabsNew');
+  tabBar.querySelectorAll('.sub-tab').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+function toggleQ(el) {
+  const ans = el.querySelector('.q-answer');
+  const btn = el.querySelector('.toggle-btn');
+  const isOpen = ans.classList.contains('show');
+  ans.classList.toggle('show');
+  btn.textContent = isOpen ? '보기 ▼' : '접기 ▲';
+}
+
+function toggleMemo(el) {
+  el.querySelector('.memo-a').classList.toggle('show');
+}
+
+function doSearch() {
+  const val = document.getElementById('searchInput').value.toLowerCase().trim();
+  if (!val) return;
+  document.querySelectorAll('.q-item, .memo-card, .qcard').forEach(el => {
+    const txt = el.textContent.toLowerCase();
+    el.style.display = txt.includes(val) ? '' : 'none';
+  });
+}
+document.getElementById('searchInput').addEventListener('focus', function() {
+  if (!this.value) {
+    document.querySelectorAll('.q-item, .memo-card, .qcard').forEach(el => el.style.display = '');
+  }
+});
+</script>
+</body>
+</html>
